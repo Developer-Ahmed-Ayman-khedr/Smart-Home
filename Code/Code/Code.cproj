@@ -123,6 +123,10 @@
     <Compile Include="APP\main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="LIB\BIT_MATH.h">
+      <SubType>compile</SubType>
+      <Link>LIB\BIT_MATH.h</Link>
+    </Compile>
     <Compile Include="LIB\STD_TYPES.h">
       <SubType>compile</SubType>
     </Compile>
