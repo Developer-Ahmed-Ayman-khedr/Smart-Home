@@ -123,17 +123,30 @@
     <Compile Include="APP\main.c">
       <SubType>compile</SubType>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="HAL\LCD\LCD_INT.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="HAL\LCD\LCD_PROG.c">
+=======
+    <Compile Include="HAL\KPD\KPD_INT.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\KPD\KPD_PROG.c">
+>>>>>>> 919c4e1cee98def6d8d0f95ea6bbd99a82fa11e4
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="LIB\BIT_MATH.h">
       <SubType>compile</SubType>
-      <Link>LIB\BIT_MATH.h</Link>
     </Compile>
     <Compile Include="LIB\STD_TYPES.h">
+      <SubType>compile</SubType>
+      <Link>LIB\STD_TYPES.h</Link>
+    </Compile>
+    <Compile Include="MCAL\DIO\DIO_INT.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\DIO\DIO_PROG.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\ADC\ADC_INT.h">
@@ -145,11 +158,21 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APP" />
+<<<<<<< HEAD
     <Folder Include="HAL\LCD" />
     <Folder Include="MCAL" />
     <Folder Include="HAL" />
     <Folder Include="LIB" />
     <Folder Include="MCAL\ADC" />
+=======
+    <Folder Include="HAL\KPD" />
+    <Folder Include="HAL\LCD" />
+    <Folder Include="HAL\SS" />
+    <Folder Include="LIB" />
+    <Folder Include="MCAL" />
+    <Folder Include="HAL" />
+    <Folder Include="MCAL\DIO" />
+>>>>>>> 919c4e1cee98def6d8d0f95ea6bbd99a82fa11e4
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
