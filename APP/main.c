@@ -5,4 +5,6 @@
  *      Author: ahmed
  */
 
-
+int main(){
+	return 0;
+}
