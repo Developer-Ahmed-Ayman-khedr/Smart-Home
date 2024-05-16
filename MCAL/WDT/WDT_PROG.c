@@ -5,8 +5,7 @@
  *      Author: DELL
  */
 
-#include "STD_TYPES.h"
-#include "BIT_MATH.h"
+
 #include "WDT_INT.h"
 
 void WDT_start(u8 time)
