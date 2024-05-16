@@ -66,7 +66,7 @@ void LCD_Shift(u8 direction);
 //Send
 void LCD_sendData(u8 data);
 
-void LCD_sendCmd(u8 cmd);
+void LCD_sendcmd(u8 cmd);
 
 void LCD_sendStr(u8* str);
 

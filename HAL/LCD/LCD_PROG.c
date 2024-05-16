@@ -8,6 +8,13 @@
 
 #include "LCD_INT.h"
 
+void LCD_pulse ()
+{
+	DIO_setPinValue(LCD_E, DIO_HIGH);
+	_delay_ms(1);
+	DIO_setPinValue(LCD_E, DIO_LOW);
+}
+
 void LCD_init ()
 {
 	DIO_setPinDir(LCD_D4, DIO_OUTPUT);
@@ -71,12 +78,7 @@ void LCD_clearDis()
 {
 	LCD_sendcmd(0b00000001);
 }
-void LCD_pulse ()
-{
-	DIO_setPinValue(LCD_E, DIO_HIGH);
-	_delay_ms(1);
-	DIO_setPinValue(LCD_E, DIO_LOW);
-}
+
 void LCD_sendStr (u8*str)
 {
 	u8 i=0;
