@@ -34,5 +34,5 @@ GLOBAL FUNCTIONS MACROS
 
 /**************
 GLOBAL FUNCTIONS Prototypes
-***************
-#endif /* LIB_BIT_MATH_H_ */
+****************/
+#endif /* LIB_BIT_MATH_H_*/

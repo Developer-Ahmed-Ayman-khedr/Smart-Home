@@ -7,7 +7,6 @@
 
 
 #include "LCD_INT.h"
-#include "BIT_MATH.h"
 
 void LCD_init ()
 {
@@ -137,4 +136,5 @@ void LCD_Goto (u8 x , u8 line )
 	{
 		LCD_sendcmd(0b11000000+x);
 	}
+}
 

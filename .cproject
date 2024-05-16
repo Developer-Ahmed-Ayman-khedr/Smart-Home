@@ -13,7 +13,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="de.innot.avreclipse.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=de.innot.avreclipse.buildArtefactType.app,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" description="" id="de.innot.avreclipse.configuration.app.debug.348450855" name="Debug" optionalBuildProperties="org.eclipse.cdt.docker.launcher.containerbuild.property.volumes=,org.eclipse.cdt.docker.launcher.containerbuild.property.selectedvolumes=" parent="de.innot.avreclipse.configuration.app.debug">
+				<configuration artifactName="${ProjName}" buildArtefactType="de.innot.avreclipse.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=de.innot.avreclipse.buildArtefactType.app,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" description="" id="de.innot.avreclipse.configuration.app.debug.348450855" name="Debug" optionalBuildProperties="org.eclipse.cdt.docker.launcher.containerbuild.property.selectedvolumes=,org.eclipse.cdt.docker.launcher.containerbuild.property.volumes=" parent="de.innot.avreclipse.configuration.app.debug">
 					<folderInfo id="de.innot.avreclipse.configuration.app.debug.348450855." name="/" resourcePath="">
 						<toolChain id="de.innot.avreclipse.toolchain.winavr.app.debug.1681040363" name="AVR-GCC Toolchain" superClass="de.innot.avreclipse.toolchain.winavr.app.debug">
 							<option id="de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.debug.189204847" name="Generate HEX file for Flash memory" superClass="de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.debug" value="true" valueType="boolean"/>
@@ -30,6 +30,18 @@
 							<tool id="de.innot.avreclipse.tool.compiler.winavr.app.debug.21934166" name="AVR Compiler" superClass="de.innot.avreclipse.tool.compiler.winavr.app.debug">
 								<option id="de.innot.avreclipse.compiler.option.debug.level.1285077631" name="Generate Debugging Info" superClass="de.innot.avreclipse.compiler.option.debug.level"/>
 								<option id="de.innot.avreclipse.compiler.option.optimize.983760299" name="Optimization Level" superClass="de.innot.avreclipse.compiler.option.optimize"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="de.innot.avreclipse.compiler.option.incpath.485500380" name="Include Paths (-I)" superClass="de.innot.avreclipse.compiler.option.incpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;D:\Courses\Programming\Embedded_Systems_Course\MyProjects\Smart-Home\LIB&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\Courses\Programming\Embedded_Systems_Course\MyProjects\Smart-Home\MCAL\DIO&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\Courses\Programming\Embedded_Systems_Course\MyProjects\Smart-Home\MCAL\EXT&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\Courses\Programming\Embedded_Systems_Course\MyProjects\Smart-Home\MCAL\GI&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\Courses\Programming\Embedded_Systems_Course\MyProjects\Smart-Home\MCAL\ADC&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\Courses\Programming\Embedded_Systems_Course\MyProjects\Smart-Home\MCAL\TIMER0&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\Courses\Programming\Embedded_Systems_Course\MyProjects\Smart-Home\MCAL\Timer1&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\Courses\Programming\Embedded_Systems_Course\MyProjects\Smart-Home\MCAL\WDT&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\Courses\Programming\Embedded_Systems_Course\MyProjects\Smart-Home\HAL\LCD&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\Courses\Programming\Embedded_Systems_Course\MyProjects\Smart-Home\HAL\KPAD&quot;"/>
+								</option>
 								<inputType id="de.innot.avreclipse.compiler.winavr.input.1961670298" name="C Source Files" superClass="de.innot.avreclipse.compiler.winavr.input"/>
 							</tool>
 							<tool id="de.innot.avreclipse.tool.cppcompiler.app.debug.1161933512" name="AVR C++ Compiler" superClass="de.innot.avreclipse.tool.cppcompiler.app.debug">
@@ -120,4 +132,6 @@
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
