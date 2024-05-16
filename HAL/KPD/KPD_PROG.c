@@ -5,7 +5,7 @@
  *      Author: Abdo
  */
 
-#include <KPD_INT.h>
+#include "../KPD/KPD_INT.h"
 
 void KPD_init()
 {
