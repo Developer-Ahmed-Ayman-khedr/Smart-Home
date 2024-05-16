@@ -5,11 +5,8 @@
  *      Author: Abdo
  */
 
-#ifndef HAL_KPAD_KPAD_INT_H_
-#define HAL_KPAD_KPAD_INT_H_
-
-#include "STD_TYPES.h"
-#include "DIO_INT.h"
+#ifndef HAL_KPD_KPAD_INT_H_
+#define HAL_KPD_KPAD_INT_H_
 
 /**************
   INCLUDES
@@ -80,4 +77,4 @@ void KPD_init();
 //Read
 u8 KPD_read();
 
-#endif /* HAL_KPAD_KPAD_INT_H_ */
+#endif /* HAL_KPD_KPAD_INT_H_ */

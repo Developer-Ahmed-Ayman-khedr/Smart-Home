@@ -5,10 +5,7 @@
  *      Author: Abdo
  */
 
-
-#include "STD_TYPES.h"
-#include "DIO_INT.h"
-#include "KPD_INT.h"
+#include <KPD_INT.h>
 
 void KPD_init()
 {

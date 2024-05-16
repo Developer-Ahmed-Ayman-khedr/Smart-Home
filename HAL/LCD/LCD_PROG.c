@@ -125,6 +125,7 @@ void LCD_sendFloatNum(f32 num)
 	f32 no = num - (s32) num ;
 	no = no * 1000 ;
 	LCD_sendNum((s32)no);
+}
 
 void LCD_Goto (u8 x , u8 line )
 {
