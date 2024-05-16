@@ -103,7 +103,8 @@ u16 TIMER1_getICR(){
 void (*TIMER1_IcuFunc)();
 
 //call back function to send the function from the main function
-void TIMER1_setcallbackIcu(void (*ptr)()){
+void TIMER1_setcallbackIcu(void (*ptr)())
+{
 	TIMER1_IcuFunc = ptr;
 }
 
