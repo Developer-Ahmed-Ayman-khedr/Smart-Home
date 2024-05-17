@@ -57,7 +57,7 @@ void LCD_init();
 //Operation
 void LCD_clearDis();
 
-void LCD_GoTo(u8 x, u8 line );
+void LCD_Goto(u8 x, u8 line );
 
 void LCD_CreateNewCharacter(u8* ArrCustumCharachter, u8 CharLocation);
 
