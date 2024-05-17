@@ -9,7 +9,7 @@
 
 int main(){
 
-	u8 Main_Flage=0, main_password;
+	u8 Main_Flage=0;
 
 	//Start the Hold process
 	HOLD_init();

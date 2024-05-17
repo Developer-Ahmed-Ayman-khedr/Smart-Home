@@ -12,8 +12,7 @@
 /******************************************
   INCLUDES
 *******************************************/
-#include "BIT_MATH.h"
-#include "STD_TYPES.h"
+#include "DIO_INT.h"
 
 /******************************************
   Global Data TYPES AND STRUCTURES
