@@ -41,4 +41,6 @@ void TEMP_Init();
 
 void TEMP_Check();
 
+void TEMP_SendToAC();
+
 #endif /* APP_TEMP_TEMP_INT_H_ */
