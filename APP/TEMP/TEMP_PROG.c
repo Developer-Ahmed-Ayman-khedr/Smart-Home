@@ -20,3 +20,8 @@ void TEMP_Check(){
 	LCD_sendFloatNum(ADC_convertAnalog(vtemp));
 	LCD_sendStr(" C");
 }
+
+
+void TEMP_SendToAC(){
+
+}
