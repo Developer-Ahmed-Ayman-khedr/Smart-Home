@@ -34,6 +34,8 @@
 
 #include "PasswordCheck_INT.h"
 
+#include "KEYPAD_INT.h"
+
 /******************************************
   Global Data TYPES AND STRUCTURES
 *******************************************/
