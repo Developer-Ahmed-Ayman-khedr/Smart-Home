@@ -32,6 +32,7 @@
 
 #include "TEMP_INT.h"
 
+#include "PasswordCheck_INT.h"
 
 /******************************************
   Global Data TYPES AND STRUCTURES
