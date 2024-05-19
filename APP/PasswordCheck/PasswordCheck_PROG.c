@@ -22,7 +22,7 @@ u8 SavedPassword [4] = {'4','4','4','4'} ;
 u8 key=0 ;
 u8 i = 0 ;
 BOOL flage = FALSE ;
-u8 counter = 1 ;
+u8 counter = 0 ;
 
 void CheckPassword (u8* Ma_Fl_ptr){
 	key=KPD_read();
@@ -57,16 +57,28 @@ void CheckPassword (u8* Ma_Fl_ptr){
 			LCD_sendStr("welcome");
 			* Ma_Fl_ptr = 3 ;
 
+
 		}
 		else {
 			LCD_sendStr("WRONGPASSWORD");
 			counter ++ ;
-			if (counter== 4)
-			{
+			switch (counter){
+			case 1 :
+				DIO_setPinDir (DIO_PINC2,DIO_HIGH) ;
+				break ;
+			case 2 :
+				DIO_setPinDir (DIO_PINC7,DIO_HIGH) ;
+				break ;
+			case 3 :
+				DIO_setPinDir (DIO_PINA3,DIO_HIGH) ;
+				DIO_setPinDir (DIO_PIND3,DIO_HIGH) ;
 				LCD_sendStr("BLOCK");
 				_delay_ms(60000);
-
+				break ;
+			default:
+				break;
 			}
+
 
 		}
 
