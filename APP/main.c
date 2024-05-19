@@ -17,6 +17,13 @@ int main(){
 	//Initialize the temperature check process
 	TEMP_Init();
 
+	//Initialize the Keypad input process
+	KEYPAD_Init();
+
+	//Initialize the Password Check check process
+	password_init ();
+
+
 	while (1){
 
 		switch(Main_Flage){
@@ -29,10 +36,6 @@ int main(){
 			LCD_sendStr("Please enter your password:");
 			LCD_Goto(0,1);
 
-			//Password input function and wait inside it for input for 1 minute
-			//to give the user the time for inputing
-
-
 			//Password check function
 			CheckPassword(&Main_Flage);
 
@@ -43,8 +46,13 @@ int main(){
 			LCD_Goto(0,1);
 			LCD_sendStr("2. Temperature check:");
 
-			//Keypad read and wait for input for 3 seconds
-			//Main_Flage = Keypad_read();
+			//Keypad read
+			if(KEYPAD_Read()==1){
+				Main_Flage = 4;
+			}
+			else if(KEYPAD_Read()==2){
+				Main_Flage = 5;
+			}
 			break;
 		case 4:
 			//lighting
@@ -53,15 +61,16 @@ int main(){
 			//Temperature check
 			TEMP_Check();
 			LCD_Goto(0,1);
-			LCD_sendStr("Enter 3 to return:");
+			LCD_sendStr("Enter 1 to return:  ");
 
-			//Keypad read and wait for input for 3 seconds
-			//Main_Flage = Keypad_read();
+			//Keypad read
+			if(KEYPAD_Read()==1){
+				Main_Flage = 3;
+			}
 			break;
 		default:
 			break;
 		}
-
 	}
 	return 0;
 }

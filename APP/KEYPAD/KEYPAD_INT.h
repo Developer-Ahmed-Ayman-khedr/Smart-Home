@@ -1,12 +1,12 @@
 /*
- * TEMP_INT.h
+ * KEYPAD_INT.h
  *
- *  Created on: May 17, 2024
+ *  Created on: May 19, 2024
  *      Author: ahmed
  */
 
-#ifndef APP_TEMP_TEMP_INT_H_
-#define APP_TEMP_TEMP_INT_H_
+#ifndef APP_KEYPAD_KEYPAD_INT_H_
+#define APP_KEYPAD_KEYPAD_INT_H_
 
 /******************************************
   INCLUDES
@@ -14,11 +14,9 @@
 
 #include "DIO_INT.h"
 
-#include "ADC_INT.h"
-
 #include "LCD_INT.h"
 
-#include "TIMER1_INT.h"
+#include "KPD_INT.h"
 
 /******************************************
   Global Data TYPES AND STRUCTURES
@@ -39,10 +37,8 @@
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
 
-void TEMP_Init();
+void KEYPAD_Init();
 
-void TEMP_Check();
+u8 KEYPAD_Read();
 
-void TEMP_ControlAC();
-
-#endif /* APP_TEMP_TEMP_INT_H_ */
+#endif /* APP_KEYPAD_KEYPAD_INT_H_ */
