@@ -34,7 +34,7 @@ int main(){
 
 
 			//Password check function
-			PasswordCheck (&Main_Flage);
+			CheckPassword(&Main_Flage);
 
 			break;
 		case 3:
