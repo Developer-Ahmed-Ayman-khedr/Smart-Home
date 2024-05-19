@@ -51,7 +51,7 @@ void HOLD_init(){
 
 void HOLD_Start(u8* Ma_Fl_ptr){
 	DIO_setPinValue(DIO_PINC6,DIO_HIGH);
-	_delay_us(10);
+	_delay_us(11);
 	DIO_setPinValue(DIO_PINC6,DIO_LOW);
 	_delay_ms(100);
 
