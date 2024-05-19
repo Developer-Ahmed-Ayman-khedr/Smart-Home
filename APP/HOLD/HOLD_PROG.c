@@ -37,6 +37,12 @@ void HOLD_UltrasonicFunc(){
 void HOLD_init(){
 	GI_enable();
 
+	//TR
+	DIO_setPinDir(DIO_PINC6,DIO_OUTPUT);
+
+	//ECHO
+	DIO_setPinDir(DIO_PIND6,DIO_INPUT);
+
 	TIMER1_InitIcu(TIMER1_ICU_RISING,2);//set prescaler 64
 
 	TIMER1_setcallbackIcu(HOLD_UltrasonicFunc);
@@ -44,9 +50,9 @@ void HOLD_init(){
 
 
 void HOLD_Start(u8* Ma_Fl_ptr){
-	DIO_setPinValue(DIO_PIND1,DIO_HIGH);
+	DIO_setPinValue(DIO_PINC6,DIO_HIGH);
 	_delay_us(10);
-	DIO_setPinValue(DIO_PIND1,DIO_LOW);
+	DIO_setPinValue(DIO_PINC6,DIO_LOW);
 	_delay_ms(100);
 
 	if (vhold==2) {
