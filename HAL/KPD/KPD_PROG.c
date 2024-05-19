@@ -12,7 +12,6 @@ void KPD_init()
 	DIO_setPinDir(KPD_COL0, DIO_OUTPUT);
 	DIO_setPinDir(KPD_COL1, DIO_OUTPUT);
 	DIO_setPinDir(KPD_COL2, DIO_OUTPUT);
-	DIO_setPinDir(KPD_COL3, DIO_OUTPUT);
 
 	DIO_setPinDir(KPD_ROW0, DIO_INPUT);
 	DIO_setPinDir(KPD_ROW1, DIO_INPUT);
@@ -32,7 +31,6 @@ u8 KPD_read()
 	DIO_setPinValue(KPD_COL0, DIO_LOW);
 	DIO_setPinValue(KPD_COL1, DIO_HIGH);
 	DIO_setPinValue(KPD_COL2, DIO_HIGH);
-	DIO_setPinValue(KPD_COL3, DIO_HIGH);
 
 	if(DIO_readPinValue(KPD_ROW0) == DIO_LOW)
 	{
@@ -54,7 +52,6 @@ u8 KPD_read()
 	DIO_setPinValue(KPD_COL0, DIO_HIGH);
 	DIO_setPinValue(KPD_COL1, DIO_LOW);
 	DIO_setPinValue(KPD_COL2, DIO_HIGH);
-	DIO_setPinValue(KPD_COL3, DIO_HIGH);
 
 	if(DIO_readPinValue(KPD_ROW0) == DIO_LOW)
 	{
@@ -77,7 +74,6 @@ u8 KPD_read()
 	DIO_setPinValue(KPD_COL0, DIO_HIGH);
 	DIO_setPinValue(KPD_COL1, DIO_HIGH);
 	DIO_setPinValue(KPD_COL2, DIO_LOW);
-	DIO_setPinValue(KPD_COL3, DIO_HIGH);
 
 	if(DIO_readPinValue(KPD_ROW0) == DIO_LOW)
 	{
@@ -94,28 +90,6 @@ u8 KPD_read()
 	else if(DIO_readPinValue(KPD_ROW3) == DIO_LOW)
 	{
 		return KPD_ROW3_COL2;
-	}
-
-	DIO_setPinValue(KPD_COL0, DIO_HIGH);
-	DIO_setPinValue(KPD_COL1, DIO_HIGH);
-	DIO_setPinValue(KPD_COL2, DIO_HIGH);
-	DIO_setPinValue(KPD_COL3, DIO_LOW);
-
-	if(DIO_readPinValue(KPD_ROW0) == DIO_LOW)
-	{
-		return KPD_ROW0_COL3;
-	}
-	else if(DIO_readPinValue(KPD_ROW1) == DIO_LOW)
-	{
-		return KPD_ROW1_COL3;
-	}
-	else if(DIO_readPinValue(KPD_ROW2) == DIO_LOW)
-	{
-		return KPD_ROW2_COL3;
-	}
-	else if(DIO_readPinValue(KPD_ROW3) == DIO_LOW)
-	{
-		return KPD_ROW3_COL3;
 	}
 
 	return KPD_UNPRESSED;
