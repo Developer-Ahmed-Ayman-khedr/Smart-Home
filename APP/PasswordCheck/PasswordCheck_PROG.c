@@ -14,6 +14,13 @@ void password_init (){
 	KPD_init();
 	LCD_init();
 
+	DIO_setPinDir(DIO_PINC2,DIO_OUTPUT);
+
+	DIO_setPinDir (DIO_PINC7,DIO_OUTPUT) ;
+
+	DIO_setPinDir (DIO_PINA3,DIO_OUTPUT) ;
+
+	DIO_setPinDir (DIO_PIND3,DIO_OUTPUT) ;
 }
 
 
@@ -64,14 +71,14 @@ void CheckPassword (u8* Ma_Fl_ptr){
 			counter ++ ;
 			switch (counter){
 			case 1 :
-				DIO_setPinDir (DIO_PINC2,DIO_HIGH) ;
+				DIO_setPinValue (DIO_PINC2,DIO_HIGH) ;
 				break ;
 			case 2 :
-				DIO_setPinDir (DIO_PINC7,DIO_HIGH) ;
+				DIO_setPinValue (DIO_PINC7,DIO_HIGH) ;
 				break ;
 			case 3 :
-				DIO_setPinDir (DIO_PINA3,DIO_HIGH) ;
-				DIO_setPinDir (DIO_PIND3,DIO_HIGH) ;
+				DIO_setPinValue (DIO_PINA3,DIO_HIGH) ;
+				DIO_setPinValue (DIO_PIND3,DIO_HIGH) ;
 				LCD_sendStr("BLOCK");
 				_delay_ms(60000);
 				break ;
