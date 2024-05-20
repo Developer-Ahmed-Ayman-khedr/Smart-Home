@@ -11,9 +11,6 @@
 
 void password_init (){
 
-	KPD_init();
-	LCD_init();
-
 	DIO_setPinDir(DIO_PINC2,DIO_OUTPUT);
 
 	DIO_setPinDir (DIO_PINC7,DIO_OUTPUT) ;
@@ -62,7 +59,7 @@ void CheckPassword (u8* Ma_Fl_ptr){
 		if (flage==TRUE)
 		{
 			LCD_sendStr("welcome");
-			* Ma_Fl_ptr = 3 ;
+			* Ma_Fl_ptr = 4 ;
 
 
 		}

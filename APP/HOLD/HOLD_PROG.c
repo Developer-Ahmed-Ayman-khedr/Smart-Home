@@ -7,12 +7,13 @@
 
 #include "HOLD_INT.h"
 
+f32 Ttick = 0.004; //ms
+u32 dis = 0;
 u8 vhold;
 
 void HOLD_UltrasonicFunc(){
-	static f32 Ttick = 0.004; //ms
-	static u32 dis = 0;
 	static u8 edge = 0;
+
 	//rising
 	if (edge==0){
 		TIMER1_setPreload(0);
@@ -26,10 +27,6 @@ void HOLD_UltrasonicFunc(){
 		dis = 17 * Time;
 		TIMER1_InitIcu(TIMER1_ICU_RISING,2);//set prescaler 64
 		edge = 0;
-	}
-
-	if (dis<=30) {
-		vhold = 2;
 	}
 }
 
@@ -55,7 +52,7 @@ void HOLD_Start(u8* Ma_Fl_ptr){
 	DIO_setPinValue(DIO_PINC6,DIO_LOW);
 	_delay_ms(100);
 
-	if (vhold==2) {
+	if (dis<=30) {
 		*Ma_Fl_ptr = 2;
 	}
 }

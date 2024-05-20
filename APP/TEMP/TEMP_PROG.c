@@ -21,7 +21,6 @@ void TEMP_Init(){
 	DIO_setPinDir(DIO_PIND3,DIO_OUTPUT);
 	DIO_setPinDir(DIO_PIND7,DIO_OUTPUT);
 
-	ADC_init();
 }
 
 u16 VDigitalTemp, VAnalogTemp;
