@@ -29,6 +29,7 @@ void TEMP_Check(){
 
 	VDigitalTemp = ADC_read(ADC_CH1);
 	VAnalogTemp = ADC_convertAnalog(VDigitalTemp);
+	LCD_clearDis();
 	LCD_sendStr("Temperature = ");
 	LCD_sendFloatNum(VAnalogTemp);
 	LCD_sendStr(" C");
@@ -48,10 +49,10 @@ void TEMP_ControlAC(){
 	}
 	else if(VAnalogTemp<28){
 
-			//Enable
+		//Enable
 		DIO_setPinValue(DIO_PINA0,DIO_LOW);
 
-			//Direction
+		//Direction
 		DIO_setPinValue(DIO_PIND3,DIO_LOW);
 		DIO_setPinValue(DIO_PINC6,DIO_LOW);
 	}
