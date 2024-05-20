@@ -9,7 +9,7 @@
 
 int main(){
 
-	u8 Main_Flage=1;
+	u8 Main_Flage=1, read=0;
 
 	//Start the Hold process
 	HOLD_init();
@@ -33,7 +33,7 @@ int main(){
 			break;
 		case 2:
 			//Password input
-			LCD_sendStr("Please enter your password:");
+			LCD_sendStr("Enter password:");
 			LCD_Goto(0,1);
 
 			//Go to password check part.
@@ -46,19 +46,23 @@ int main(){
 			break;
 		case 4:
 			//Correct passwordWelcome
-			LCD_sendStr("1. Lighting:");
+			LCD_clearDis();
+			LCD_Goto(0,0);
+			LCD_sendStr("1.Light 2.Temp");
 			LCD_Goto(0,1);
-			LCD_sendStr("2. Temperature check:");
 
 			//Go to Keypad read part
 			Main_Flage = 5;
 			break;
 		case 5:
 			//Keypad read
-			if(KEYPAD_Read()==1){
+			read = KEYPAD_Read();
+			if(read==1){
+				LCD_sendData('1');
 				Main_Flage = 6;
 			}
-			else if(KEYPAD_Read()==2){
+			else if(read==2){
+				LCD_sendData('2');
 				Main_Flage = 7;
 			}
 			break;
@@ -67,16 +71,19 @@ int main(){
 			break;
 		case 7:
 			//Temperature check
+			LCD_Goto(0,0);
 			TEMP_Check();
 			LCD_Goto(0,1);
-			LCD_sendStr("Enter 1 to return:  ");
+			LCD_sendStr("Return Enter 1:  ");
 
 			//Go to Keypad read part
 			Main_Flage = 7;
 			break;
 		case 8:
 			//Keypad read
-			if(KEYPAD_Read()==1){
+			read = KEYPAD_Read();
+			if(read==1){
+				LCD_sendData('1');
 				Main_Flage = 3;
 			}
 			break;
