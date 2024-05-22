@@ -7,8 +7,6 @@
 
 
 #include "ADC_INT.h"
-#include "BIT_MATH.h"
-#include "STD_TYPES.h"
 
 void ADC_init()
 {

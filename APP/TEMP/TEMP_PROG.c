@@ -9,9 +9,10 @@
 
 void TEMP_Init(){
 	//ADC
+	ADC_init();
+
 	DIO_setPinDir(DIO_PINA1,DIO_INPUT);
 
-	ADC_init();
 	//DC Motor control
 
 	//Enable
@@ -23,16 +24,17 @@ void TEMP_Init(){
 
 }
 
-u16 VDigitalTemp, VAnalogTemp;
+u16 VDigitalTemp;
+f32 VAnalogTemp;
 
 void TEMP_Check(){
 
 	VDigitalTemp = ADC_read(ADC_CH1);
-	VAnalogTemp = ADC_convertAnalog(VDigitalTemp);
+	VAnalogTemp = (ADC_convertAnalog(VDigitalTemp))*100;
 	LCD_clearDis();
-	LCD_sendStr("Temperature = ");
+	LCD_sendStr("Temp = ");
 	LCD_sendFloatNum(VAnalogTemp);
-	LCD_sendStr(" C");
+	LCD_sendData('C');
 	TEMP_ControlAC();
 }
 
@@ -41,7 +43,7 @@ void TEMP_ControlAC(){
 	if(VAnalogTemp>28){
 
 		//Enable
-		DIO_setPinValue(DIO_PINA0,DIO_HIGH);
+		DIO_setPinValue(DIO_PIND5,DIO_HIGH);
 
 		//Direction
 		DIO_setPinValue(DIO_PIND3,DIO_HIGH);
@@ -50,7 +52,7 @@ void TEMP_ControlAC(){
 	else if(VAnalogTemp<28){
 
 		//Enable
-		DIO_setPinValue(DIO_PINA0,DIO_LOW);
+		DIO_setPinValue(DIO_PIND5,DIO_LOW);
 
 		//Direction
 		DIO_setPinValue(DIO_PIND3,DIO_LOW);
