@@ -57,11 +57,11 @@ int main(){
 		case 5:
 			//Keypad read
 			read = KEYPAD_Read();
-			if(read==1){
+			if(read=='1'){
 				LCD_sendData('1');
 				Main_Flage = 6;
 			}
-			else if(read==2){
+			else if(read=='2'){
 				LCD_sendData('2');
 				Main_Flage = 7;
 			}
@@ -74,17 +74,17 @@ int main(){
 			LCD_Goto(0,0);
 			TEMP_Check();
 			LCD_Goto(0,1);
-			LCD_sendStr("Return Enter 1:  ");
+			LCD_sendStr("1 to return:  ");
 
 			//Go to Keypad read part
-			Main_Flage = 7;
+			Main_Flage = 8;
 			break;
 		case 8:
 			//Keypad read
 			read = KEYPAD_Read();
-			if(read==1){
+			if(read=='1'){
 				LCD_sendData('1');
-				Main_Flage = 3;
+				Main_Flage = 4;
 			}
 			break;
 		default:
