@@ -17,9 +17,9 @@ void KEYPAD_Init(){
 u8 KEYPAD_Read(){
 	static u8 Keypad_Press;
 	Keypad_Press=KPD_read();
-	if (Keypad_Press!= KPD_UNPRESSED)
+	if (Keypad_Press!=KPD_UNPRESSED)
 	{
-		while (KPD_read()!= KPD_UNPRESSED);
+		while (KPD_read()!=KPD_UNPRESSED);
 		return Keypad_Press;
 	}
 }
