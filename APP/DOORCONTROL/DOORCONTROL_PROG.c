@@ -6,3 +6,10 @@
  */
 
 
+void DOORCONTROL_init(){
+
+}
+
+void DOORCONTROL_Start(){
+
+}
