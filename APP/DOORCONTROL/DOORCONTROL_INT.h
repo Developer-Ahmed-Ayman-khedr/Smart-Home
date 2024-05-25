@@ -14,7 +14,11 @@
 
 #include "DIO_INT.h"
 
+#include "GI_INT.h"
+
 #include "TIMER1_INT.h"
+
+#include "HOLD_INT.h"
 
 /******************************************
   Global Data TYPES AND STRUCTURES
@@ -37,6 +41,6 @@
 
 void DOORCONTROL_init();
 
-void DOORCONTROL_Start();
+void DOORCONTROL_Start(u8* Ma_Fl_ptr);
 
 #endif /* APP_DOORCONTROL_DOORCONTROL_INT_H_ */

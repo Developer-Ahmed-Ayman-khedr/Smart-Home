@@ -34,7 +34,11 @@
 
 #include "PasswordCheck_INT.h"
 
-#include "KEYPAD_INT.h"
+#include "LIGHTING_INT.h"
+
+#include "DOORCONTROL_INT.h"
+
+#include "INPUT_INT.h"
 
 /******************************************
   Global Data TYPES AND STRUCTURES
