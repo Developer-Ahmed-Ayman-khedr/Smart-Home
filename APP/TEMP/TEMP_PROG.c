@@ -16,7 +16,7 @@ void TEMP_Init(){
 	//DC Motor control
 
 	//Enable
-	DIO_setPinDir(DIO_PIND5,DIO_OUTPUT);
+	DIO_setPinDir(DIO_PIND4,DIO_OUTPUT);
 
 	//Direction
 	DIO_setPinDir(DIO_PIND3,DIO_OUTPUT);
@@ -43,7 +43,7 @@ void TEMP_ControlAC(){
 	if(VAnalogTemp>28){
 
 		//Enable
-		DIO_setPinValue(DIO_PIND5,DIO_HIGH);
+		DIO_setPinValue(DIO_PIND4,DIO_HIGH);
 
 		//Direction
 		DIO_setPinValue(DIO_PIND3,DIO_HIGH);
@@ -52,7 +52,7 @@ void TEMP_ControlAC(){
 	else if(VAnalogTemp<28){
 
 		//Enable
-		DIO_setPinValue(DIO_PIND5,DIO_LOW);
+		DIO_setPinValue(DIO_PIND4,DIO_LOW);
 
 		//Direction
 		DIO_setPinValue(DIO_PIND3,DIO_LOW);

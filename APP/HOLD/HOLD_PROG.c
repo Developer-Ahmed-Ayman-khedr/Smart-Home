@@ -9,7 +9,6 @@
 
 f32 Ttick = 0.004; //ms
 u32 dis = 0;
-u8 vhold;
 
 void HOLD_UltrasonicFunc(){
 	static u8 edge = 0;
@@ -46,13 +45,12 @@ void HOLD_init(){
 }
 
 
-void HOLD_Start(u8* Ma_Fl_ptr){
+void HOLD_Start(){
 	DIO_setPinValue(DIO_PINC6,DIO_HIGH);
 	_delay_us(11);
 	DIO_setPinValue(DIO_PINC6,DIO_LOW);
 	_delay_ms(100);
-
-	if (dis<=30) {
-		*Ma_Fl_ptr = 2;
-	}
+}
+u32 HOLD_Retrun(){
+	return dis;
 }
