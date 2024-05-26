@@ -16,7 +16,11 @@
 
 #include "GI_INT.h"
 
+#include "TIMER0_INT.h"
+
 #include "TIMER1_INT.h"
+
+#include "EXT_INT.h"
 
 #include "HOLD_INT.h"
 

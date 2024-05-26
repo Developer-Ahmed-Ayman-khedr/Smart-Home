@@ -18,7 +18,7 @@ void EXT_int0Int(u8 Logic){
 	else if (Logic==EXT_FALLING)
 	{
 		CLEAR_BIT(MCUCR,ISC00);
-		CLEAR_BIT(MCUCR,ISC01);
+		SET_BIT(MCUCR,ISC01);
 	}
 	else if (Logic==EXT_ANY_LOGIC){
 		SET_BIT(MCUCR,ISC00);

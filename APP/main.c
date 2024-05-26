@@ -26,6 +26,9 @@ int main(){
 	//initialize the Lighting Control process
 	LIGHTING_init();
 
+	//initialize the Door Control process
+	DOORCONTROL_init();
+
 	while (1){
 
 		switch(Main_Flage){
@@ -51,13 +54,12 @@ int main(){
 			break;
 		case 4:
 			//Door control function
-			DOORCONTROL_init();
 			DOORCONTROL_Start(&Main_Flage);
 
 			break;
 		case 5:
 			//Correct passwordWelcome
-			LCD_clearDis();
+			//LCD_clearDis();
 			LCD_Goto(0,0);
 			LCD_sendStr("1.Light 2.Temp");
 			LCD_Goto(0,1);

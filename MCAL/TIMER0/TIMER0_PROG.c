@@ -33,6 +33,24 @@ void TIMER0_start(u8 prescaler)
 		SET_BIT(TCCR0,CS01);
 		CLEAR_BIT(TCCR0,CS02);
 	}
+	else if(prescaler == TIMER0_DIV64)
+	{
+		SET_BIT(TCCR0,CS00);
+		SET_BIT(TCCR0,CS01);
+		CLEAR_BIT(TCCR0,CS02);
+	}
+	else if(prescaler == TIMER0_DIV256)
+	{
+		CLEAR_BIT(TCCR0,CS00);
+		CLEAR_BIT(TCCR0,CS01);
+		SET_BIT(TCCR0,CS02);
+	}
+	else if(prescaler == TIMER0_DIV1028)
+	{
+		SET_BIT(TCCR0,CS00);
+		CLEAR_BIT(TCCR0,CS01);
+		SET_BIT(TCCR0,CS02);
+	}
 	else if(prescaler == TIMER0_EXT_RISING)
 	{
 		SET_BIT(TCCR0,CS00);
