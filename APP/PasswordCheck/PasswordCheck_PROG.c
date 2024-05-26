@@ -59,7 +59,7 @@ void CheckPassword (u8* Ma_Fl_ptr){
 		if (flage==TRUE)
 		{
 			LCD_sendStr("welcome");
-			* Ma_Fl_ptr = 4 ;
+			* Ma_Fl_ptr = 5 ;
 
 
 		}
