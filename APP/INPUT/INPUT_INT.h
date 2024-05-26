@@ -5,8 +5,8 @@
  *      Author: ahmed
  */
 
-#ifndef APP_KEYPAD_KEYPAD_INT_H_
-#define APP_KEYPAD_KEYPAD_INT_H_
+#ifndef APP_INPUT_INPUT_INT_H_
+#define APP_INPUT_INPUT_INT_H_
 
 /******************************************
   INCLUDES
@@ -41,4 +41,4 @@ void KEYPAD_Init();
 
 u8 KEYPAD_Read();
 
-#endif /* APP_KEYPAD_KEYPAD_INT_H_ */
+#endif /* APP_INPUT_INPUT_INT_H_ */

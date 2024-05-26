@@ -40,7 +40,8 @@
 
 void HOLD_init();
 
-void HOLD_Start(u8* Ma_Fl_ptr);
+void HOLD_Start();
 
+u32 HOLD_Retrun();
 
 #endif /* APP_HOLD_HOLD_INT_H_ */

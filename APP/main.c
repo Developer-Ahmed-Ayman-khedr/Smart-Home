@@ -23,13 +23,18 @@ int main(){
 	//Initialize the Password Check check process
 	password_init ();
 
+	//initialize the Lighting Control process
+	LIGHTING_init();
 
 	while (1){
 
 		switch(Main_Flage){
 		case 1:
 			//Hold function
-			HOLD_Start(&Main_Flage);
+			HOLD_Start();
+			if(HOLD_Retrun()<=30){
+				Main_Flage = 2;
+			}
 			break;
 		case 2:
 			//Password input
@@ -45,6 +50,12 @@ int main(){
 
 			break;
 		case 4:
+			//Door control function
+			DOORCONTROL_init();
+			DOORCONTROL_Start(&Main_Flage);
+
+			break;
+		case 5:
 			//Correct passwordWelcome
 			LCD_clearDis();
 			LCD_Goto(0,0);
@@ -52,29 +63,26 @@ int main(){
 			LCD_Goto(0,1);
 
 			//Go to Keypad read part
-			Main_Flage = 5;
+			Main_Flage = 6;
 			break;
-		case 5:
+		case 6:
 			//Keypad read
 			read = KEYPAD_Read();
 			if(read=='1'){
 				LCD_sendData('1');
-				Main_Flage = 6;
+				Main_Flage = 7;
 			}
 			else if(read=='2'){
 				LCD_sendData('2');
-				Main_Flage = 7;
+				Main_Flage = 8;
 			}
 			break;
-		case 6:
-			//lighting
-			break;
 		case 7:
-			//Temperature check
+			//lighting
+			LCD_clearDis();
 			LCD_Goto(0,0);
-			TEMP_Check();
+			LCD_sendStr("1.Hall 2.Entrance");
 			LCD_Goto(0,1);
-			LCD_sendStr("1 to return:  ");
 
 			//Go to Keypad read part
 			Main_Flage = 8;
@@ -84,7 +92,30 @@ int main(){
 			read = KEYPAD_Read();
 			if(read=='1'){
 				LCD_sendData('1');
-				Main_Flage = 4;
+				LIGHTING_Start(1);
+			}
+			else if(read=='2'){
+				LCD_sendData('2');
+				LIGHTING_Start(2);
+			}
+			Main_Flage = 5;
+			break;
+		case 9:
+			//Temperature check
+			LCD_Goto(0,0);
+			TEMP_Check();
+			LCD_Goto(0,1);
+			LCD_sendStr("1 to return:  ");
+
+			//Go to Keypad read part
+			Main_Flage = 10;
+			break;
+		case 10:
+			//Keypad read
+			read = KEYPAD_Read();
+			if(read=='1'){
+				LCD_sendData('1');
+				Main_Flage = 5;
 			}
 			break;
 		default:
