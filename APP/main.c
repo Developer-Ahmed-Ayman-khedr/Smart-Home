@@ -9,7 +9,7 @@
 
 int main(){
 
-	u8 Main_Flage=4, read=0;
+	u8 Main_Flage=2, read=0;
 
 	//Start the Hold process
 	HOLD_init();
@@ -59,7 +59,7 @@ int main(){
 			break;
 		case 5:
 			//Correct passwordWelcome
-			//LCD_clearDis();
+			LCD_clearDis();
 			LCD_Goto(0,0);
 			LCD_sendStr("1.Light 2.Temp");
 			LCD_Goto(0,1);
@@ -76,7 +76,7 @@ int main(){
 			}
 			else if(read=='2'){
 				LCD_sendData('2');
-				Main_Flage = 8;
+				Main_Flage = 9;
 			}
 			break;
 		case 7:
@@ -94,13 +94,14 @@ int main(){
 			read = KEYPAD_Read();
 			if(read=='1'){
 				LCD_sendData('1');
-				LIGHTING_Start(1);
+				LIGHTING_Start(LIGHTINGROOM);
+				Main_Flage = 5;
 			}
 			else if(read=='2'){
 				LCD_sendData('2');
-				LIGHTING_Start(2);
+				LIGHTING_Start(LIGHTINHALL);
+				Main_Flage = 5;
 			}
-			Main_Flage = 5;
 			break;
 		case 9:
 			//Temperature check
