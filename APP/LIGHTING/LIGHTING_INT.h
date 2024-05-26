@@ -22,7 +22,9 @@
 /******************************************
   GLOBAL CONSTANT MACROS
 *******************************************/
+#define LIGHTINGROOM  1
 
+#define LIGHTINHALL   2
 
 /******************************************
   GLOBAL FUNCTIONS MACROS
