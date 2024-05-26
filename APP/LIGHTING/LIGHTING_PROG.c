@@ -18,15 +18,16 @@ void LIGHTING_init (){
 void LIGHTING_Start(u8 Start){
 	switch(Start){
 			case 1:
-				 DIO_setPinValue (DIO_PINC0,DIO_HIGH);
-
+				 DIO_togglePinValue(DIO_PINC0);
 				break;
 			case 2:
-				 DIO_setPinValue (DIO_PINC1,DIO_HIGH);
+				 DIO_togglePinValue(DIO_PINC1);
 				break;
 			default:
 				break ;
 
 	}
+
+
 
 }
