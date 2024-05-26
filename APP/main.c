@@ -9,7 +9,7 @@
 
 int main(){
 
-	u8 Main_Flage=1, read=0;
+	u8 Main_Flage=4, read=0;
 
 	//Start the Hold process
 	HOLD_init();
@@ -36,7 +36,7 @@ int main(){
 			//Hold function
 			HOLD_Start();
 			if(HOLD_Retrun()<=30){
-				Main_Flage = 2;
+				//Main_Flage = 2;
 			}
 			break;
 		case 2:
