@@ -76,6 +76,7 @@ void CheckPassword (u8* Ma_Fl_ptr){
 			case 3 :
 				//DIO_setPinValue (DIO_PINA3,DIO_HIGH) ;
 				DIO_setPinValue (DIO_PINA3,DIO_HIGH) ;
+				LCD_clearDis();
 				LCD_sendStr("BLOCK");
 				_delay_ms(60000);
 				break ;
