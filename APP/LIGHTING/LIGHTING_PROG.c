@@ -17,10 +17,10 @@ void LIGHTING_init (){
 
 void LIGHTING_Start(u8 Start){
 	switch(Start){
-			case 1:
+			case LIGHTINGROOM:
 				 DIO_togglePinValue(DIO_PINC0);
 				break;
-			case 2:
+			case LIGHTINHALL:
 				 DIO_togglePinValue(DIO_PINC1);
 				break;
 			default:
