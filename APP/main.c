@@ -9,7 +9,7 @@
 
 int main(){
 
-	u8 Main_Flage=2, read=0;
+	u8 Main_Flage=1, read=0;
 
 	//Start the Hold process
 	HOLD_init();
@@ -18,7 +18,7 @@ int main(){
 	TEMP_Init();
 
 	//Initialize the Keypad input process
-	KEYPAD_Init();
+	INPUT_Init();
 
 	//Initialize the Password Check check process
 	password_init ();
@@ -36,7 +36,7 @@ int main(){
 			//Hold function
 			HOLD_Start();
 			if(HOLD_Retrun()<=30){
-				//Main_Flage = 2;
+				Main_Flage = 2;
 			}
 			break;
 		case 2:
@@ -54,7 +54,9 @@ int main(){
 			break;
 		case 4:
 			//Door control function
-			DOORCONTROL_Start(&Main_Flage);
+			//DOORCONTROL_Start(&Main_Flage);
+
+			Main_Flage = 5;
 
 			break;
 		case 5:
@@ -69,12 +71,12 @@ int main(){
 			break;
 		case 6:
 			//Keypad read
-			read = KEYPAD_Read();
-			if(read=='1'){
+			read = INPUT_Read();
+			if(read==INPUT_Light){
 				LCD_sendData('1');
 				Main_Flage = 7;
 			}
-			else if(read=='2'){
+			else if(read==INPUT_Temp){
 				LCD_sendData('2');
 				Main_Flage = 9;
 			}
@@ -91,14 +93,14 @@ int main(){
 			break;
 		case 8:
 			//Keypad read
-			read = KEYPAD_Read();
+			read = INPUT_Read();
 			if(read=='1'){
-				LCD_sendData('1');
+				LCD_sendData(INPUT_LIGHTINGROOM);
 				LIGHTING_Start(LIGHTINGROOM);
 				Main_Flage = 5;
 			}
 			else if(read=='2'){
-				LCD_sendData('2');
+				LCD_sendData(INPUT_LIGHTINHALL);
 				LIGHTING_Start(LIGHTINHALL);
 				Main_Flage = 5;
 			}
@@ -115,9 +117,9 @@ int main(){
 			break;
 		case 10:
 			//Keypad read
-			read = KEYPAD_Read();
+			read = INPUT_Read();
 			if(read=='1'){
-				LCD_sendData('1');
+				LCD_sendData(INPUT_return);
 				Main_Flage = 5;
 			}
 			break;

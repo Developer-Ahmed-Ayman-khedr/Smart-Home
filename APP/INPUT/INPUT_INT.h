@@ -18,6 +18,8 @@
 
 #include "KPD_INT.h"
 
+#include "UART_INT.h"
+
 /******************************************
   Global Data TYPES AND STRUCTURES
 *******************************************/
@@ -28,6 +30,17 @@
 *******************************************/
 
 
+#define INPUT_Light	'1'
+
+#define INPUT_Temp 	'2'
+
+
+#define INPUT_LIGHTINGROOM '1'
+
+#define INPUT_LIGHTINHALL '2'
+
+#define INPUT_return '1'
+
 /******************************************
   GLOBAL FUNCTIONS MACROS
 *******************************************/
@@ -37,8 +50,8 @@
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
 
-void KEYPAD_Init();
+void INPUT_Init();
 
-u8 KEYPAD_Read();
+u8 INPUT_Read();
 
 #endif /* APP_INPUT_INPUT_INT_H_ */
