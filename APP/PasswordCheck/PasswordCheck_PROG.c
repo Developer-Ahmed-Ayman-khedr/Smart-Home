@@ -9,7 +9,8 @@
 
 
 
-void password_init (){
+void password_init ()
+{
 
 	DIO_setPinDir(DIO_PINA0,DIO_OUTPUT);
 
@@ -23,21 +24,34 @@ void password_init (){
 
 u8 enteredPassword [4];
 u8 SavedPassword [4] = {'4','4','4','4'} ;
-u8 key=0 ;
+u8 key1;
+u8 key2;
 u8 i = 0 ;
 BOOL flage = FALSE ;
 u8 counter = 0 ;
 
-void CheckPassword (u8* Ma_Fl_ptr){
-	key=KPD_read();
-	if (key!= KPD_UNPRESSED)
+void CheckPassword (u8* Ma_Fl_ptr)
+{
+	key1=KPD_read();
+	key2 = UART_receiveData();
+	if ( Key1!= KPD_UNPRESSED || key2!=UART_NOT_RECEIVE)
 	{
 
-		enteredPassword [i]=key ;
-		 LCD_sendData (key);
-			i++ ;
-		while (KPD_read()!= KPD_UNPRESSED);
+		while(KPD_read()!= KPD_UNPRESSED || UART_receiveData()!=UART_NOT_RECEIVE);
 
+		if(key1 == KPD_UNPRESSED)
+		{
+			LCD_sendData(key1);
+			enteredPassword[i] = key1;
+		}
+		else if(key2 == UART_NOT_RECEIVE)
+		{
+			LCD_sendData(key2);
+			enteredPassword[i] = key2;
+		}
+
+
+		i++;
 	}
 	if (i==4){
 
@@ -59,12 +73,14 @@ void CheckPassword (u8* Ma_Fl_ptr){
 		if (flage==TRUE)
 		{
 			LCD_sendStr("welcome");
+			UART_sendStr("welcome");
 			* Ma_Fl_ptr = 5 ;
 
 
 		}
 		else {
 			LCD_sendStr("WRONGPASSWORD");
+			UART_sendStr("WRONGPASSWORD");
 			counter ++ ;
 			switch (counter){
 			case 1 :
@@ -78,6 +94,7 @@ void CheckPassword (u8* Ma_Fl_ptr){
 				DIO_setPinValue (DIO_PINA3,DIO_HIGH) ;
 				LCD_clearDis();
 				LCD_sendStr("BLOCK");
+				UART_sendStr("BLOCK");
 				_delay_ms(60000);
 				break ;
 			default:
