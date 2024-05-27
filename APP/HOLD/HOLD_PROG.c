@@ -8,7 +8,7 @@
 #include "HOLD_INT.h"
 
 f32 Ttick = 0.004, TONTime=0; //ms
-u32 dis = 0;
+u32 dis = 31;
 u32 OnCounter = 0, OvCounter=0,TimeOn=0;
 u8 state = 0;
 
@@ -48,7 +48,10 @@ void UltrasonicFunc(){
 	}
 }
 
-
+void UARTInterrupt(){
+	dis = 28;
+	UART_INT_init(UART_DISABLE_RXC);
+}
 
 void HOLD_init(){
 
@@ -69,11 +72,15 @@ void HOLD_init(){
 
 	EXT_setcallbackInt0(UltrasonicFunc);
 
+	//UART Interrupt when input occurred
+	UART_INT_init(UART_ENABLE_RXC);
 
+	UART_setcallbackINT(UARTInterrupt);
 }
 
 
 void HOLD_Start(){
+	/*
 	//Start the timer
 	TIMER0_start(TIMER0_DIV64);
 
@@ -90,7 +97,9 @@ void HOLD_Start(){
 		LCD_clearDis();
 		_delay_ms(1000);
 		state = 0;
-	}
+	}*/
+
+
 
 }
 u32 HOLD_Retrun(){

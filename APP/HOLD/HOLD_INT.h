@@ -23,6 +23,8 @@
 
 #include "LCD_INT.h"
 
+#include "UART_INT.h"
+
 /******************************************
   Global Data TYPES AND STRUCTURES
 *******************************************/

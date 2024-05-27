@@ -7,19 +7,26 @@
 #include "INPUT_INT.h"
 
 
-void KEYPAD_Init(){
+void INPUT_Init(){
 	KPD_init();
 	LCD_init();
+	UART_init();
 }
 
 
 
-u8 KEYPAD_Read(){
-	static u8 Keypad_Press;
-	Keypad_Press=KPD_read();
-	if (Keypad_Press!=KPD_UNPRESSED)
+u8 INPUT_Read(){
+	static u8 Keypad_Press_KPD,UART_Press;
+	Keypad_Press_KPD=KPD_read();
+	UART_Press=UART_receiveData();
+	if (Keypad_Press_KPD!=KPD_UNPRESSED)
 	{
 		while (KPD_read()!=KPD_UNPRESSED);
-		return Keypad_Press;
+		return Keypad_Press_KPD;
+	}
+	if (UART_Press!=UART_NOT_RECEIVE)
+	{
+		while (UART_receiveData()!=UART_NOT_RECEIVE);
+		return UART_Press;
 	}
 }
