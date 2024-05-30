@@ -6,9 +6,6 @@
  */
 #include "PasswordCheck_INT.h"
 
-
-
-
 void password_init ()
 {
 
@@ -19,100 +16,114 @@ void password_init ()
 	//DIO_setPinDir (DIO_PINA3,DIO_OUTPUT) ;
 
 	DIO_setPinDir (DIO_PINA3,DIO_OUTPUT) ;
+
+	EEPROM_Init();
 }
 
 
-u8 enteredPassword [4];
-u8 SavedPassword [4] = {'4','4','4','4'} ;
-u8 key1;
-u8 key2;
-u8 i = 0 ;
-BOOL flage = FALSE ;
-u8 counter = 0 ;
 
-void CheckPassword (u8* Ma_Fl_ptr)
-{
-	key1=KPD_read();
-	key2 = UART_receiveData();
-	if ( Key1!= KPD_UNPRESSED || key2!=UART_NOT_RECEIVE)
+BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
+u8 UART_RecevedData, KPD_RecevedData, Entered_Pass[4], i = 0, i2 = 0, EEPROMRecevedData,counter=0;
+
+
+void CheckPassword (u8* Ma_Fl_ptr){
+	while (i2<4)
 	{
-
-		while(KPD_read()!= KPD_UNPRESSED || UART_receiveData()!=UART_NOT_RECEIVE);
-
-		if(key1 == KPD_UNPRESSED)
+		_delay_ms(1000);
+		EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
+		if (EEPROMRecevedData!=255)
 		{
-			LCD_sendData(key1);
-			enteredPassword[i] = key1;
+			EEPROM_flage = TRUE;
 		}
-		else if(key2 == UART_NOT_RECEIVE)
+		else
 		{
-			LCD_sendData(key2);
-			enteredPassword[i] = key2;
+			EEPROM_flage = FALSE;
 		}
+		i2++;
+	}
 
-
+	UART_RecevedData = UART_receiveData();
+	KPD_RecevedData = KPD_read();
+	if (UART_RecevedData!=UART_NOT_RECEIVE || KPD_RecevedData!=KPD_UNPRESSED)
+	{
+		while(KPD_read()!=KPD_UNPRESSED);
+		if (KPD_RecevedData!=KPD_UNPRESSED)
+		{
+			LCD_sendNum(KPD_RecevedData-48);
+			Entered_Pass[i] = KPD_RecevedData;
+		}
+		else if (UART_RecevedData!=UART_NOT_RECEIVE)
+		{
+			LCD_sendNum(UART_RecevedData-48);
+			Entered_Pass[i] = UART_RecevedData;
+		}
 		i++;
 	}
-	if (i==4){
 
-		u8 k ;
-		for (k=0 ;k<4;k++)
+	if (i==4)
+	{
+		if (EEPROM_flage==FALSE)
 		{
-			if (enteredPassword [k] ==SavedPassword [k] )
+			i2 = 0;
+			while (i2<4)
 			{
-				flage = TRUE ;
+				_delay_ms(1000);
+				EEPROM_SendByte(Entered_Pass[i2],i2);
+				i2++;
 			}
-			else
+			Save_flage = TRUE;
+		}
+		if (EEPROM_flage==TRUE){
+			i2 = 0;
+			while ( i2<4)
 			{
-				flage = FALSE ;
-				break ;
+				_delay_ms(1000);
+				EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
+				if (Entered_Pass[i2]==EEPROMRecevedData)
+				{
+					flage = TRUE;
+				}
+				else
+				{
+					flage = FALSE;
+				}
+				i2++;
 			}
 		}
 
-		i = 0 ;
-		if (flage==TRUE)
+		if (Save_flage==FALSE)
 		{
-			LCD_sendStr("welcome");
-			UART_sendStr("welcome");
-			* Ma_Fl_ptr = 5 ;
+			if (flage==TRUE)
+			{
+				LCD_sendStr("welcome");
+				UART_sendStr("welcome");
+				* Ma_Fl_ptr = 5 ;
 
 
-		}
-		else {
-			LCD_sendStr("WRONGPASSWORD");
-			UART_sendStr("WRONGPASSWORD");
-			counter ++ ;
-			switch (counter){
-			case 1 :
-				DIO_setPinValue (DIO_PINA0,DIO_HIGH) ;
-				break ;
-			case 2 :
-				DIO_setPinValue (DIO_PINA2,DIO_HIGH) ;
-				break ;
-			case 3 :
-				//DIO_setPinValue (DIO_PINA3,DIO_HIGH) ;
-				DIO_setPinValue (DIO_PINA3,DIO_HIGH) ;
-				LCD_clearDis();
-				LCD_sendStr("BLOCK");
-				UART_sendStr("BLOCK");
-				_delay_ms(60000);
-				break ;
-			default:
-				break;
 			}
-
-
+			else {
+				LCD_sendStr("WRONGPASSWORD");
+				UART_sendStr("WRONGPASSWORD");
+				counter ++ ;
+				switch (counter){
+				case 1 :
+					DIO_setPinValue (DIO_PINA0,DIO_HIGH) ;
+					break ;
+				case 2 :
+					DIO_setPinValue (DIO_PINA2,DIO_HIGH) ;
+					break ;
+				case 3 :
+					DIO_setPinValue (DIO_PINA3,DIO_HIGH) ;
+					LCD_clearDis();
+					LCD_sendStr("BLOCK");
+					UART_sendStr("BLOCK");
+					_delay_ms(60000);
+					break ;
+				default:
+					break;
+				}
+			}
 		}
-
-
+		i = 0;
 	}
-
-
-
-
-
-
-
-
-
 }

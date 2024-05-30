@@ -16,6 +16,9 @@
 
 #include "UART_INT.h"
 
+#include "EEPROM_INT.h"
+
+#include"I2C_INT.h"
 /**************
   Global Data TYPES AND STRUCTURES
 ***************/
