@@ -46,12 +46,13 @@
 #define TIMER0_RISING	0
 #define TIMER0_FALING	1
 
-#define TIMER0_DIV0			0
-#define TIMER0_DIV8			1
-#define TIMER0_DIV64		2
-#define TIMER0_DIV256		3
-#define TIMER0_DIV1028		4
-#define TIMER0_EXT_RISING	5
+#define TIMER0_STOP			0
+#define TIMER0_DIV0			1
+#define TIMER0_DIV8			2
+#define TIMER0_DIV64		3
+#define TIMER0_DIV256		4
+#define TIMER0_DIV1028		5
+#define TIMER0_EXT_RISING	6
 
 #define TIMER0_NON_INVERTED		0
 #define TIMER0_INVERTED			1
