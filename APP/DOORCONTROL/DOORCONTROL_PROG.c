@@ -19,26 +19,30 @@ void DOORCONTROL_init(){
 
 	TIMER1_setFrequency(50);
 
+	//Start the Holding process
+	HOLD_init();
+
 }
 
 void DOORCONTROL_Start(u8* Ma_Fl_ptr){
 
+
+
+
+
+
 	//Open the door
 	TIMER1_setOcr(499);
 
-	_delay_ms(1000);
-	//Close the door
-	TIMER1_setOcr(375);
-
-	_delay_ms(1000);
 	//Wait for the Ultrasonic Sensor to return a distance greater than 30cm
-	//HOLD_Start();
+	HOLD_Start();
 	//LCD_sendNum(HOLD_Retrun());
 
-	//if(HOLD_Retrun()>30)
+	if(HOLD_Retrun()>30)
 	{
 
-
-		//* Ma_Fl_ptr = 5 ;
+		//Close the door
+		TIMER1_setOcr(375);
+		* Ma_Fl_ptr = 5 ;
 	}
 }

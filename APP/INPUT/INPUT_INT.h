@@ -34,6 +34,8 @@
 
 #define INPUT_Temp 	'2'
 
+#define INPUT_ENTER '3'
+
 
 #define INPUT_LIGHTINGROOM '1'
 
