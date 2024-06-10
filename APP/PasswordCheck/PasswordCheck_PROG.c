@@ -29,7 +29,7 @@ u8 UART_RecevedData, KPD_RecevedData, Entered_Pass[4], i = 0, i2 = 0, EEPROMRece
 void CheckPassword (u8* Ma_Fl_ptr){
 	while (i2<4)
 	{
-		_delay_ms(1000);
+		_delay_ms(100);
 		EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
 		if (EEPROMRecevedData!=255)
 		{
@@ -67,7 +67,7 @@ void CheckPassword (u8* Ma_Fl_ptr){
 			i2 = 0;
 			while (i2<4)
 			{
-				_delay_ms(1000);
+				_delay_ms(100);
 				EEPROM_SendByte(Entered_Pass[i2],i2);
 				i2++;
 			}
@@ -77,7 +77,7 @@ void CheckPassword (u8* Ma_Fl_ptr){
 			i2 = 0;
 			while ( i2<4)
 			{
-				_delay_ms(1000);
+				_delay_ms(100);
 				EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
 				if (Entered_Pass[i2]==EEPROMRecevedData)
 				{
