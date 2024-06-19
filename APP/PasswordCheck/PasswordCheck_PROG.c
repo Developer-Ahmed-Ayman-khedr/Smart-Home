@@ -64,19 +64,27 @@ u8 create_user(){
 
 	u8 Input[8];
 	u8 index = 0;
-	for( index = newnode->start_address_user ;index < newnode->end_address_pass; index++){
+	u32 EEPROMAddress;
+	for( index = 0 ;index < 8; index++){
 
 		UART_receiveData(Input[index]);
-		if(index==newnode->end_address_user){
+		if(index==3){
 			UART_sendStr("Add Password:");
 		}
 	}
 
-	for(index = newnode->start_address_user ;index < newnode->end_address_pass; index++){}
+
 
 	if(Head==NULL)
 	{
-			Head=newnode;
+		Head=newnode;
+		index = 0;
+		EEPROMAddress = newnode->start_address_user;
+		while(EEPROMAddress<=newnode->end_address_pass){
+			EEPROM_SendByte(Input[index],EEPROMAddress);
+			index++;
+			EEPROMAddress++;
+		}
 	}
 	else
 	{
@@ -87,6 +95,14 @@ u8 create_user(){
 		}
 		current->next=newnode;
 		newnode->next=NULL;
+		index = 0;
+		EEPROMAddress = newnode->start_address_user;
+		while(EEPROMAddress<=newnode->end_address_pass){
+			EEPROM_SendByte(Input[index],EEPROMAddress);
+			index++;
+			EEPROMAddress++;
+		}
+		}
 	}
 
 
