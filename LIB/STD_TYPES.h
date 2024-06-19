@@ -31,6 +31,9 @@ typedef enum {FALSE,TRUE} BOOL;
   GLOBAL CONSTANT MACROS
 ***************/
 
+#ifndef NULL
+#define NULL ((void *) 0)
+#endif
 
 /**************
   GLOBAL FUNCTIONS MACROS

@@ -20,6 +20,79 @@ void password_init ()
 	EEPROM_Init();
 }
 
+/*while(ptr!=NULL){
+	for (u8 n = 0;n<4;n++){
+    if(ptr.start_user==username[c+n]){
+        if(ptr.start_pass==password[c+n]){
+
+        }
+    }
+	}
+    ptr=pUser->next;
+}*/
+
+
+u8 c = 4 ;
+u8 username[4],password[4];
+
+/*for(u8 k=0;k<3;k++){
+		for(u8 k2 = 0 ; k2<4;k2++){
+		UART_receiveData(username[k2]);
+		EEPROM_SendByte(username[k2],c+k2-48);
+		UART_receiveData(password[k2]);
+		EEPROM_SendByte(password[k2],c + 4 + k2-48);
+		}
+		c = c +8;
+
+}*/
+
+u8 create_user(){
+	static u16 currentAddress = 4;
+
+	NODE* current = Head , *newnode ;
+
+	newnode=(NODE *)malloc(1*sizeof(NODE));
+
+	newnode->start_address_user = currentAddress;
+	newnode->end_address_user = newnode->start_address_user+3;
+	newnode->start_address_pass = newnode->end_address_user+1;
+	newnode->end_address_pass = newnode->start_address_pass+3;
+	newnode->next = NULL;
+
+
+	UART_sendStr("Enter User ID:");
+
+	u8 Input[8];
+	u8 index = 0;
+	for( index = newnode->start_address_user ;index < newnode->end_address_pass; index++){
+
+		UART_receiveData(Input[index]);
+		if(index==newnode->end_address_user){
+			UART_sendStr("Add Password:");
+		}
+	}
+
+	for(index = newnode->start_address_user ;index < newnode->end_address_pass; index++){}
+
+	if(Head==NULL)
+	{
+			Head=newnode;
+	}
+	else
+	{
+		//newnode->start_address_user = username[4];
+		while (current->next!=NULL)
+		{
+			current=current->next;
+		}
+		current->next=newnode;
+		newnode->next=NULL;
+	}
+
+
+
+	//current->next=NULL;
+}
 
 
 BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
