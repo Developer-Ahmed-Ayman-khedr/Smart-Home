@@ -83,6 +83,7 @@ void CheckPassword (u8* Ma_Fl_ptr){
 				else
 				{
 					flage = FALSE;
+					break;
 				}
 				i2++;
 			}

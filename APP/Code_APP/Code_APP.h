@@ -1,12 +1,13 @@
 /*
- * main.h
+ * Code_APP.h
  *
- *  Created on: May 17, 2024
+ *  Created on: Jun 25, 2024
  *      Author: ahmed
  */
 
-#ifndef APP_MAIN_H_
-#define APP_MAIN_H_
+#ifndef APP_CODE_APP_CODE_APP_H_
+#define APP_CODE_APP_CODE_APP_H_
+
 
 /******************************************
   INCLUDES
@@ -61,6 +62,8 @@
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
 
-int main();
+void Code_APPInitDrivers();
 
-#endif /* APP_MAIN_H_ */
+void Code_APP();
+
+#endif /* APP_CODE_APP_CODE_APP_H_ */
