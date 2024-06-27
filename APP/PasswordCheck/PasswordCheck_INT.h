@@ -38,7 +38,7 @@
   GLOBAL FUNCTIONS Prototypes
 ***************/
 void password_init ();
-BOOL CheckPassword ();
+BOOL CheckPasswordAdmin();
 
 
 #endif /* APP_PASSWORDCHECK_PASSWORDCHECK_INT_H_ */
