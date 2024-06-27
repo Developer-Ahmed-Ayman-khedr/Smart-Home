@@ -23,16 +23,6 @@
   Global Data TYPES AND STRUCTURES
 ***************/
 
-typedef struct node
-{
-    u8 start_address_user;
-    u8 end_address_user;
-    u8 start_address_pass;
-    u8 end_address_pass;
-    struct node* next;
- }NODE;
-
- NODE* Head = NULL ;
 
 /**************
   GLOBAL CONSTANT MACROS
