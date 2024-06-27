@@ -23,16 +23,6 @@
   Global Data TYPES AND STRUCTURES
 ***************/
 
-typedef struct node
-{
-    u8 start_address_user;
-    u8 end_address_user;
-    u8 start_address_pass;
-    u8 end_address_pass;
-    struct node* next;
- }NODE;
-
- NODE* Head = NULL ;
 
 /**************
   GLOBAL CONSTANT MACROS
@@ -48,7 +38,7 @@ typedef struct node
   GLOBAL FUNCTIONS Prototypes
 ***************/
 void password_init ();
-void CheckPassword (u8* Ma_Fl_ptr);
+BOOL CheckPassword ();
 
 
 #endif /* APP_PASSWORDCHECK_PASSWORDCHECK_INT_H_ */

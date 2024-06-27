@@ -16,106 +16,14 @@ void password_init ()
 	//DIO_setPinDir (DIO_PINA3,DIO_OUTPUT) ;
 
 	DIO_setPinDir (DIO_PINA3,DIO_OUTPUT) ;
-
-	EEPROM_Init();
 }
-
-/*while(ptr!=NULL){
-	for (u8 n = 0;n<4;n++){
-    if(ptr.start_user==username[c+n]){
-        if(ptr.start_pass==password[c+n]){
-
-        }
-    }
-	}
-    ptr=pUser->next;
-}*/
-
-
 u8 c = 4 ;
 u8 username[4],password[4];
-
-/*for(u8 k=0;k<3;k++){
-		for(u8 k2 = 0 ; k2<4;k2++){
-		UART_receiveData(username[k2]);
-		EEPROM_SendByte(username[k2],c+k2-48);
-		UART_receiveData(password[k2]);
-		EEPROM_SendByte(password[k2],c + 4 + k2-48);
-		}
-		c = c +8;
-
-}*/
-
-u8 create_user(){
-	static u16 currentAddress = 4;
-
-	NODE* current = Head , *newnode ;
-
-	newnode=(NODE *)malloc(1*sizeof(NODE));
-
-	newnode->start_address_user = currentAddress;
-	newnode->end_address_user = newnode->start_address_user+3;
-	newnode->start_address_pass = newnode->end_address_user+1;
-	newnode->end_address_pass = newnode->start_address_pass+3;
-	newnode->next = NULL;
-
-
-	UART_sendStr("Enter User ID:");
-
-	u8 Input[8];
-	u8 index = 0;
-	u32 EEPROMAddress;
-	for( index = 0 ;index < 8; index++){
-
-		UART_receiveData(Input[index]);
-		if(index==3){
-			UART_sendStr("Add Password:");
-		}
-	}
-
-
-
-	if(Head==NULL)
-	{
-		Head=newnode;
-		index = 0;
-		EEPROMAddress = newnode->start_address_user;
-		while(EEPROMAddress<=newnode->end_address_pass){
-			EEPROM_SendByte(Input[index],EEPROMAddress);
-			index++;
-			EEPROMAddress++;
-		}
-	}
-	else
-	{
-		//newnode->start_address_user = username[4];
-		while (current->next!=NULL)
-		{
-			current=current->next;
-		}
-		current->next=newnode;
-		newnode->next=NULL;
-		index = 0;
-		EEPROMAddress = newnode->start_address_user;
-		while(EEPROMAddress<=newnode->end_address_pass){
-			EEPROM_SendByte(Input[index],EEPROMAddress);
-			index++;
-			EEPROMAddress++;
-		}
-		}
-	}
-
-
-
-	//current->next=NULL;
-}
-
-
 BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
 u8 UART_RecevedData, KPD_RecevedData, Entered_Pass[4], i = 0, i2 = 0, EEPROMRecevedData,counter=0;
 
 
-void CheckPassword (u8* Ma_Fl_ptr){
+BOOL CheckPassword(){
 	while (i2<4)
 	{
 		_delay_ms(100);
@@ -187,7 +95,7 @@ void CheckPassword (u8* Ma_Fl_ptr){
 			{
 				LCD_sendStr("welcome");
 				UART_sendStr("welcome");
-				* Ma_Fl_ptr = 5 ;
+				return TRUE;
 
 
 			}
