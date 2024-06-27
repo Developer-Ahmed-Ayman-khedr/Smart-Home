@@ -17,13 +17,24 @@ void password_init ()
 
 	DIO_setPinDir (DIO_PINA3,DIO_OUTPUT) ;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
+BOOL CheckPasswordAdmin(){
+	u8 c = 4 ;
+	u8 username[4],password[4];
+	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
+	u8 UART_RecevedData, Entered_Pass[4], i = 0, i2 = 0, EEPROMRecevedData,counter=0;
 
+<<<<<<< HEAD
 BOOL CheckPassword(){
 	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
 	u8 UART_RecevedData, KPD_RecevedData, Entered_Pass[4], i = 0, i2 = 0, EEPROMRecevedData,counter=0;
 
+=======
+>>>>>>> master
 	while (i2<4)
 	{
 		_delay_ms(100);
@@ -40,18 +51,10 @@ BOOL CheckPassword(){
 	}
 
 	UART_RecevedData = UART_receiveData();
-	KPD_RecevedData = KPD_read();
-	if (UART_RecevedData!=UART_NOT_RECEIVE || KPD_RecevedData!=KPD_UNPRESSED)
+	if (UART_RecevedData!=UART_NOT_RECEIVE)
 	{
-		while(KPD_read()!=KPD_UNPRESSED);
-		if (KPD_RecevedData!=KPD_UNPRESSED)
+		if (UART_RecevedData!=UART_NOT_RECEIVE)
 		{
-			LCD_sendNum(KPD_RecevedData-48);
-			Entered_Pass[i] = KPD_RecevedData;
-		}
-		else if (UART_RecevedData!=UART_NOT_RECEIVE)
-		{
-			LCD_sendNum(UART_RecevedData-48);
 			Entered_Pass[i] = UART_RecevedData;
 		}
 		i++;
@@ -93,14 +96,12 @@ BOOL CheckPassword(){
 		{
 			if (flage==TRUE)
 			{
-				LCD_sendStr("welcome");
 				UART_sendStr("welcome");
 				return TRUE;
 
 
 			}
 			else {
-				LCD_sendStr("WRONGPASSWORD");
 				UART_sendStr("WRONGPASSWORD");
 				counter ++ ;
 				switch (counter){
@@ -112,8 +113,6 @@ BOOL CheckPassword(){
 					break ;
 				case 3 :
 					DIO_setPinValue (DIO_PINA3,DIO_HIGH) ;
-					LCD_clearDis();
-					LCD_sendStr("BLOCK");
 					UART_sendStr("BLOCK");
 					_delay_ms(60000);
 					break ;
