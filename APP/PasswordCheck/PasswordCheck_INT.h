@@ -38,7 +38,7 @@
   GLOBAL FUNCTIONS Prototypes
 ***************/
 void password_init ();
-void CheckPassword (u8* Ma_Fl_ptr);
+BOOL CheckPassword ();
 
 
 #endif /* APP_PASSWORDCHECK_PASSWORDCHECK_INT_H_ */
