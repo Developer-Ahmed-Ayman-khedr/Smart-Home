@@ -17,6 +17,10 @@ void password_init ()
 
 	DIO_setPinDir (DIO_PINA3,DIO_OUTPUT) ;
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
 
 BOOL CheckPasswordAdmin(){
 	u8 c = 4 ;
@@ -24,6 +28,13 @@ BOOL CheckPasswordAdmin(){
 	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
 	u8 UART_RecevedData, Entered_Pass[4], i = 0, i2 = 0, EEPROMRecevedData,counter=0;
 
+<<<<<<< HEAD
+BOOL CheckPassword(){
+	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
+	u8 UART_RecevedData, KPD_RecevedData, Entered_Pass[4], i = 0, i2 = 0, EEPROMRecevedData,counter=0;
+
+=======
+>>>>>>> master
 	while (i2<4)
 	{
 		_delay_ms(100);
