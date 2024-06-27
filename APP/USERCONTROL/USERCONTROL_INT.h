@@ -47,9 +47,9 @@
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
 
-u8 AddUserName();
+void AddUserName();
 
-u8 AddPassword();
+void AddPassword();
 
 u8 DeleteUser();
 

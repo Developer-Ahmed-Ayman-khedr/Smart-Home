@@ -56,7 +56,7 @@ void AddPassword()
 		for(u8 arrayindex = 0;arrayindex<=4;arrayindex++){
 			EEPROM_SendByte(password[arrayindex],k);
 			k++;
-			EEPROM_ReadByteNACK(&EEPROMValue,i);
+			EEPROM_ReadByteNACK(&EEPROMValue,k);
 			UART_sendData(EEPROMValue);
 		}
 	}
