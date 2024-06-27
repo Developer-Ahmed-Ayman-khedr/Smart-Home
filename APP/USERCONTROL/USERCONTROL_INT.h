@@ -13,6 +13,10 @@
 ***************/
 
 #include "STD_TYPES.h"
+#include"LCD_INT.h"
+#include"EEPROM_INT.h"
+#include"KPD_INT.h"
+#include"UART_INT.h"
 
 /******************************************
   Global Data TYPES AND STRUCTURES
@@ -25,15 +29,9 @@
 
 #define MAXUSERNUM  4
 
-#define MAXPASSNUM  4
+#define MINEEPROMUSER   100
 
-#define MINEEPROMUSER   '100'
-
-#define MAXEEPROMUSER   '116'
-
-#define MINEEPROMPASS   '117'
-
-#define MAXEEPROMPASS   '132'
+#define MAXEEPROMUSER   132
 
 
 
@@ -47,10 +45,10 @@
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
 
-void AddUserName();
+void AddUser();
 
-void AddPassword();
+BOOL DeleteUser();
 
-u8 DeleteUser();
+BOOL CheckDataForUser();
 
 #endif /* APP_USERCONTROL_USERCONTROL_INT_H_ */

@@ -17,13 +17,13 @@ void password_init ()
 
 	DIO_setPinDir (DIO_PINA3,DIO_OUTPUT) ;
 }
-u8 c = 4 ;
-u8 username[4],password[4];
-BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
-u8 UART_RecevedData, KPD_RecevedData, Entered_Pass[4], i = 0, i2 = 0, EEPROMRecevedData,counter=0;
+
 
 
 BOOL CheckPassword(){
+	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
+	u8 UART_RecevedData, KPD_RecevedData, Entered_Pass[4], i = 0, i2 = 0, EEPROMRecevedData,counter=0;
+
 	while (i2<4)
 	{
 		_delay_ms(100);
