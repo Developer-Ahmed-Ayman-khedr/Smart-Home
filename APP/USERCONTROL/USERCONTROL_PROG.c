@@ -45,7 +45,7 @@ void AddUser()
 }
 
 BOOL CheckDataForUser(){
-	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE , flag=0;
+	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE , flag=0 , Check_index = MINEEPROMUSER + 4;
 	u8  KPD_RecevedData, Entered_User[4],Entered_Pass[4], Userindex = 0,Passindex=0, i2 = 0, EEPROMRecevedData,counter=0;
 
 	while (i2<4)
@@ -88,8 +88,8 @@ BOOL CheckDataForUser(){
 	{
 		if (EEPROM_flage==FALSE)
 		{
-			i2 = 0;
-			while (i2<4)
+			i2 = MINEEPROMUSER;
+			while (i2<Check_index)
 			{
 				_delay_ms(100);
 				EEPROM_SendByte(Entered_User[i2],i2);
@@ -98,8 +98,8 @@ BOOL CheckDataForUser(){
 			Save_flage = TRUE;
 		}
 		if (EEPROM_flage==TRUE){
-			i2 = 0;
-			while ( i2<4)
+			i2 = MINEEPROMUSER;
+			while ( i2<Check_index)
 			{
 				_delay_ms(100);
 				EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
@@ -148,6 +148,7 @@ BOOL CheckDataForUser(){
 		}
 		Userindex = 0;
 		flag = 1 ;
+		Check_index +=4;
 	}
 
 
@@ -155,7 +156,7 @@ else if (Passindex==4 && flag==1)
 	{
 		if (EEPROM_flage==FALSE)
 		{
-			i2 = 0;
+			i2 = MINEEPROMUSER;
 			while (i2<4)
 			{
 				_delay_ms(100);
@@ -165,7 +166,7 @@ else if (Passindex==4 && flag==1)
 			Save_flage = TRUE;
 		}
 		if (EEPROM_flage==TRUE){
-			i2 = 0;
+			i2 = MINEEPROMUSER;
 			while ( i2<4)
 			{
 				_delay_ms(100);
