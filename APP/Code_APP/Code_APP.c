@@ -30,7 +30,7 @@ BOOL Passwordinputfunc(){
 
 BOOL Passwordcheckfunc(){
 	//Password check function
-	if(CheckPassword()==TRUE){
+	if(CheckPasswordAdmin()==TRUE){
 		return TRUE;
 	}
 }
