@@ -142,5 +142,29 @@ BOOL CheckDataForUser(){
 
 BOOL DeleteUser(){
 
+	// define flag to delete user
+	 u8 deleteuserflag = FALSE , i2 = 0 , EEPROMRecevedData ;
+		 while (i2<4)
+		 	{
+		 		_delay_ms(100);
+		 		EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
+		 		if (EEPROMRecevedData!=255)
+		 		{
+		 			deleteuserflag = TRUE;
+		 		}
+		 		else
+		 		{
+		 			deleteuserflag = FALSE;
+		 		}
+		 		i2++;
+
+		 	}
 
 }
+
+
+
+
+
+
+

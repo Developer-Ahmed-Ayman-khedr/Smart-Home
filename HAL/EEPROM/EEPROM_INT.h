@@ -40,5 +40,7 @@ void EEPROM_SendByte(u8 byte,u16 location);
 
 void EEPROM_ReadByteNACK(u8* byte,u16 location);
 
+void EEPROMERASE(u16 address);
+
 
 #endif /* HAL_EEPROM_EEPROM_INT_H_ */
