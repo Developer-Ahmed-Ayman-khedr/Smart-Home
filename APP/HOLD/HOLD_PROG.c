@@ -44,11 +44,6 @@ void UltrasonicFunc(){
 	}
 }
 
-void UARTInterrupt(){
-	dis = 28;
-	UART_INT_init(UART_DISABLE_RXC);
-}
-
 void HOLD_init(){
 
 	//TR
@@ -69,13 +64,7 @@ void HOLD_init(){
 	EXT_int0Int(EXT_RISING);
 
 	EXT_setcallbackInt0(UltrasonicFunc);
-
-	//UART Interrupt when input occurred
-	UART_INT_init(UART_ENABLE_RXC);
-
-	UART_setcallbackINT(UARTInterrupt);
 }
-
 
 void HOLD_Start(){
 	DIO_setPinValue(DIO_PINC6,DIO_HIGH);
