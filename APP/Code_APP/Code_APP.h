@@ -33,7 +33,7 @@
 
 #include "TEMP_INT.h"
 
-#include "PasswordCheck_INT.h"
+
 
 #include "LIGHTING_INT.h"
 
@@ -42,6 +42,10 @@
 #include "INPUT_INT.h"
 
 #include "UART_INT.h"
+
+#include "PasswordCheck_INT.h"
+
+#include "USERCONTROL_INT.h"
 
 /******************************************
   Global Data TYPES AND STRUCTURES
