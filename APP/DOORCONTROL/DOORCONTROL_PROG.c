@@ -18,31 +18,20 @@ void DOORCONTROL_init(){
 	TIMER1_initFastPwmMod14();
 
 	TIMER1_setFrequency(50);
-
-	//Start the Holding process
-	HOLD_init();
-
 }
 
-void DOORCONTROL_Start(u8* Ma_Fl_ptr){
-
-
-
-
-
-
+BOOL DOORCONTROL_Start(){
 	//Open the door
 	TIMER1_setOcr(499);
 
-	//Wait for the Ultrasonic Sensor to return a distance greater than 30cm
+	//Start the Holding process
 	HOLD_Start();
-	//LCD_sendNum(HOLD_Retrun());
 
+	//Wait for the Ultrasonic Sensor to return a distance greater than 30cm
 	if(HOLD_Retrun()>30)
 	{
-
 		//Close the door
 		TIMER1_setOcr(375);
-		* Ma_Fl_ptr = 5 ;
+		return TRUE;
 	}
 }

@@ -7,6 +7,26 @@
 
 #include"Code_APP.h"
 
+void Code_APPInitDrivers(){
+	//Start the Hold process
+	HOLD_init();
+
+	//Initialize the temperature check process
+	TEMP_Init();
+
+	//Initialize the Keypad input process
+	INPUT_Init();
+
+	//Initialize the Password Check check process
+	password_init ();
+
+	//initialize the Lighting Control process
+	LIGHTING_init();
+
+	//initialize the Door Control process
+	DOORCONTROL_init();
+}
+
 BOOL HoldFunc(){
 	//Hold function
 	HOLD_Start();
@@ -33,7 +53,11 @@ BOOL Passwordcheckfunc(){
 	if(CheckPasswordAdmin()==TRUE){
 		return TRUE;
 	}
+	else if(CheckDataForUser()==TRUE){
+		return FALSE;
+	}
 }
+
 BOOL CorrectpasswordWelcomefunc(){
 	//Correct passwordWelcome
 	LCD_clearDis();
@@ -52,25 +76,7 @@ BOOL lightingfunc(){
 	return TRUE;
 }
 
-void Code_APPInitDrivers(){
-	//Start the Hold process
-		HOLD_init();
 
-		//Initialize the temperature check process
-		TEMP_Init();
-
-		//Initialize the Keypad input process
-		INPUT_Init();
-
-		//Initialize the Password Check check process
-		password_init ();
-
-		//initialize the Lighting Control process
-		LIGHTING_init();
-
-		//initialize the Door Control process
-		DOORCONTROL_init();
-}
 
 BOOL Temperaturecheckfunc(){
 	//Temperature check
@@ -83,8 +89,61 @@ BOOL Temperaturecheckfunc(){
 
 void Code_APP(){
 	static u8 Main_Flage=1, read=0;
+	BOOL LoginMode;
 
-	switch(Main_Flage){
+	if(CheckPasswordAdmin()==TRUE){
+		//Admin Login
+		switch(Main_Flage){
+			case 1:
+				//Correct passwordWelcome
+				UART_sendStr("1.Light 2.Temp 3.Enter\r\n");
+				Main_Flage = 2;
+				break;
+			case 2:
+				//UART read
+				if(UART_receiveData()==INPUT_Light){
+					//lighting
+					UART_sendStr("1.Hall 2.Entrance\r\n");
+					//Go to UART read part for Lighting Section
+					Main_Flage = 3;
+				}
+				else if(UART_receiveData()==INPUT_Temp){
+					//Temperature check
+					TEMP_Check();
+					UART_sendStr("\r\n1 to return:  ");
+					Main_Flage = 4;
+				}
+				else if(UART_receiveData()==INPUT_ENTER){
+					DOORCONTROL_Start();
+					Main_Flage = 10;
+				}
+				break;
+			case 3:
+				//UART read for Lighting Section
+				if(UART_receiveData()==LIGHTINGROOM){
+					LIGHTING_Start(LIGHTINGROOM);
+					Main_Flage = 1;
+				}
+				else if(UART_receiveData()==LIGHTINHALL){
+					LIGHTING_Start(LIGHTINHALL);
+					Main_Flage = 1;
+				}
+				break;
+			case 4:
+				//UART read
+				if(UART_receiveData()==RETURN){
+					Main_Flage = 1;
+				}
+				break;
+			default:
+				break;
+			}
+	}
+
+
+	else if (Passwordcheckfunc()==FALSE){
+		//User Login
+		switch(Main_Flage){
 			case 1:
 				if(HoldFunc()==TRUE){
 					Main_Flage = 2;
@@ -96,7 +155,8 @@ void Code_APP(){
 				}
 				break;
 			case 3:
-				if(Passwordcheckfunc()==TRUE){
+				//if()
+				{
 					Main_Flage = 4;
 				}
 				break;
@@ -157,5 +217,8 @@ void Code_APP(){
 			default:
 				break;
 			}
+	}
+
+
 
 }

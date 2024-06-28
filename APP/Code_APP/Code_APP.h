@@ -52,6 +52,7 @@
   GLOBAL CONSTANT MACROS
 *******************************************/
 
+#define RETURN 1
 
 /******************************************
   GLOBAL FUNCTIONS MACROS
