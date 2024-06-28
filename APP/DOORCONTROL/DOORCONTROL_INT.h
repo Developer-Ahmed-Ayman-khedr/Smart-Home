@@ -45,6 +45,6 @@
 
 void DOORCONTROL_init();
 
-void DOORCONTROL_Start(u8* Ma_Fl_ptr);
+BOOL DOORCONTROL_Start();
 
 #endif /* APP_DOORCONTROL_DOORCONTROL_INT_H_ */
