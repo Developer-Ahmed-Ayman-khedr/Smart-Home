@@ -74,3 +74,10 @@ void EEPROM_ReadByteNACK(u8* byte,u16 location){
   //Send Stop
   TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWSTO);
 }
+
+
+void EEPROMERASE(u16 address) {
+	u8 EEPROMCLEAR = 255;
+	EEPROM_SendByte(&EEPROMCLEAR,address);
+
+}
