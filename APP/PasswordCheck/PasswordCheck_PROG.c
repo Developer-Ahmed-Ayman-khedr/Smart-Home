@@ -42,7 +42,7 @@ BOOL CheckPasswordAdmin(){
 		i2++;
 	}
 	UART_RecevedData = (UART_receiveData()-48);
-	UART_sendData(UART_RecevedData+48);
+	//UART_sendData(UART_RecevedData);
 	if (UART_RecevedData!=UART_NOT_RECEIVE)
 	{
 		Entered_Pass[i] = UART_RecevedData;
