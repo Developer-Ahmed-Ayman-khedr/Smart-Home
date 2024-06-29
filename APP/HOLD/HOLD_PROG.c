@@ -57,8 +57,7 @@ void HOLD_init(){
 
 	TIMER0_setCallbackOv(Timer0OvFunc);
 
-	//Global Interrupt
-	GI_enable();
+
 
 	//External Interrupt
 	EXT_int0Int(EXT_RISING);

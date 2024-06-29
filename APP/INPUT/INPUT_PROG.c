@@ -6,15 +6,6 @@
  */
 #include "INPUT_INT.h"
 
-
-void INPUT_Init(){
-	KPD_init();
-	LCD_init();
-	UART_init();
-}
-
-
-
 u8 INPUT_Read(){
 	static u8 Keypad_Press_KPD,UART_Press;
 	Keypad_Press_KPD=KPD_read();

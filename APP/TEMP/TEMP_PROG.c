@@ -8,8 +8,7 @@
 #include "TEMP_INT.h"
 
 void TEMP_Init(){
-	//ADC
-	ADC_init();
+
 
 	DIO_setPinDir(DIO_PINA1,DIO_INPUT);
 
