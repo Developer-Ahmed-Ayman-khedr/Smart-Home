@@ -52,8 +52,6 @@
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
 
-void INPUT_Init();
-
 u8 INPUT_Read();
 
 #endif /* APP_INPUT_INPUT_INT_H_ */

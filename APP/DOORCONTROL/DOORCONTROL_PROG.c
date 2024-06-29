@@ -13,8 +13,6 @@ void DOORCONTROL_init(){
 	DIO_setPinDir(DIO_PIND5,DIO_OUTPUT);
 
 	//Timer1
-	GI_enable();
-
 	TIMER1_initFastPwmMod14();
 
 	TIMER1_setFrequency(50);

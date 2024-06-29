@@ -8,56 +8,78 @@
 #include"Code_APP.h"
 
 void Code_APPInitDrivers(){
+
+	//Global Interrupt
+	//GI_enable();
+
+	//KPD_init();
+	//LCD_init();
+
+	UART_init();
+
+
+	EEPROM_Init();
+
+	//ADC
+	//ADC_init();
+
 	//Start the Hold process
-	HOLD_init();
+	//HOLD_init();
 
 	//Initialize the temperature check process
-	TEMP_Init();
+	//TEMP_Init();
 
 	//Initialize the Keypad input process
-	INPUT_Init();
+	//INPUT_Init();
 
 	//Initialize the Password Check check process
 	password_init ();
 
 	//initialize the Lighting Control process
-	LIGHTING_init();
+	//LIGHTING_init();
 
 	//initialize the Door Control process
-	DOORCONTROL_init();
+	//DOORCONTROL_init();
+
+
 }
 
 void Code_APP(){
 	static u8 Admin_Main_Flage=1, User_Main_Flage = 1, read=0;
 
-	if(CheckPasswordAdmin()==TRUE){
+	//if(CheckPasswordAdmin()==TRUE){
 		//Admin Login
 		switch(Admin_Main_Flage){
 			case 1:
+				if(CheckPasswordAdmin()==TRUE){
+					Admin_Main_Flage = 2;
+				}
+				break;
+			/*case 2:
 				//Correct passwordWelcome
 				UART_sendStr("1.Light 2.Temp 3.Enter\r\n");
-				Admin_Main_Flage = 2;
+				Admin_Main_Flage = 3;
 				break;
-			case 2:
+			case 3:
 				//UART read
 				if(UART_receiveData()==INPUT_Light){
 					//lighting
 					UART_sendStr("1.Hall 2.Entrance\r\n");
 					//Go to UART read part for Lighting Section
-					Admin_Main_Flage = 3;
+					Admin_Main_Flage = 4;
 				}
 				else if(UART_receiveData()==INPUT_Temp){
 					//Temperature check
 					TEMP_Check();
 					UART_sendStr("\r\n1 to return:  ");
-					Admin_Main_Flage = 4;
+					Admin_Main_Flage = 5;
 				}
 				else if(UART_receiveData()==INPUT_ENTER){
 					DOORCONTROL_Start();
-					Admin_Main_Flage = 10;
+					Admin_Main_Flage = 2;
 				}
 				break;
-			case 3:
+			case 4:
 				//UART read for Lighting Section
 				if(UART_receiveData()==LIGHTINGROOM){
 					LIGHTING_Start(LIGHTINGROOM);
@@ -65,21 +87,21 @@ void Code_APP(){
 				}
 				else if(UART_receiveData()==LIGHTINHALL){
 					LIGHTING_Start(LIGHTINHALL);
-					Admin_Main_Flage = 1;
+					Admin_Main_Flage = 2;
 				}
 				break;
-			case 4:
+			case 5:
 				//UART read
 				if(UART_receiveData()==RETURN){
-					Admin_Main_Flage = 1;
+					Admin_Main_Flage = 2;
 				}
-				break;
+				break;*/
 			default:
 				break;
 			}
-	}
+	//}
 	//User Login
-	switch(User_Main_Flage){
+	/*switch(User_Main_Flage){
 		case 1:
 			//Hold function
 			HOLD_Start();
@@ -168,5 +190,5 @@ void Code_APP(){
 			break;
 		default:
 			break;
-		}
+		}*/
 }

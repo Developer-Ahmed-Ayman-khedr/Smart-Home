@@ -11,22 +11,26 @@ void password_init ()
 
 	DIO_setPinDir(DIO_PINA0,DIO_OUTPUT);
 
-	DIO_setPinDir (DIO_PINA2,DIO_OUTPUT) ;
+	DIO_setPinDir (DIO_PINA2,DIO_OUTPUT);
 
-	//DIO_setPinDir (DIO_PINA3,DIO_OUTPUT) ;
-
-	DIO_setPinDir (DIO_PINA3,DIO_OUTPUT) ;
+	DIO_setPinDir (DIO_PINA3,DIO_OUTPUT);
 }
 
 BOOL CheckPasswordAdmin(){
-	u8 c = 4 ;
-	u8 username[4],password[4];
-	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
-	u8 UART_RecevedData, Entered_Pass[4], i = 0, i2 = 0, EEPROMRecevedData,counter=0;
-	while (i2<4)
+	static BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
+	static u8 UART_RecevedData = 0, Entered_Pass[4], i = 0, EEPROMRecevedData = 0,counter=0;
+	static u16 i2 = 0;
+	/*while (i2<4)
 	{
 		_delay_ms(100);
+		EEPROM_SendByte(4,i2);
+		i2++;
+	}*/
+	while (i2<4)
+	{
 		EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
+		_delay_ms(100);
+		//UART_sendData(EEPROMRecevedData+48);
 		if (EEPROMRecevedData!=255)
 		{
 			EEPROM_flage = TRUE;
@@ -37,17 +41,13 @@ BOOL CheckPasswordAdmin(){
 		}
 		i2++;
 	}
-
-	UART_RecevedData = UART_receiveData();
+	UART_RecevedData = (UART_receiveData()-48);
+	UART_sendData(UART_RecevedData+48);
 	if (UART_RecevedData!=UART_NOT_RECEIVE)
 	{
-		if (UART_RecevedData!=UART_NOT_RECEIVE)
-		{
-			Entered_Pass[i] = UART_RecevedData;
-		}
+		Entered_Pass[i] = UART_RecevedData;
 		i++;
 	}
-
 	if (i==4)
 	{
 		if (EEPROM_flage==FALSE)
@@ -84,10 +84,9 @@ BOOL CheckPasswordAdmin(){
 		{
 			if (flage==TRUE)
 			{
-				UART_sendStr("welcome");
+				UART_sendStr("Welcome");
+				i=0;
 				return TRUE;
-
-
 			}
 			else {
 				UART_sendStr("WRONGPASSWORD");
