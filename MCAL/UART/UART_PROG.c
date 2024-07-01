@@ -51,7 +51,8 @@ void UART_sendStr(u8* str)
 
 u8 UART_receiveData()
 {
-	while(!(UCSRA&(1<<RXC)));
+	//while(!(UCSRA&(1<<RXC)));
+	while(GET_BIT(UCSRA,RXC) == 0);
 
 	return UDR;
 }
