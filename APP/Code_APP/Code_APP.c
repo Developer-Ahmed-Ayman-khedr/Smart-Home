@@ -44,18 +44,18 @@ void Code_APPInitDrivers(){
 
 }
 
-void Code_APP(){
-	static u8 Admin_Main_Flage=1, User_Main_Flage = 1, read=0;
-	static BOOL CheckPasswordAdminRetrun = FALSE;
+u8 Admin_Main_Flage=1, User_Main_Flage = 1, read=0;
+BOOL CheckPasswordAdminRetrun = FALSE;
 
+void Code_APP(){
 	//if(CheckPasswordAdmin()==TRUE){
 		//Admin Login
 		switch(Admin_Main_Flage){
 			case 1:
 				CheckPasswordAdminRetrun = CheckPasswordAdmin();
-				/*if(CheckPasswordAdminRetrun == TRUE){
+				if(CheckPasswordAdminRetrun == TRUE){
 					Admin_Main_Flage = 2;
-				}*/
+				}
 				break;
 			case 2:
 				//Correct passwordWelcome
