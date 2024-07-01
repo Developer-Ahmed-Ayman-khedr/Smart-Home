@@ -51,9 +51,10 @@ void Code_APP(){
 		//Admin Login
 		switch(Admin_Main_Flage){
 			case 1:
-				if(CheckPasswordAdmin()==TRUE){
+				CheckPasswordAdmin();
+				/*if(==TRUE){
 					Admin_Main_Flage = 2;
-				}
+				}*/
 				break;
 			/*case 2:
 				//Correct passwordWelcome
