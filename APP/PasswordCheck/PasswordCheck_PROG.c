@@ -18,17 +18,17 @@ void password_init ()
 
 BOOL CheckPasswordAdmin(){
 	static BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
-	static u8 UART_RecevedData = 0, Entered_Pass[4], i = 0, EEPROMRecevedData = 0,counter=0;
-	static u16 i2 = 0;
-	/*while (i2<4)
+	static u8 UART_RecevedData = 'x', Entered_Pass[4], i = 0, EEPROMRecevedData = 0,counter=0;
+	static u16 EEPROMAdminLocation = 0;
+	/*while (EEPROMAdminLocation<4)
 	{
 		_delay_ms(100);
-		EEPROM_SendByte(4,i2);
-		i2++;
+		EEPROM_SendByte(4,EEPROMAdminLocation);
+		EEPROMAdminLocation++;
 	}*/
-	while (i2<4)
+	while (EEPROMAdminLocation<4)
 	{
-		EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
+		EEPROM_ReadByteNACK(&EEPROMRecevedData,EEPROMAdminLocation);
 		_delay_ms(100);
 		//UART_sendData(EEPROMRecevedData+48);
 		if (EEPROMRecevedData!=255)
@@ -38,36 +38,42 @@ BOOL CheckPasswordAdmin(){
 		else
 		{
 			EEPROM_flage = FALSE;
+			break;
 		}
-		i2++;
+		EEPROMAdminLocation++;
 	}
-	UART_RecevedData = (UART_receiveData()-48);
-	//UART_sendData(UART_RecevedData);
-	if (UART_RecevedData!=UART_NOT_RECEIVE)
-	{
-		Entered_Pass[i] = UART_RecevedData;
-		i++;
+	while(i<4){
+		//UART_RecevedData = (-48);
+		UART_RecevedData = UART_receiveData();
+		if (UART_RecevedData!=UART_NOT_RECEIVE)
+		{
+			//Entered_Pass[i] = UART_receiveData()-48;
+			Entered_Pass[i] = UART_RecevedData;
+			UART_sendData(Entered_Pass[i]);
+			i++;
+		}
 	}
+
 	if (i==4)
 	{
 		if (EEPROM_flage==FALSE)
 		{
-			i2 = 0;
-			while (i2<4)
+			EEPROMAdminLocation = 0;
+			while (EEPROMAdminLocation<4)
 			{
 				_delay_ms(100);
-				EEPROM_SendByte(Entered_Pass[i2],i2);
-				i2++;
+				EEPROM_SendByte(Entered_Pass[EEPROMAdminLocation],EEPROMAdminLocation);
+				EEPROMAdminLocation++;
 			}
 			Save_flage = TRUE;
 		}
 		if (EEPROM_flage==TRUE){
-			i2 = 0;
-			while ( i2<4)
+			EEPROMAdminLocation = 0;
+			while ( EEPROMAdminLocation<4)
 			{
 				_delay_ms(100);
-				EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
-				if (Entered_Pass[i2]==EEPROMRecevedData)
+				EEPROM_ReadByteNACK(&EEPROMRecevedData,EEPROMAdminLocation);
+				if (Entered_Pass[EEPROMAdminLocation]==EEPROMRecevedData)
 				{
 					flage = TRUE;
 				}
@@ -76,7 +82,7 @@ BOOL CheckPasswordAdmin(){
 					flage = FALSE;
 					break;
 				}
-				i2++;
+				EEPROMAdminLocation++;
 			}
 		}
 
