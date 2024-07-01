@@ -46,22 +46,23 @@ void Code_APPInitDrivers(){
 
 void Code_APP(){
 	static u8 Admin_Main_Flage=1, User_Main_Flage = 1, read=0;
+	static BOOL CheckPasswordAdminRetrun = FALSE;
 
 	//if(CheckPasswordAdmin()==TRUE){
 		//Admin Login
 		switch(Admin_Main_Flage){
 			case 1:
-				CheckPasswordAdmin();
-				/*if(==TRUE){
+				CheckPasswordAdminRetrun = CheckPasswordAdmin();
+				/*if(CheckPasswordAdminRetrun == TRUE){
 					Admin_Main_Flage = 2;
 				}*/
 				break;
-			/*case 2:
+			case 2:
 				//Correct passwordWelcome
 				UART_sendStr("1.Light 2.Temp 3.Enter\r\n");
 				Admin_Main_Flage = 3;
 				break;
-			case 3:
+				/*case 3:
 				//UART read
 				if(UART_receiveData()==INPUT_Light){
 					//lighting
