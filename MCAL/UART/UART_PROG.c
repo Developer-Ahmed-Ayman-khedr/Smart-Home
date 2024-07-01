@@ -51,15 +51,7 @@ void UART_sendStr(u8* str)
 
 u8 UART_receiveData()
 {
-	u32 timeOut = 10000000;
-	while(GET_BIT(UCSRA,RXC)==0)
-	{
-		timeOut--;
-		if(timeOut == 0)
-		{
-			return UART_NOT_RECEIVE;
-		}
-	}
+	while(!(UCSRA&(1<<RXC)));
 
 	return UDR;
 }
