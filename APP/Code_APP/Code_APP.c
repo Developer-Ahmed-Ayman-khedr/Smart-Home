@@ -17,7 +17,6 @@ void Code_APPInitDrivers(){
 
 	UART_init();
 
-
 	EEPROM_Init();
 
 	//ADC
@@ -44,58 +43,57 @@ void Code_APPInitDrivers(){
 
 }
 
-u8 Admin_Main_Flage=1, User_Main_Flage = 1, read=0;
-BOOL CheckPasswordAdminRetrun = FALSE;
-
 void Code_APP(){
-	//Admin Login
+	static u8 Admin_Main_Flage=0, User_Main_Flage = 0, read=0;
 	if(CheckPasswordAdmin()==TRUE){
-		switch(Admin_Main_Flage){
-			case 1:
-				//Correct passwordWelcome
-				UART_sendStr("1.Light 2.Temp 3.Enter\r\n");
-				Admin_Main_Flage = 2;
-				break;
-			case 2:
-				//UART read
-				if(UART_receiveData()==INPUT_Light){
-					//lighting
-					UART_sendStr("1.Hall 2.Entrance\r\n");
-					//Go to UART read part for Lighting Section
-					Admin_Main_Flage = 3;
-				}
-				else if(UART_receiveData()==INPUT_Temp){
-					//Temperature check
-					TEMP_Check();
-					UART_sendStr("\r\n1 to return:  ");
-					Admin_Main_Flage = 4;
-				}
-				else if(UART_receiveData()==INPUT_ENTER){
-					DOORCONTROL_Start();
-					Admin_Main_Flage = 1;
-				}
-				break;
-			case 3:
-				//UART read for Lighting Section
-				if(UART_receiveData()==LIGHTINGROOM){
-					LIGHTING_Start(LIGHTINGROOM);
-					Admin_Main_Flage = 1;
-				}
-				else if(UART_receiveData()==LIGHTINHALL){
-					LIGHTING_Start(LIGHTINHALL);
-					Admin_Main_Flage = 1;
-				}
-				break;
-			case 4:
-				//UART read
-				if(UART_receiveData()==RETURN){
-					Admin_Main_Flage = 2;
-				}
-				break;
-			default:
-				break;
-			}
+		Admin_Main_Flage = 1;
 	}
+	switch(Admin_Main_Flage){
+		case 1:
+			//Correct passwordWelcome
+			UART_sendStr("1.Light 2.Temp 3.Enter\r\n");
+			Admin_Main_Flage = 2;
+			break;
+		case 2:
+			//UART read
+			if(UART_receiveData()=='1'){
+				//lighting
+				UART_sendStr("1.Hall 2.Entrance\r\n");
+				//Go to UART read part for Lighting Section
+				Admin_Main_Flage = 3;
+			}
+			else if(UART_receiveData()=='2'){
+				//Temperature check
+				TEMP_Check();
+				UART_sendStr("\r\n1 to return:  ");
+				Admin_Main_Flage = 4;
+			}
+			else if(UART_receiveData()==INPUT_ENTER){
+				DOORCONTROL_Start();
+				Admin_Main_Flage = 1;
+			}
+			break;
+		case 3:
+			//UART read for Lighting Section
+			if(UART_receiveData()==LIGHTINGROOM){
+				LIGHTING_Start(LIGHTINGROOM);
+				Admin_Main_Flage = 1;
+			}
+			else if(UART_receiveData()==LIGHTINHALL){
+				LIGHTING_Start(LIGHTINHALL);
+				Admin_Main_Flage = 1;
+			}
+			break;
+		case 4:
+			//UART read
+			if(UART_receiveData()==RETURN){
+				Admin_Main_Flage = 2;
+			}
+			break;
+		default:
+			break;
+		}
+
 	//User Login
 	/*switch(User_Main_Flage){
 		case 1:

@@ -16,8 +16,10 @@ void password_init ()
 	DIO_setPinDir (DIO_PINA3,DIO_OUTPUT);
 }
 
+BOOL flage=FALSE;
+
 BOOL CheckPasswordAdmin(){
-	static BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
+	static BOOL EEPROM_flage = FALSE,Save_flage = FALSE;
 	static u8 UART_RecevedData = 'x', Entered_Pass[4], InputIndex = 0, EEPROMRecevedData = 0,counter=0;
 	static u16 EEPROMAdminLocation = 0;
 	/*while (EEPROMAdminLocation<4)
@@ -85,25 +87,26 @@ BOOL CheckPasswordAdmin(){
 		{
 			if (flage==TRUE)
 			{
-				UART_sendStr("Welcome");
+				UART_sendStr("Welcome\r\n");
 				InputIndex=0;
+				_delay_ms(100);
 				return TRUE;
 			}
 			else {
 				UART_sendStr("WRONGPASSWORD");
-				counter ++ ;
+				counter++;
 				switch (counter){
-				case 1 :
-					DIO_setPinValue (DIO_PINA0,DIO_HIGH) ;
-					break ;
-				case 2 :
-					DIO_setPinValue (DIO_PINA2,DIO_HIGH) ;
-					break ;
-				case 3 :
-					DIO_setPinValue (DIO_PINA3,DIO_HIGH) ;
+				case 1:
+					DIO_setPinValue (DIO_PINA0,DIO_HIGH);
+					break;
+				case 2:
+					DIO_setPinValue (DIO_PINA2,DIO_HIGH);
+					break;
+				case 3:
+					DIO_setPinValue (DIO_PINA3,DIO_HIGH);
 					UART_sendStr("BLOCK");
 					_delay_ms(60000);
-					break ;
+					break;
 				default:
 					break;
 				}
@@ -111,4 +114,5 @@ BOOL CheckPasswordAdmin(){
 		}
 		InputIndex = 0;
 	}
+	return FALSE;
 }
