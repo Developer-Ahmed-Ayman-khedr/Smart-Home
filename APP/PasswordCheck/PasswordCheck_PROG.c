@@ -18,7 +18,7 @@ void password_init ()
 
 BOOL CheckPasswordAdmin(){
 	static BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE;
-	static u8 UART_RecevedData = 'x', Entered_Pass[4], i = 0, EEPROMRecevedData = 0,counter=0;
+	static u8 UART_RecevedData = 'x', Entered_Pass[4], InputIndex = 0, EEPROMRecevedData = 0,counter=0;
 	static u16 EEPROMAdminLocation = 0;
 	/*while (EEPROMAdminLocation<4)
 	{
@@ -42,19 +42,14 @@ BOOL CheckPasswordAdmin(){
 		}
 		EEPROMAdminLocation++;
 	}
-	while(i<4){
-		//UART_RecevedData = (-48);
-		UART_RecevedData = UART_receiveData();
-		if (UART_RecevedData!=UART_NOT_RECEIVE)
-		{
-			//Entered_Pass[i] = UART_receiveData()-48;
-			Entered_Pass[i] = UART_RecevedData;
-			UART_sendData(Entered_Pass[i]);
-			i++;
-		}
+	UART_RecevedData = UART_NOT_RECEIVE;
+	UART_RecevedData = UART_receiveData()-48;
+	if (UART_RecevedData!=UART_NOT_RECEIVE)
+	{
+		Entered_Pass[InputIndex] = UART_RecevedData;
+		InputIndex++;
 	}
-
-	if (i==4)
+	if (InputIndex==4)
 	{
 		if (EEPROM_flage==FALSE)
 		{
@@ -91,7 +86,7 @@ BOOL CheckPasswordAdmin(){
 			if (flage==TRUE)
 			{
 				UART_sendStr("Welcome");
-				i=0;
+				InputIndex=0;
 				return TRUE;
 			}
 			else {
@@ -114,6 +109,6 @@ BOOL CheckPasswordAdmin(){
 				}
 			}
 		}
-		i = 0;
+		InputIndex = 0;
 	}
 }
