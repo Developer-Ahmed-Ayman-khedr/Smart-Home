@@ -13,6 +13,8 @@
   INCLUDES
 *******************************************/
 
+//Physical Drivers
+
 #include "DIO_INT.h"
 
 #include "ADC_INT.h"
@@ -33,15 +35,23 @@
 
 #include "TEMP_INT.h"
 
+#include "UART_INT.h"
 
+//FreeRTOS
+
+#include "FreeRTOS.h"
+
+#include "FreeRTOSConfig.h"
+
+#include "task.h"
+
+//Project Elements
 
 #include "LIGHTING_INT.h"
 
 #include "DOORCONTROL_INT.h"
 
 #include "INPUT_INT.h"
-
-#include "UART_INT.h"
 
 #include "PasswordCheck_INT.h"
 

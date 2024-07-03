@@ -53,7 +53,17 @@ u8 UART_receiveData()
 {
 	//while(!(UCSRA&(1<<RXC)));
 	while(GET_BIT(UCSRA,RXC) == 0);
+	/*u32 timeOut = 100000;
+	while(GET_BIT(UCSRA,RXC)==0)
+	{
+		timeOut--;
+		if(timeOut == 0)
+		{
+			return UART_NOT_RECEIVE;
+		}
+	}*/
 
+	_delay_ms(100);
 	return UDR;
 }
 
