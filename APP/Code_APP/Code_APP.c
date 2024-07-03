@@ -31,7 +31,7 @@ void Code_APPInitDrivers(){
 	//Initialize the Keypad input process
 	//INPUT_Init();
 
-	//Initialize the Password Check check process
+	//Initialize the PasswordCheck check process
 	password_init ();
 
 	//initialize the Lighting Control process
