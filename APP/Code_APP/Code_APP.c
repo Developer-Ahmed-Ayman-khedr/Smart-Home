@@ -7,6 +7,27 @@
 
 #include"Code_APP.h"
 
+  QueueHandle_t xQueue;
+void DoorControlTask (void * pvParameters )
+{
+u8 DoorKey ;
+	while(1)
+	{
+		if (xQueueRecieve(xQueue,&DoorKey,0)== pdpass)
+		{
+			if(DoorKey==1)
+			{
+				DOORCONTROL_Start();
+
+			}
+
+		}
+
+		vTaskDelay(250/portTICK_PERIOD_MS);
+	}
+}
+
+
 void Code_APPInitDrivers(){
 
 	//Global Interrupt
