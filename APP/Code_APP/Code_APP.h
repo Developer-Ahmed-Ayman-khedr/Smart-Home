@@ -66,6 +66,12 @@
   GLOBAL CONSTANT MACROS
 *******************************************/
 
+#define INPUT_Light	'1'
+
+#define INPUT_Temp 	'2'
+
+#define INPUT_ENTERANCE '3'
+
 #define RETURN 1
 
 /******************************************

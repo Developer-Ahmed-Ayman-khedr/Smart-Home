@@ -8,7 +8,11 @@
 #include "Code_APP.h"
 
 int main(){
-	Code_APPInitDrivers();
+	TaskHandle_t xHandle1;
+	xTaskCreate(Code_APPInitDriversTask,NULL,100,NULL,3,&xHandle1);
+
+	vTaskStartScheduler();
+
 	while (1){
 		Code_APP();
 	}

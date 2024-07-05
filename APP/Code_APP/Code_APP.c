@@ -7,43 +7,140 @@
 
 #include"Code_APP.h"
 
-void Code_APPInitDrivers(){
+void Code_APPInitDriversTask(void *pvParameters){
+	while (1)
+	{
+		//Initialize ADC
+		ADC_init();
 
-	//Global Interrupt
-	//GI_enable();
+		//Global Interrupt
+		GI_enable();
 
-	//KPD_init();
-	//LCD_init();
+		//Initialize the Keypad
+		KPD_init();
 
-	UART_init();
+		//Initialize the LCD
+		LCD_init();
 
-	EEPROM_Init();
+		//Initialize the UART
+		UART_init();
 
-	//ADC
-	//ADC_init();
+		//Initialize the EEPROM
+		EEPROM_Init();
 
-	//Start the Hold process
-	//HOLD_init();
+		//Initialize the PasswordCheck check process
+		password_init ();
 
-	//Initialize the temperature check process
-	//TEMP_Init();
+		//Initialize the temperature check process
+		TEMP_Init();
 
-	//Initialize the Keypad input process
-	//INPUT_Init();
+		//Start the Hold process
+		HOLD_init();
 
-	//Initialize the PasswordCheck check process
-	password_init ();
+		//initialize the Lighting Control process
+		LIGHTING_init();
 
-	//initialize the Lighting Control process
-	//LIGHTING_init();
+		//initialize the Door Control process
+		DOORCONTROL_init();
 
-	//initialize the Door Control process
-	//DOORCONTROL_init();
-
-
+		vTaskSuspend(NULL);
+		vTaskDelay(500/portTICK_PERIOD_MS);
+	}
 }
 
-void Code_APP(){
+QueueHandle_t MyQueue;
+
+void UARTInputTask(void *pvParameters){
+	u8 var = UART_NOT_RECEIVE;
+	while(1){
+		var = UART_receiveData();
+		if(var!=UART_NOT_RECEIVE){
+			xQueueSend(MyQueue,&var,0);
+		}
+		vTaskDelay(500/portTICK_PERIOD_MS);
+	}
+}
+
+EventBits_t uxBits;
+
+void OptionsTask(void *pvParameters){
+	u8 var2, read = 0;
+	while(1){
+		if (xQueueReceive( MyQueue, &var2, 0) == pdPASS)
+		{
+			uxBits = xEventGroupWaitBits(xEventGroup, BIT_0, pdTRUE, pdFALSE, 0 );
+			if(( uxBits & BIT_0 ) != 1){
+				//Correct password Welcome
+				UART_sendStr("1.Light 2.Temp 3.Enter\r\n");
+
+				//UART read
+				if(UART_receiveData()==INPUT_Light){
+					//lighting
+					UART_sendStr("1.Hall 2.Entrance\r\n");
+					//Go to UART read part for Lighting Section
+				}
+				else if(UART_receiveData()==INPUT_Temp){
+					//Temperature check
+					TEMP_Check();
+					UART_sendStr("\r\n1 to return:  ");
+				}
+				else if(UART_receiveData()==INPUT_ENTERANCE){
+
+				}
+			}
+			else if(){
+				LCD_sendStr("1.Light 2.Temp 3.Enter");
+				LCD_Goto(0,1);
+				//Go to Keypad read part
+
+				//Keypad read
+				if(INPUT_Read()==INPUT_Light){
+					LCD_sendData('1');
+				}
+				else if(INPUT_Read()==INPUT_Temp){
+					LCD_sendData('2');
+				}
+				else if(INPUT_Read()==INPUT_ENTERANCE){
+					LCD_sendData('3');
+				}
+
+				//lighting
+				LCD_clearDis();
+				LCD_Goto(0,0);
+				LCD_sendStr("1.Hall 2.Entrance");
+				LCD_Goto(0,1);
+				//Go to Keypad read part
+
+				//Keypad read
+				if(INPUT_Read()=='1'){
+					LCD_sendData(INPUT_LIGHTINGROOM);
+					LIGHTING_Start(LIGHTINGROOM);
+				}
+				else if(INPUT_Read()=='2'){
+					LCD_sendData(INPUT_LIGHTINHALL);
+					LIGHTING_Start(LIGHTINHALL);
+				}
+
+				//Temperature check
+				LCD_Goto(0,0);
+				TEMP_Check();
+				LCD_Goto(0,1);
+				LCD_sendStr("1 to return:  ");
+				//Go to Keypad read part
+
+				//Keypad read
+				read = INPUT_Read();
+				if(INPUT_Read()=='1'){
+					LCD_sendData(INPUT_return);
+
+				}
+			}
+		}
+		vTaskDelay(500/portTICK_PERIOD_MS);
+	}
+}
+
+/*void Code_APP(){
 	static u8 Admin_Main_Flage=0, User_Main_Flage = 0, read=0;
 	if(CheckPasswordAdmin()==TRUE){
 		Admin_Main_Flage = 1;
@@ -95,7 +192,7 @@ void Code_APP(){
 		}
 
 	//User Login
-	/*switch(User_Main_Flage){
+	switch(User_Main_Flage){
 		case 1:
 			//Hold function
 			HOLD_Start();
@@ -184,5 +281,6 @@ void Code_APP(){
 			break;
 		default:
 			break;
-		}*/
+		}
 }
+*/
