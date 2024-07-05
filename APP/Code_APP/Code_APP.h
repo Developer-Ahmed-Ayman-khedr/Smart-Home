@@ -45,6 +45,8 @@
 
 #include "task.h"
 
+#include"event_groups.h"
+
 //Project Elements
 
 #include "LIGHTING_INT.h"
@@ -73,6 +75,9 @@
 #define INPUT_ENTERANCE '3'
 
 #define RETURN 1
+
+// Specific for Event Group in Login System
+#define BIT_0	( 1 << 0 )
 
 /******************************************
   GLOBAL FUNCTIONS MACROS

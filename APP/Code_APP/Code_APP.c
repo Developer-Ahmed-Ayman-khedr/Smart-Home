@@ -7,11 +7,32 @@
 
 #include"Code_APP.h"
 
+<<<<<<< HEAD
 void Code_APPInitDriversTask(void *pvParameters){
 	while (1)
 	{
 		//Initialize ADC
 		ADC_init();
+=======
+EventGroupHandle_t LoginEventGroup;
+
+
+void LoginTask(void * pvParameters )
+{
+	while(1)
+	{
+		if(CheckPasswordAdmin()==TRUE){
+
+			xEventGroupSetBits(LoginEventGroup, BIT_0 );
+		}
+		else if(CheckDataForUser() == TRUE){
+			 xEventGroupClearBits( LoginEventGroup, BIT_0 );
+		}
+	}
+}
+
+void Code_APPInitDrivers(){
+>>>>>>> Hady_Mohamed_branch
 
 		//Global Interrupt
 		GI_enable();
