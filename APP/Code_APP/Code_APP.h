@@ -47,6 +47,8 @@
 
 #include"event_groups.h"
 
+#include "queue.h"
+
 //Project Elements
 
 #include "LIGHTING_INT.h"
