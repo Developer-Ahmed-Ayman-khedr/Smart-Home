@@ -8,6 +8,7 @@
 #include"Code_APP.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void Code_APPInitDriversTask(void *pvParameters){
 	while (1)
 	{
@@ -15,6 +16,61 @@ void Code_APPInitDriversTask(void *pvParameters){
 		ADC_init();
 =======
 EventGroupHandle_t LoginEventGroup;
+=======
+  QueueHandle_t xQueue;
+void DoorControlTask (void * pvParameters )
+{
+u8 DoorKey ;
+	while(1)
+	{
+		if (xQueueRecieve(xQueue,&DoorKey,0)== pdpass)
+		{
+			if(DoorKey==1)
+			{
+				DOORCONTROL_Start();
+
+			}
+
+		}
+
+		vTaskDelay(250/portTICK_PERIOD_MS);
+	}
+}
+
+
+void Code_APPInitDrivers(){
+
+	//Global Interrupt
+	//GI_enable();
+
+	//KPD_init();
+	//LCD_init();
+
+	UART_init();
+
+	EEPROM_Init();
+
+	//ADC
+	//ADC_init();
+
+	//Start the Hold process
+	//HOLD_init();
+
+	//Initialize the temperature check process
+	//TEMP_Init();
+
+	//Initialize the Keypad input process
+	//INPUT_Init();
+
+	//Initialize the PasswordCheck check process
+	password_init ();
+
+	//initialize the Lighting Control process
+	//LIGHTING_init();
+
+	//initialize the Door Control process
+	//DOORCONTROL_init();
+>>>>>>> Abdo_ElRazaz_branch
 
 
 void LoginTask(void * pvParameters )
