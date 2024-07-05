@@ -7,89 +7,8 @@
 
 #include"Code_APP.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 void Code_APPInitDriversTask(void *pvParameters){
-	while (1)
-	{
-		//Initialize ADC
-		ADC_init();
-=======
-EventGroupHandle_t LoginEventGroup;
-=======
-  QueueHandle_t xQueue;
-void DoorControlTask (void * pvParameters )
-{
-u8 DoorKey ;
-	while(1)
-	{
-		if (xQueueRecieve(xQueue,&DoorKey,0)== pdpass)
-		{
-			if(DoorKey==1)
-			{
-				DOORCONTROL_Start();
-
-			}
-
-		}
-
-		vTaskDelay(250/portTICK_PERIOD_MS);
-	}
-}
-
-
-void Code_APPInitDrivers(){
-
-	//Global Interrupt
-	//GI_enable();
-
-	//KPD_init();
-	//LCD_init();
-
-	UART_init();
-
-	EEPROM_Init();
-
-	//ADC
-	//ADC_init();
-
-	//Start the Hold process
-	//HOLD_init();
-
-	//Initialize the temperature check process
-	//TEMP_Init();
-
-	//Initialize the Keypad input process
-	//INPUT_Init();
-
-	//Initialize the PasswordCheck check process
-	password_init ();
-
-	//initialize the Lighting Control process
-	//LIGHTING_init();
-
-	//initialize the Door Control process
-	//DOORCONTROL_init();
->>>>>>> Abdo_ElRazaz_branch
-
-
-void LoginTask(void * pvParameters )
-{
-	while(1)
-	{
-		if(CheckPasswordAdmin()==TRUE){
-
-			xEventGroupSetBits(LoginEventGroup, BIT_0 );
-		}
-		else if(CheckDataForUser() == TRUE){
-			 xEventGroupClearBits( LoginEventGroup, BIT_0 );
-		}
-	}
-}
-
-void Code_APPInitDrivers(){
->>>>>>> Hady_Mohamed_branch
-
+	while(1){
 		//Global Interrupt
 		GI_enable();
 
@@ -121,20 +40,36 @@ void Code_APPInitDrivers(){
 		DOORCONTROL_init();
 
 		vTaskSuspend(NULL);
+
 		vTaskDelay(500/portTICK_PERIOD_MS);
 	}
 }
 
-QueueHandle_t MyQueue;
+EventGroupHandle_t LoginEventGroup;
+
+QueueHandle_t xQueue;
 
 void UARTInputTask(void *pvParameters){
 	u8 var = UART_NOT_RECEIVE;
 	while(1){
 		var = UART_receiveData();
 		if(var!=UART_NOT_RECEIVE){
-			xQueueSend(MyQueue,&var,0);
+			xQueueSend(xQueue,&var,0);
 		}
 		vTaskDelay(500/portTICK_PERIOD_MS);
+	}
+}
+
+void LoginTask(void * pvParameters ){
+	while(1)
+	{
+		if(CheckPasswordAdmin()==TRUE){
+
+			xEventGroupSetBits(LoginEventGroup, BIT_0 );
+		}
+		else if(CheckDataForUser() == TRUE){
+			 xEventGroupClearBits( LoginEventGroup, BIT_0 );
+		}
 	}
 }
 
@@ -143,9 +78,9 @@ EventBits_t uxBits;
 void OptionsTask(void *pvParameters){
 	u8 var2, read = 0;
 	while(1){
-		if (xQueueReceive( MyQueue, &var2, 0) == pdPASS)
+		if (xQueueReceive( xQueue, &var2, 0) == pdPASS)
 		{
-			uxBits = xEventGroupWaitBits(xEventGroup, BIT_0, pdTRUE, pdFALSE, 0 );
+			uxBits = xEventGroupWaitBits(LoginEventGroup, BIT_0, pdTRUE, pdFALSE, 0 );
 			if(( uxBits & BIT_0 ) != 1){
 				//Correct password Welcome
 				UART_sendStr("1.Light 2.Temp 3.Enter\r\n");
@@ -165,7 +100,7 @@ void OptionsTask(void *pvParameters){
 
 				}
 			}
-			else if(){
+			else if(( uxBits & BIT_0 ) != 0){
 				LCD_sendStr("1.Light 2.Temp 3.Enter");
 				LCD_Goto(0,1);
 				//Go to Keypad read part
@@ -214,6 +149,24 @@ void OptionsTask(void *pvParameters){
 			}
 		}
 		vTaskDelay(500/portTICK_PERIOD_MS);
+	}
+}
+
+void DoorControlTask (void * pvParameters ){
+u8 DoorKey ;
+	while(1)
+	{
+		if (xQueueReceive(xQueue,&DoorKey,0)== pdPASS)
+		{
+			if(DoorKey==1)
+			{
+				DOORCONTROL_Start();
+
+			}
+
+		}
+
+		vTaskDelay(250/portTICK_PERIOD_MS);
 	}
 }
 

@@ -14,7 +14,6 @@ int main(){
 	vTaskStartScheduler();
 
 	while (1){
-		Code_APP();
 	}
 	return 0;
 }

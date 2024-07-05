@@ -90,8 +90,14 @@
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
 
-void Code_APPInitDrivers();
+void Code_APPInitDriversTask(void *pvParameters);
 
-void Code_APP();
+void UARTInputTask(void *pvParameters);
+
+void LoginTask(void * pvParameters );
+
+void OptionsTask(void *pvParameters);
+
+void DoorControlTask (void * pvParameters );
 
 #endif /* APP_CODE_APP_CODE_APP_H_ */
