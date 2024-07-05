@@ -7,6 +7,23 @@
 
 #include"Code_APP.h"
 
+EventGroupHandle_t LoginEventGroup;
+
+
+void LoginTask(void * pvParameters )
+{
+	while(1)
+	{
+		if(CheckPasswordAdmin()==TRUE){
+
+			xEventGroupSetBits(LoginEventGroup, BIT_0 );
+		}
+		else if(CheckDataForUser() == TRUE){
+			 xEventGroupClearBits( LoginEventGroup, BIT_0 );
+		}
+	}
+}
+
 void Code_APPInitDrivers(){
 
 	//Global Interrupt
