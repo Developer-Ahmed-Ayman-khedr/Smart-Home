@@ -31,11 +31,11 @@
 
 #include "TIMER1_INT.h"
 
-#include "HOLD_INT.h"
-
-#include "TEMP_INT.h"
-
 #include "UART_INT.h"
+
+#include "I2C_INT.h"
+
+#include "EEPROM_INT.h"
 
 //FreeRTOS
 
@@ -49,22 +49,15 @@
 
 #include "queue.h"
 
-//Project Elements
-
-#include "LIGHTING_INT.h"
-
-#include "DOORCONTROL_INT.h"
-
-#include "INPUT_INT.h"
-
-#include "PasswordCheck_INT.h"
-
-#include "USERCONTROL_INT.h"
-
 /******************************************
   Global Data TYPES AND STRUCTURES
 *******************************************/
 
+EventGroupHandle_t LoginEventGroup;
+
+QueueHandle_t xQueue;
+
+EventBits_t uxBits;
 
 /******************************************
   GLOBAL CONSTANT MACROS
@@ -78,8 +71,28 @@
 
 #define RETURN 1
 
+//Input
+#define INPUT_LIGHTINGROOM '1'
+
+#define INPUT_LIGHTINHALL '2'
+
+#define INPUT_return '1'
+
 // Specific for Event Group in Login System
 #define BIT_0	( 1 << 0 )
+
+//Lighting
+#define LIGHTINGROOM  1
+
+#define LIGHTINHALL   2
+
+//User
+#define MAXUSERNUM  4
+
+#define MINEEPROMUSER   100
+
+#define MAXEEPROMUSER   132
+
 
 /******************************************
   GLOBAL FUNCTIONS MACROS
@@ -89,7 +102,47 @@
 /******************************************
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
+//Admin
+void password_init ();
 
+BOOL CheckPasswordAdmin();
+
+//Temperature
+void TEMP_Init();
+
+void TEMP_Check();
+
+void TEMP_ControlAC();
+
+//Lighting
+
+void LIGHTING_init();
+
+void LIGHTING_Start(u8 Start);
+
+//Input
+u8 INPUT_Read();
+
+//Servo
+void HOLD_init();
+
+void HOLD_Start();
+
+u32 HOLD_Retrun();
+
+//Door
+void DOORCONTROL_init();
+
+BOOL DOORCONTROL_Start();
+
+//User
+void AddUser();
+
+BOOL DeleteUser();
+
+BOOL CheckDataForUser();
+
+//Main
 void Code_APPInitDriversTask(void *pvParameters);
 
 void UARTInputTask(void *pvParameters);
