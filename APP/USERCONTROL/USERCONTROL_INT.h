@@ -29,9 +29,9 @@
 
 #define MAXUSERNUM  4
 
-#define MINEEPROMUSER   100
+#define MINEEPROMUSER   4
 
-#define MAXEEPROMUSER   132
+#define MAXEEPROMUSER   21
 
 
 

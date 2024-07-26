@@ -28,8 +28,12 @@ void UARTInputTask(void *pvParameters){
 		var = UART_receiveData();
 
 		if(var!=UART_NOT_RECEIVE){
-			xQueueSend(xQueue,&var,0);
+			if( xQueueSend(xQueue,&var,0) == pdPASS )
+			{
+				UART_sendStr("\r\nHHH");
+			}
 		}
+
 
 		vTaskResume(OptionsTaskHandle);
 
@@ -76,7 +80,7 @@ void OptionsTask(void *pvParameters){
 
 				//UART read
 				if (xQueueReceive( xQueue, &var2, 0) == pdPASS){
-					UART_sendStr("\r\nHHH");
+
 					if(var2==INPUT_Light){
 						//lighting
 						UART_sendStr("\r\n1.Hall 2.Entrance\r\n");
