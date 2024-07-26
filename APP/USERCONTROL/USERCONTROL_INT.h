@@ -31,7 +31,7 @@
 
 #define MINEEPROMUSER   100
 
-#define MAXEEPROMUSER   132
+#define MAXEEPROMUSER   120
 
 
 

@@ -6,7 +6,11 @@
  */
 #include"USERCONTROL_INT.h"
 
-u8 password[4], username[4], ch;
+u8 password[4], username, ch;
+
+u8 array[5];
+
+u8 index ;
 
 void AddUser()
 {
@@ -26,27 +30,38 @@ void AddUser()
 			EEPROMReturnFlag = TRUE;
 			break;
 		}
-		EEPROMINDEX+=8;
+		EEPROMINDEX+=5;
 	}
+
 	if(EEPROMReturnFlag==TRUE){
-		for(u8 userindex = 0;userindex<=4;userindex++){
-			EEPROM_SendByte(username[userindex],EEPROMINDEX);
-			EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
-			UART_sendData(EEPROMValue);
-			EEPROMINDEX++;
+
+		for( index = 0;index<=4;index++){
+
+			if(index==0){
+
+					EEPROM_SendByte(array[index],EEPROMINDEX);
+					EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
+					UART_sendData(EEPROMValue);
+					EEPROMINDEX++;
+			}
+
+			else if(index>0){
+
+					EEPROM_SendByte(array[index],EEPROMINDEX);
+					EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
+					UART_sendData(EEPROMValue);
+					EEPROMINDEX++;
+
+			}
+
 		}
-		for(u8 passindex = 0;passindex<=4;passindex++){
-			EEPROM_SendByte(password[passindex],EEPROMINDEX);
-			EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
-			UART_sendData(EEPROMValue);
-			EEPROMINDEX++;
-		}
+		index = 0;
 	}
 }
 
 BOOL CheckDataForUser(){
 	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE , flag=0 , Check_index = MINEEPROMUSER + 4;
-	u8  KPD_RecevedData, Entered_User[4],Entered_Pass[4], Userindex = 0,Passindex=0, i2 = 0, EEPROMRecevedData,counter=0;
+	u8  KPD_RecevedData, Entered_User[1],Entered_Pass[4], Userindex = 0,Passindex=0, i2 = 0, EEPROMRecevedData,counter=0;
 
 	while (i2<4)
 	{
@@ -71,7 +86,6 @@ BOOL CheckDataForUser(){
 			LCD_sendNum(KPD_RecevedData-48);
 			Entered_User[Userindex] = KPD_RecevedData;
 
-
 			Userindex++;
 	}
 	else if ( KPD_RecevedData!=KPD_UNPRESSED)
@@ -84,7 +98,7 @@ BOOL CheckDataForUser(){
 	}
 
 
-	if (Userindex==4&&flag==0)
+	if (Userindex==1&&flag==0)
 	{
 		if (EEPROM_flage==FALSE)
 		{
@@ -240,6 +254,7 @@ BOOL DeleteUser(){
 		 		i2++;
 
 		 	}
+
 
 }
 
