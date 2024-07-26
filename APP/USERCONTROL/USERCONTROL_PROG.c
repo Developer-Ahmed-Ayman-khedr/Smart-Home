@@ -221,23 +221,26 @@ else if (Passindex==4 && flag==1)
 
 }
 
-BOOL DeleteUser(){
+BOOL DeleteUser(u8 userID){
 
 	// define flag to delete user
-	 u8 deleteuserflag = FALSE , i2 = 0 , EEPROMRecevedData ;
-		 while (i2<4)
+	 u8 deleteuserflag = FALSE , i2 = 4 , EEPROMRecievedData ;
+		 while (i2<21)
 		 	{
 		 		_delay_ms(100);
-		 		EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
-		 		if (EEPROMRecevedData!=255)
+		 		EEPROM_ReadByteNACK(&EEPROMRecievedData,i2);
+		 		if (EEPROMRecievedData == userID)
 		 		{
 		 			deleteuserflag = TRUE;
+		 			for (u8 i=i2;i<(i2+5);i++){
+		 				EEPROM_SendByte(0xff,i);
+		 			}
 		 		}
 		 		else
 		 		{
 		 			deleteuserflag = FALSE;
 		 		}
-		 		i2++;
+		 		i2+=4;
 
 		 	}
 
