@@ -29,12 +29,9 @@
 
 #define MAXUSERNUM  4
 
-#define MINEEPROMUSER   100
+#define MINEEPROMUSER   4
 
-#define MAXEEPROMUSER   120
-
-
-
+#define MAXEEPROMUSER   21
 
 /******************************************
   GLOBAL FUNCTIONS MACROS

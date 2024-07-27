@@ -14,26 +14,12 @@ void Code_APPInitDriversTask(void *pvParameters){
 		LCD_init();
 		UART_init();
 		EEPROM_Init();
+
+		LIGHTING_init();
+		HOLD_init();
+		DOORCONTROL_init();
 		vTaskSuspend(NULL);
 		vTaskDelay(500/portTICK_PERIOD_MS);
-	}
-}
-
-void UARTInputTask(void *pvParameters){
-	u8 var = UART_NOT_RECEIVE;
-	while(1){
-
-		vTaskSuspend(OptionsTaskHandle);
-
-		var = UART_receiveData();
-
-		if(var!=UART_NOT_RECEIVE){
-			xQueueSend(xQueue,&var,0);
-		}
-
-		vTaskResume(OptionsTaskHandle);
-
-		vTaskDelay(5/portTICK_PERIOD_MS);
 	}
 }
 
@@ -53,16 +39,19 @@ void LoginTask(void * pvParameters ){
 
 				//xSemaphoreGive( A );
 			}
-			/*else if(CheckDataForUser() == TRUE){
-					xEventGroupClearBits( LoginEventGroup, BIT_0 );
-			}*/
+			else if(CheckDataForUser() == TRUE){
+				xEventGroupClearBits( LoginEventGroup, BIT_0 );
+				vTaskResume(OptionsTaskHandle);
+
+				vTaskSuspend(LoginTaskHandle);
+			}
 		}
 		vTaskDelay(5/portTICK_PERIOD_MS);
 	}
 }
 
 void OptionsTask(void *pvParameters){
-	u8 var2;
+	//u8 var2 = 'a';
 	//u8 read = 0;
 	while(1){
 		//if( xSemaphoreTake( A, 0 ) == pdTRUE )
@@ -70,24 +59,36 @@ void OptionsTask(void *pvParameters){
 
 			uxBits = xEventGroupWaitBits(LoginEventGroup, BIT_0, pdTRUE, pdFALSE, 0 );
 			if(( uxBits & BIT_0 ) != 0){
-				vTaskSuspend(UARTInputTaskHandle);
 				//Correct password Welcome
-				UART_sendStr("1.Light 2.Temp 3.Enter\r\n");
+				UART_sendStr("1.Light 2.Temp 3.Enter 4.Add User\r\n");
 
 				//UART read
-				if (xQueueReceive( xQueue, &var2, 0) == pdPASS){
-					UART_sendStr("\r\nHHH");
-					if(var2==INPUT_Light){
-						//lighting
-						UART_sendStr("\r\n1.Hall 2.Entrance\r\n");
+				if(UART_receiveData()==INPUT_Light){
+					//lighting
+					UART_sendStr("1.Hall 2.Entrance\r\n");
+					if (UART_receiveData()==LIGHTINGROOM)
+					{
+						LIGHTING_Start(LIGHTINGROOM);
 					}
-					else if(var2==INPUT_Temp){
-						//Temperature check
-						TEMP_Check();
-						UART_sendStr("\r\n1 to return:  \r\n");
+					else if (UART_receiveData()==LIGHTINHALL)
+					{
+						LIGHTING_Start(LIGHTINHALL);
 					}
 				}
-				vTaskResume(OptionsTaskHandle);
+				else if(UART_receiveData()==INPUT_Temp){
+					//Temperature check
+					TEMP_Check();
+					UART_sendStr("\r\n1 to return:  \r\n");
+				}
+				else if (UART_receiveData()==INPUT_ENTERANCE)
+				{
+					DOORCONTROL_Start();
+				}
+				else if (UART_receiveData()== INPUT_ADDUSER)
+				{
+					UART_sendStr("\r\n Add user data \r\n");
+					AddUser();
+				}
 			}
 			/*else if(( uxBits & BIT_0 ) != 1){
 				LCD_sendStr("1.Light 2.Temp 3.Enter");
@@ -132,13 +133,13 @@ void DoorControlTask (void * pvParameters ){
 u8 DoorKey ;
 	while(1)
 	{
-		if (xQueueReceive(xQueue,&DoorKey,0)== pdPASS)
+		/*if (xQueueReceive(xQueue,&DoorKey,0)== pdPASS)
 		{
 			if(DoorKey==1)
 			{
 				DOORCONTROL_Start();
 			}
-		}
+		}*/
 		vTaskDelay(250/portTICK_PERIOD_MS);
 	}
 }

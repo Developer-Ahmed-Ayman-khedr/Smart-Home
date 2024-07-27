@@ -14,8 +14,6 @@ int main(){
 
 	xTaskCreate(Code_APPInitDriversTask,NULL,100,NULL,3,&Code_APPInitDriversTaskHandle);
 
-	xTaskCreate(UARTInputTask,NULL,100,NULL,1,&UARTInputTaskHandle);
-
 	xTaskCreate(LoginTask,NULL,100,NULL,3,&LoginTaskHandle);
 
 	xTaskCreate(OptionsTask,NULL,100,NULL,2,&OptionsTaskHandle);
@@ -27,6 +25,7 @@ int main(){
 	xSemaphoreGive( A );
 
 	vTaskStartScheduler();
+
 
 	while (1){
 	}
