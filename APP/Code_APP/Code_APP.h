@@ -80,44 +80,36 @@ EventBits_t uxBits;
 SemaphoreHandle_t A;
 
 TaskHandle_t Code_APPInitDriversTaskHandle;
+
 TaskHandle_t UARTInputTaskHandle;
+
 TaskHandle_t LoginTaskHandle;
+
 TaskHandle_t OptionsTaskHandle;
+
 TaskHandle_t DoorControlTaskHandle;
 
 /******************************************
   GLOBAL CONSTANT MACROS
 *******************************************/
 
+//Input
 #define INPUT_Light	'1'
 
 #define INPUT_Temp 	'2'
 
 #define INPUT_ENTERANCE '3'
 
-#define RETURN 1
+#define INPUT_ADDUSER  '4'
 
-//Input
+#define INPUT_RETURN '1'
+
 #define INPUT_LIGHTINGROOM '1'
 
 #define INPUT_LIGHTINHALL '2'
 
-#define INPUT_return '1'
-
 // Specific for Event Group in Login System
 #define BIT_0	( 1 << 0 )
-
-//Lighting
-#define LIGHTINGROOM  1
-
-#define LIGHTINHALL   2
-
-//User
-#define MAXUSERNUM  4
-
-#define MINEEPROMUSER   100
-
-#define MAXEEPROMUSER   132
 
 /******************************************
   GLOBAL FUNCTIONS MACROS
