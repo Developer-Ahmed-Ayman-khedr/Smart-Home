@@ -6,7 +6,11 @@
  */
 #include"USERCONTROL_INT.h"
 
-u8 password[4], username[4], ch;
+u8 password[4], username, ch;
+
+u8 array[5];
+
+u8 index ;
 
 void AddUser()
 {
@@ -26,39 +30,85 @@ void AddUser()
 			EEPROMReturnFlag = TRUE;
 			break;
 		}
-		EEPROMINDEX+=8;
+		EEPROMINDEX+=5;
 	}
+
 	if(EEPROMReturnFlag==TRUE){
-		for(u8 userindex = 0;userindex<=4;userindex++){
-			EEPROM_SendByte(username[userindex],EEPROMINDEX);
-			EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
-			UART_sendData(EEPROMValue);
-			EEPROMINDEX++;
+
+		for( index = 0;index<=4;index++){
+
+			if(index==0){
+
+					EEPROM_SendByte(array[index],EEPROMINDEX);
+					EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
+					UART_sendData(EEPROMValue);
+					EEPROMINDEX++;
+			}
+
+			else if(index>0){
+
+					EEPROM_SendByte(array[index],EEPROMINDEX);
+					EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
+					UART_sendData(EEPROMValue);
+					EEPROMINDEX++;
+
+			}
+
 		}
-		for(u8 passindex = 0;passindex<=4;passindex++){
-			EEPROM_SendByte(password[passindex],EEPROMINDEX);
-			EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
-			UART_sendData(EEPROMValue);
-			EEPROMINDEX++;
-		}
+		index = 0;
 	}
 }
 
 BOOL CheckDataForUser(){
+<<<<<<< HEAD
 	u8 KPD_RecevedData , User_Data[5] , Userindex = 0 , EEPROMRecievedData , AccessTimes=1;
 	u16 EEPROMIndex =MINEEPROMUSER;
 	BOOL AccessResult = FALSE ;
 	while (Userindex<=4){
+=======
+	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE , flag=0 , Check_index = MINEEPROMUSER + 4;
+	u8  KPD_RecevedData, Entered_User[1],Entered_Pass[4], Userindex = 0,Passindex=0, i2 = 0, EEPROMRecevedData,counter=0;
+
+	while (i2<4)
+	{
+		_delay_ms(100);
+		EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
+		if (EEPROMRecevedData!=255)
+		{
+			EEPROM_flage = TRUE;
+		}
+		else
+		{
+			EEPROM_flage = FALSE;
+		}
+		i2++;
+	}
+
+>>>>>>> master
 	KPD_RecevedData = KPD_read();
 	if ( KPD_RecevedData!=KPD_UNPRESSED)
 	{
 		while(KPD_read()!=KPD_UNPRESSED);
+<<<<<<< HEAD
 		LCD_sendNum(KPD_RecevedData-48);
 		User_Data[Userindex] = KPD_RecevedData;
 		Userindex++;
+=======
+
+			LCD_sendNum(KPD_RecevedData-48);
+			Entered_User[Userindex] = KPD_RecevedData;
+
+			Userindex++;
+>>>>>>> master
 	}
 	}
+<<<<<<< HEAD
 	while (EEPROMIndex<MAXEEPROMUSER)
+=======
+
+
+	if (Userindex==1&&flag==0)
+>>>>>>> master
 	{
 		_delay_ms(100);
 		EEPROM_ReadByteNACK(&EEPROMRecievedData,EEPROMIndex);
@@ -133,6 +183,7 @@ BOOL DeleteUser(u8 userID){
 		 		i2+=4;
 
 		 	}
+
 
 }
 

@@ -20,4 +20,5 @@ u8 INPUT_Read(){
 		while (UART_receiveData()!=UART_NOT_RECEIVE);
 		return UART_Press;
 	}
+	return UART_NOT_RECEIVE;
 }

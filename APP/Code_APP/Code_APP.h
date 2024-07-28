@@ -31,11 +31,11 @@
 
 #include "TIMER1_INT.h"
 
-#include "HOLD_INT.h"
-
-#include "TEMP_INT.h"
-
 #include "UART_INT.h"
+
+#include "I2C_INT.h"
+
+#include "EEPROM_INT.h"
 
 //FreeRTOS
 
@@ -45,19 +45,25 @@
 
 #include "task.h"
 
-#include"event_groups.h"
+#include "semphr.h"
+
+#include "event_groups.h"
 
 #include "queue.h"
 
 //Project Elements
 
-#include "LIGHTING_INT.h"
-
 #include "DOORCONTROL_INT.h"
+
+#include "HOLD_INT.h"
 
 #include "INPUT_INT.h"
 
+#include "LIGHTING_INT.h"
+
 #include "PasswordCheck_INT.h"
+
+#include "TEMP_INT.h"
 
 #include "USERCONTROL_INT.h"
 
@@ -65,18 +71,42 @@
   Global Data TYPES AND STRUCTURES
 *******************************************/
 
+EventGroupHandle_t LoginEventGroup;
+
+QueueHandle_t xQueue;
+
+EventBits_t uxBits;
+
+SemaphoreHandle_t A;
+
+TaskHandle_t Code_APPInitDriversTaskHandle;
+
+TaskHandle_t UARTInputTaskHandle;
+
+TaskHandle_t LoginTaskHandle;
+
+TaskHandle_t OptionsTaskHandle;
+
+TaskHandle_t DoorControlTaskHandle;
 
 /******************************************
   GLOBAL CONSTANT MACROS
 *******************************************/
 
+//Input
 #define INPUT_Light	'1'
 
 #define INPUT_Temp 	'2'
 
 #define INPUT_ENTERANCE '3'
 
-#define RETURN 1
+#define INPUT_ADDUSER  '4'
+
+#define INPUT_RETURN '1'
+
+#define INPUT_LIGHTINGROOM '1'
+
+#define INPUT_LIGHTINHALL '2'
 
 // Specific for Event Group in Login System
 #define BIT_0	( 1 << 0 )
