@@ -61,6 +61,7 @@ void AddUser()
 
 BOOL CheckDataForUser(){
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 KPD_RecevedData , User_Data[5] , Userindex = 0 , EEPROMRecievedData , AccessTimes=1;
 	u16 EEPROMIndex =MINEEPROMUSER;
 	BOOL AccessResult = FALSE ;
@@ -85,10 +86,17 @@ BOOL CheckDataForUser(){
 	}
 
 >>>>>>> master
+=======
+	u8 KPD_RecevedData , User_Data[5] , Userindex = 0 , EEPROMRecievedData , AccessTimes=1; 
+	u16 EEPROMIndex =MINEEPROMUSER;
+	BOOL AccessResult = FALSE ; 
+	while (Userindex<=4){
+>>>>>>> 89dd561784cd40646aa88ca0df04c0ab8c45c750
 	KPD_RecevedData = KPD_read();
 	if ( KPD_RecevedData!=KPD_UNPRESSED)
 	{
 		while(KPD_read()!=KPD_UNPRESSED);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		LCD_sendNum(KPD_RecevedData-48);
 		User_Data[Userindex] = KPD_RecevedData;
@@ -109,55 +117,62 @@ BOOL CheckDataForUser(){
 
 	if (Userindex==1&&flag==0)
 >>>>>>> master
+=======
+		LCD_sendNum(KPD_RecevedData-48);
+		User_Data[Userindex] = KPD_RecevedData;
+		Userindex++;
+	}
+	}
+	while (EEPROMIndex<MAXEEPROMUSER)
+>>>>>>> 89dd561784cd40646aa88ca0df04c0ab8c45c750
 	{
-		_delay_ms(100);
+		_delay_ms(100); 
 		EEPROM_ReadByteNACK(&EEPROMRecievedData,EEPROMIndex);
 		if (EEPROMRecievedData== User_Data [0])
 		{
 			for (Userindex=0 ; Userindex<5;Userindex++)
 			{
-				_delay_ms(50);
-				EEPROM_ReadByteNACK(&EEPROMRecievedData , EEPROMIndex) ;
+				_delay_ms(50)
+				EEPROM_ReadByteNACK(&EEPROMRecievedData , EEPROMIndex) ; 
 				if (EEPROMRecievedData == User_Data[Userindex])
 				{
-					AccessResult = TRUE ;
+					AccessResult = TRUE ; 
 				}
 				else
-				{
+				{			
 					AccessResult = FALSE ;
-					break ;
+					break ; 
 				}
-				EEPROMIndex++;
+				EEPROMIndex++; 
 			}
 		}
 		EEPROMIndex+=5;
 	}
-
 	if (AccessResult == TRUE)
 	{
-		LCD_sendStr("welcome/r/n") ;
+		LCD_sendStr("welcome/r/n") ;		
 	}
 	else
 	{
 		switch (AccessTimes)
 		{
 		case 1:
+			LCD_sendStr("WrongData") ;  
+			EEPROMIndex = MINEEPROMUSER ; 	
+			break;
+		case 2 : 
 			LCD_sendStr("WrongData") ;
 			EEPROMIndex = MINEEPROMUSER ;
 			break;
-		case 2 :
-			LCD_sendStr("WrongData") ;
-			EEPROMIndex = MINEEPROMUSER ;
-			break;
-		case 3 :
+		case 3 : 
 			LCD_sendStr("Block") ;
-			EEPROMIndex = MAXEEPROMUSER ;
+			EEPROMIndex = MAXEEPROMUSER ; 
 			break;
 		default:
-			break;
+			break; 	
 		}
 		Userindex = 0 ;
-		AccessTimes ++ ;
+		AccessTimes ++ ; 
 	}
 }
 
@@ -186,10 +201,3 @@ BOOL DeleteUser(u8 userID){
 
 
 }
-
-
-
-
-
-
-
