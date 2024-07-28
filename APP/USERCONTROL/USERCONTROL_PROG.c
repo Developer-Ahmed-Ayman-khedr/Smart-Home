@@ -81,7 +81,7 @@ BOOL CheckDataForUser(){
 		{
 			for (Userindex=0 ; Userindex<5;Userindex++)
 			{
-				_delay_ms(50)
+				_delay_ms(50);
 				EEPROM_ReadByteNACK(&EEPROMRecievedData , EEPROMIndex) ; 
 				if (EEPROMRecievedData == User_Data[Userindex])
 				{
@@ -97,6 +97,7 @@ BOOL CheckDataForUser(){
 		}
 		EEPROMIndex+=5;
 	}
+
 	if (AccessResult == TRUE)
 	{
 		LCD_sendStr("welcome/r/n") ;		
