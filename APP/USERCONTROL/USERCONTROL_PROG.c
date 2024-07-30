@@ -4,9 +4,9 @@
  *  Created on: Jun 25, 2024
  *      Author: DELL
  */
-#include"USERCONTROL_INT.h"
+#include"USERCONTROL_INT.h"++
 
-u8 password[4], username, ch;
+u8 password[4], username;
 
 u8 array[5];
 
@@ -14,51 +14,45 @@ u8 index ;
 
 void AddUser()
 {
-	u8 EEPROMINDEX = MINEEPROMUSER;
-	u8 EEPROMValue;
-	BOOL EEPROMReturnFlag = FALSE;
-
-	while(EEPROMINDEX<=MAXEEPROMUSER){
-
-		_delay_ms(100);
-		EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
-		if(EEPROMValue!=255){
-			EEPROMReturnFlag = FALSE;
-		}
-		else
-		{
-			EEPROMReturnFlag = TRUE;
-			break;
-		}
-		EEPROMINDEX+=5;
-	}
-
-	if(EEPROMReturnFlag==TRUE){
-
-		for( index = 0;index<=4;index++){
-
-			if(index==0){
-
-					EEPROM_SendByte(array[index],EEPROMINDEX);
-					EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
-					UART_sendData(EEPROMValue);
-					EEPROMINDEX++;
-			}
-
-			else if(index>0){
-
-					EEPROM_SendByte(array[index],EEPROMINDEX);
-					EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
-					UART_sendData(EEPROMValue);
-					EEPROMINDEX++;
-
-			}
-
-		}
-		index = 0;
-	}
+ u8 userData[5];
+ u8 EEPROMINDEX = MINEEPROMUSER;
+ u8 EEPROMValue;
+ BOOL EEPROMReturnFlag = FALSE;
+ u8 userindex = 0;
+ u8 UARTResevedData = UART_NOT_RECEIVE;
+ while(EEPROMINDEX<MAXEEPROMUSER){
+  _delay_ms(100);
+  EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
+  if(EEPROMValue==255){
+   EEPROMReturnFlag = TRUE;
+   break;
+  }
+  else
+  {
+   EEPROMReturnFlag = FALSE;
+  }
+  EEPROMINDEX+=5;
+ }
+ while (userindex<=4)
+ {
+  UARTResevedData = UART_receiveData();
+  if (UARTResevedData!=UART_NOT_RECEIVE)
+  {
+   userData[userindex] = UARTResevedData;
+   userindex++;
+  }
+ }
+ if(EEPROMReturnFlag==TRUE){
+  for(userindex = 0;userindex<=4;userindex++){
+   _delay_ms(50);
+   EEPROM_SendByte(userData[userindex],EEPROMINDEX);
+   _delay_ms(50);
+   EEPROM_ReadByteNACK(&EEPROMValue,EEPROMINDEX);
+   UART_sendData(EEPROMValue);
+   EEPROMINDEX++;
+  }
+ }
 }
-
 BOOL CheckDataForUser(){
 	BOOL flage=FALSE,EEPROM_flage = FALSE,Save_flage = FALSE , flag=0 , Check_index = MINEEPROMUSER + 4;
 	u8  KPD_RecevedData, Entered_User[1],Entered_Pass[4], Userindex = 0,Passindex=0, i2 = 0, EEPROMRecevedData,counter=0;
@@ -235,26 +229,23 @@ else if (Passindex==4 && flag==1)
 
 }
 
-BOOL DeleteUser(u8 userID){
+BOOL DeleteUser(){
 
 	// define flag to delete user
-	 u8 deleteuserflag = FALSE , i2 = 4 , EEPROMRecievedData ;
-		 while (i2<21)
+	 u8 deleteuserflag = FALSE , i2 = 0 , EEPROMRecevedData ;
+		 while (i2<4)
 		 	{
 		 		_delay_ms(100);
-		 		EEPROM_ReadByteNACK(&EEPROMRecievedData,i2);
-		 		if (EEPROMRecievedData == userID)
+		 		EEPROM_ReadByteNACK(&EEPROMRecevedData,i2);
+		 		if (EEPROMRecevedData!=255)
 		 		{
 		 			deleteuserflag = TRUE;
-		 			for (u8 i=i2;i<(i2+5);i++){
-		 				EEPROM_SendByte(0xff,i);
-		 			}
 		 		}
 		 		else
 		 		{
 		 			deleteuserflag = FALSE;
 		 		}
-		 		i2+=4;
+		 		i2++;
 
 		 	}
 
