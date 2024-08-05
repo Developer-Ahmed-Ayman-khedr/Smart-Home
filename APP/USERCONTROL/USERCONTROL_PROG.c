@@ -126,7 +126,7 @@ BOOL CheckDataForUser(){
 	return FALSE;
 }
 
-BOOL DeleteUser(){
+BOOL DeleteUser(u8 userID){
 	// define flag to delete user
 	u8 deleteuserflag = FALSE , i2 = 4 , EEPROMRecievedData ;
 	while (i2<21)
