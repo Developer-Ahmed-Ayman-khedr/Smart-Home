@@ -33,9 +33,7 @@
 
 #include "UART_INT.h"
 
-#include "I2C_INT.h"
-
-#include "EEPROM_INT.h"
+#include"INTERNALEEPROM_INT.h"
 
 //FreeRTOS
 
