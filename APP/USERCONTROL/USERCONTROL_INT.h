@@ -14,7 +14,7 @@
 
 #include "STD_TYPES.h"
 #include"LCD_INT.h"
-#include"EEPROM_INT.h"
+#include"INTERNALEEPROM_INT.h"
 #include"KPD_INT.h"
 #include"UART_INT.h"
 

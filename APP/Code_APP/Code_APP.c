@@ -13,11 +13,10 @@ void Code_APPInitDriversTask(void *pvParameters){
 		KPD_init();
 		LCD_init();
 		UART_init();
-		EEPROM_Init();
 
-		LIGHTING_init();
-		HOLD_init();
-		DOORCONTROL_init();
+		//LIGHTING_init();
+		//HOLD_init();
+		//DOORCONTROL_init();
 		vTaskSuspend(NULL);
 		vTaskDelay(500/portTICK_PERIOD_MS);
 	}
@@ -27,8 +26,7 @@ void LoginTask(void * pvParameters ){
 	while(1)
 	{
 		vTaskSuspend(OptionsTaskHandle);
-		//if( xSemaphoreTake( A, 0 ) == pdTRUE )
-		{
+		//if( xSemaphoreTake( A, 0 ) == pdTRUE ){
 			if(CheckPasswordAdmin()==TRUE)
 			{
 				xEventGroupSetBits(LoginEventGroup, BIT_0);
@@ -39,13 +37,14 @@ void LoginTask(void * pvParameters ){
 
 				//xSemaphoreGive( A );
 			}
-			else if(CheckDataForUser() == TRUE){
+			else
+			if(CheckDataForUser() == TRUE){
 				xEventGroupClearBits( LoginEventGroup, BIT_0 );
 				vTaskResume(OptionsTaskHandle);
 
 				vTaskSuspend(LoginTaskHandle);
 			}
-		}
+		//}
 		vTaskDelay(5/portTICK_PERIOD_MS);
 	}
 }
@@ -86,7 +85,7 @@ void OptionsTask(void *pvParameters){
 				}
 				else if (UART_receiveData()== INPUT_ADDUSER)
 				{
-					UART_sendStr("\r\n Add user data \r\n");
+					//UART_sendStr("\r\n Add user data \r\n");
 					AddUser();
 				}
 			}
@@ -130,7 +129,7 @@ void OptionsTask(void *pvParameters){
 }
 
 void DoorControlTask (void * pvParameters ){
-u8 DoorKey ;
+	//u8 DoorKey ;
 	while(1)
 	{
 		/*if (xQueueReceive(xQueue,&DoorKey,0)== pdPASS)

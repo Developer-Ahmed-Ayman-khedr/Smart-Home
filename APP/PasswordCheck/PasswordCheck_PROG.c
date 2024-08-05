@@ -16,80 +16,45 @@ void password_init ()
 	DIO_setPinDir (DIO_PINA3,DIO_OUTPUT);
 }
 
-BOOL flage=FALSE;
 
 BOOL CheckPasswordAdmin(){
-	static BOOL EEPROM_flage = FALSE,Save_flage = FALSE;
-	static u8 UART_RecevedData = 'x', Entered_Pass[4], InputIndex = 0, EEPROMRecevedData = 0,counter=0;
+	static u8 UART_RecevedData = UART_NOT_RECEIVE, Entered_Pass[4], InputIndex = 0, EEPROMRecevedData = 0,counter=0;
 	static u16 EEPROMAdminLocation = 0;
-	/*while (EEPROMAdminLocation<4)
-	{
-		_delay_ms(100);
-		EEPROM_SendByte(4,EEPROMAdminLocation);
-		EEPROMAdminLocation++;
-	}*/
-	while (EEPROMAdminLocation<4)
-	{
-		EEPROM_ReadByteNACK(&EEPROMRecevedData,EEPROMAdminLocation);
-		_delay_ms(100);
-		//UART_sendData(EEPROMRecevedData+48);
-		if (EEPROMRecevedData!=255)
-		{
-			EEPROM_flage = TRUE;
-		}
-		else
-		{
-			EEPROM_flage = FALSE;
-			break;
-		}
-		EEPROMAdminLocation++;
-	}
+	static BOOL AccessFlag = TRUE;
 	UART_RecevedData = UART_NOT_RECEIVE;
 	UART_RecevedData = UART_receiveData()-48;
 	if (UART_RecevedData!=UART_NOT_RECEIVE)
 	{
 		Entered_Pass[InputIndex] = UART_RecevedData;
+		//UART_sendData(UART_RecevedData+48);
+		//UART_sendStr("\r\n");
 		InputIndex++;
+		UART_RecevedData = UART_NOT_RECEIVE;
 	}
 	if (InputIndex==4)
 	{
-		if (EEPROM_flage==FALSE)
-		{
+			InputIndex = 0;
 			EEPROMAdminLocation = 0;
 			while (EEPROMAdminLocation<4)
 			{
-				_delay_ms(100);
-				EEPROM_SendByte(Entered_Pass[EEPROMAdminLocation],EEPROMAdminLocation);
-				EEPROMAdminLocation++;
-			}
-			Save_flage = TRUE;
-		}
-		if (EEPROM_flage==TRUE){
-			EEPROMAdminLocation = 0;
-			while ( EEPROMAdminLocation<4)
-			{
-				_delay_ms(100);
-				EEPROM_ReadByteNACK(&EEPROMRecevedData,EEPROMAdminLocation);
-				if (Entered_Pass[EEPROMAdminLocation]==EEPROMRecevedData)
+				_delay_ms(50);
+				EEPROMRecevedData = INTERNALEEPROM_Read(EEPROMAdminLocation);
+				if (Entered_Pass[InputIndex]==EEPROMRecevedData)
 				{
-					flage = TRUE;
+					AccessFlag = TRUE;
 				}
 				else
 				{
-					flage = FALSE;
+					AccessFlag = FALSE;
 					break;
 				}
 				EEPROMAdminLocation++;
+				InputIndex++;
 			}
-		}
-
-		if (Save_flage==FALSE)
-		{
-			if (flage==TRUE)
+			if (AccessFlag==TRUE)
 			{
 				UART_sendStr("Welcome\r\n");
 				InputIndex=0;
-				_delay_ms(100);
 				return TRUE;
 			}
 			else {
@@ -111,7 +76,6 @@ BOOL CheckPasswordAdmin(){
 					break;
 				}
 			}
-		}
 		InputIndex = 0;
 	}
 	return FALSE;
