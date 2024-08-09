@@ -16,6 +16,8 @@
 
 #include "UART_INT.h"
 
+#include "USERCONTROL_INT.h"
+
 #include"INTERNALEEPROM_INT.h"
 
 /**************
