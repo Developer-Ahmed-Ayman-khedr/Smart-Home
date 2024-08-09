@@ -6,13 +6,13 @@
  */
 
 #include"Code_APP.h"
-
 void Code_APPInitDriversTask(void *pvParameters){
 	while(1){
 		GI_enable();
 		KPD_init();
 		LCD_init();
 		UART_init();
+		EEPROMInitialize();
 
 		//LIGHTING_init();
 		//HOLD_init();
@@ -37,14 +37,15 @@ void LoginTask(void * pvParameters ){
 
 				//xSemaphoreGive( A );
 			}
-			else
+			/*else
 			if(CheckDataForUser() == TRUE){
 				xEventGroupClearBits( LoginEventGroup, BIT_0 );
 				vTaskResume(OptionsTaskHandle);
 
 				vTaskSuspend(LoginTaskHandle);
 			}
-		//}
+		//}*/
+			UserLogin();
 		vTaskDelay(5/portTICK_PERIOD_MS);
 	}
 }
@@ -101,6 +102,7 @@ void OptionsTask(void *pvParameters){
 				else if(INPUT_Read()==INPUT_ENTERANCE){
 					LCD_sendData('3');
 				}
+
 				LCD_clearDis();
 				LCD_GoTo(0,0);
 				LCD_sendStr("1.Hall 2.Entrance");

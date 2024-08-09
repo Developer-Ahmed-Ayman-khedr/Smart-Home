@@ -13,10 +13,17 @@
 ***************/
 
 #include "STD_TYPES.h"
-#include"LCD_INT.h"
-#include"INTERNALEEPROM_INT.h"
+
 #include"KPD_INT.h"
+
 #include"UART_INT.h"
+
+#include"LCD_INT.h"
+
+#include"INTERNALEEPROM_INT.h"
+
+#include"PasswordCheck_INT.h"
+
 
 /******************************************
   Global Data TYPES AND STRUCTURES
