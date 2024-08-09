@@ -54,76 +54,74 @@ void AddUser()
   }
 }
 
-BOOL CheckDataForUser(){
-	static u8 KPD_RecevedData = KPD_UNPRESSED , User_Data[5] , Userindex = 0 , EEPROMRecievedData , AccessTimes=1;
-	static u16 EEPROMIndex =MINEEPROMUSER;
-	static BOOL AccessResult = FALSE ;
-	KPD_RecevedData = KPD_UNPRESSED;
-	KPD_RecevedData = KPD_read();
-	if ( KPD_RecevedData!=KPD_UNPRESSED)
+BOOL UserLogin(){
+	static BOOL AccessResult = FALSE;
+	static u8 User_Data[5];
+	static u8 KPD_ReceivedData = KPD_UNPRESSED;
+	static u8 index = 0;
+	static u8 AccessTimes = 0;
+	u8 i2 = 4;
+
+	KPD_ReceivedData = KPD_UNPRESSED;
+	KPD_ReceivedData = KPD_read();
+	if ( KPD_ReceivedData!=KPD_UNPRESSED)
 	{
 		while(KPD_read()!=KPD_UNPRESSED);
-		LCD_sendNum(KPD_RecevedData-48);
-		User_Data[Userindex] = KPD_RecevedData;
-		Userindex++;
-		KPD_RecevedData = KPD_UNPRESSED;
+		User_Data[index] = KPD_ReceivedData;
+		KPD_ReceivedData = KPD_UNPRESSED;
 	}
-	if (Userindex==4)
+	//if the user entered five digits
+	if (index==5)
 	{
-		while (EEPROMIndex<MAXEEPROMUSER)
+		while(i2<24)
 		{
-			_delay_ms(100);
-			EEPROMRecievedData = INTERNALEEPROM_Read(EEPROMIndex);
-			if (EEPROMRecievedData== User_Data [0])
+			if (User_Data[0]==EEPROMValues[i2])
 			{
-				for (Userindex=0 ; Userindex<5;Userindex++)
+				index = 0;
+				for (u8 index2 = i2; index2<(i2+5); index2++)
 				{
-					_delay_ms(50);
-					EEPROMRecievedData = INTERNALEEPROM_Read(EEPROMIndex) ;
-					if (EEPROMRecievedData == User_Data[Userindex])
+					if (User_Data[index]==EEPROMValues[index2])
 					{
-						AccessResult = TRUE ;
+						AccessResult = TRUE;
 					}
 					else
 					{
-						AccessResult = FALSE ;
-						break ;
+						AccessResult = FALSE;
+						break;
 					}
-					EEPROMIndex++;
+					index++;
 				}
+
 			}
-			EEPROMIndex+=5;
+			i2+=5;
 		}
 
 		if (AccessResult == TRUE)
 		{
 			LCD_sendStr("welcome/r/n") ;
-			return TRUE;
+			index = 0;
+			return AccessResult;
 		}
-		else
-		{
+		else{
 			switch (AccessTimes)
 			{
+				AccessTimes++;
 				case 1:
-				LCD_sendStr("WrongData") ;
-				EEPROMIndex = MINEEPROMUSER ;
-				break;
+					LCD_sendStr("WrongData");
+					break;
 				case 2 :
-				LCD_sendStr("WrongData") ;
-				EEPROMIndex = MINEEPROMUSER ;
-				break;
+					LCD_sendStr("WrongData");
+					break;
 				case 3 :
-				LCD_sendStr("Block") ;
-				EEPROMIndex = MAXEEPROMUSER ;
-				break;
+					LCD_sendStr("Block") ;
+					break;
 				default:
 				break;
+				index = 0;
 			}
-			Userindex = 0 ;
-			AccessTimes ++ ;
 		}
 	}
-	return FALSE;
+	return AccessResult;
 }
 
 BOOL DeleteUser(u8 userID){

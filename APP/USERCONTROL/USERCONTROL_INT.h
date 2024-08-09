@@ -46,6 +46,6 @@ void AddUser();
 
 BOOL DeleteUser(u8 userID);
 
-BOOL CheckDataForUser();
+BOOL UserLogin();
 
 #endif /* APP_USERCONTROL_USERCONTROL_INT_H_ */
