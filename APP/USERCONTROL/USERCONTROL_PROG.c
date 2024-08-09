@@ -8,7 +8,52 @@
 
 void AddUser()
 {
-	 static u8 userData[5];
+	 // temp array to put pass in the main array
+		static u8 TEMPArr [5] ;
+		u8 UARTResevedData = UART_NOT_RECEIVE; TEMPArr [5];
+
+
+		UART_sendStr("Enter pass:\r\n");
+		for (u8 i=0; i<5;i++)
+		{
+			UARTResevedData = UART_NOT_RECEIVE;
+			UARTResevedData = UART_receiveData()-48;
+			if (UARTResevedData!=UART_NOT_RECEIVE)
+			{
+				TEMPArr[I] = UARTResevedData;
+				UARTResevedData = UART_NOT_RECEIVE;
+			}
+		}
+		 for (u8 i=4 ;i<24 ; i+=5)
+		 {
+			 if ( EEPROMValues[i] == 255 )
+			 {
+
+				for ( ;i<(i+5) ;i++)
+				{
+					// will put the pass from temp array in EEPROMValues
+					EEPROMValues [i] = TEMPArr [i];
+					return;
+				}
+			}
+		}
+
+		for (u8 i=4 ;i<=23;i++)
+		{
+			_delay_ms(50) ;
+			INTERNALEEPROM_SendByte(EEPROMValues[i],i) ;
+		}
+
+	}
+
+
+
+
+
+
+
+
+	/* static u8 userData[5];
 	 static u8 EEPROMINDEX = MINEEPROMUSER;
 	 static u8 EEPROMValue;
 	 static BOOL EEPROMReturnFlag = FALSE;
@@ -51,7 +96,7 @@ void AddUser()
 				 EEPROMINDEX++;
 			 }
 		 }
-  }
+  }*/
 }
 
 BOOL CheckDataForUser(){
