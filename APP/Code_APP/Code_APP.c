@@ -6,7 +6,6 @@
  */
 
 #include"Code_APP.h"
-
 void Code_APPInitDriversTask(void *pvParameters){
 	while(1){
 		GI_enable();
