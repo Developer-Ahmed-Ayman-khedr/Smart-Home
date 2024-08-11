@@ -27,25 +27,20 @@ void LoginTask(void * pvParameters ){
 	while(1)
 	{
 		vTaskSuspend(OptionsTaskHandle);
-		//if( xSemaphoreTake( A, 0 ) == pdTRUE ){
-			if(CheckPasswordAdmin()==TRUE)
-			{
-				xEventGroupSetBits(LoginEventGroup, BIT_0);
+		if(CheckPasswordAdmin()==TRUE)
+		{
+			xEventGroupSetBits(LoginEventGroup, BIT_0);
 
-				vTaskResume(OptionsTaskHandle);
+			vTaskResume(OptionsTaskHandle);
 
-				vTaskSuspend(LoginTaskHandle);
+			vTaskSuspend(LoginTaskHandle);
+		}
+		else if(UserLogin() == TRUE){
+			xEventGroupClearBits( LoginEventGroup, BIT_0 );
+			vTaskResume(OptionsTaskHandle);
 
-				//xSemaphoreGive( A );
-			}
-			/*else
-			if(CheckDataForUser() == TRUE){
-				xEventGroupClearBits( LoginEventGroup, BIT_0 );
-				vTaskResume(OptionsTaskHandle);
-
-				vTaskSuspend(LoginTaskHandle);
-			}
-		//}*/
+			vTaskSuspend(LoginTaskHandle);
+		}
 		vTaskDelay(5/portTICK_PERIOD_MS);
 	}
 }

@@ -51,7 +51,7 @@
 
 void AddUser();
 
-BOOL CheckDataForUser();
+BOOL UserLogin();
 
 BOOL DeleteUser(u8 userID);
 
