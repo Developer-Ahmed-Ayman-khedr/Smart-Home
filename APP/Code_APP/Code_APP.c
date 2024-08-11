@@ -6,6 +6,7 @@
  */
 
 #include"Code_APP.h"
+
 void Code_APPInitDriversTask(void *pvParameters){
 	while(1){
 		GI_enable();
@@ -45,7 +46,6 @@ void LoginTask(void * pvParameters ){
 				vTaskSuspend(LoginTaskHandle);
 			}
 		//}*/
-			UserLogin();
 		vTaskDelay(5/portTICK_PERIOD_MS);
 	}
 }
@@ -53,43 +53,50 @@ void LoginTask(void * pvParameters ){
 void OptionsTask(void *pvParameters){
 	//u8 var2 = 'a';
 	//u8 read = 0;
+	u8 ControlCounter = 0;
 	while(1){
-		//if( xSemaphoreTake( A, 0 ) == pdTRUE )
-		//{
-
-			uxBits = xEventGroupWaitBits(LoginEventGroup, BIT_0, pdTRUE, pdFALSE, 0 );
-			if(( uxBits & BIT_0 ) != 0){
+		uxBits = xEventGroupWaitBits(LoginEventGroup, BIT_0, pdTRUE, pdFALSE, 0 );
+		if(( uxBits & BIT_0 ) != 0){
+			if (ControlCounter==0)
+			{
 				//Correct password Welcome
 				UART_sendStr("1.Light 2.Temp 3.Enter 4.Add User\r\n");
-
-				//UART read
-				if(UART_receiveData()==INPUT_Light){
-					//lighting
-					UART_sendStr("1.Hall 2.Entrance\r\n");
-					if (UART_receiveData()==LIGHTINGROOM)
-					{
-						LIGHTING_Start(LIGHTINGROOM);
-					}
-					else if (UART_receiveData()==LIGHTINHALL)
-					{
-						LIGHTING_Start(LIGHTINHALL);
-					}
-				}
-				else if(UART_receiveData()==INPUT_Temp){
-					//Temperature check
-					TEMP_Check();
-					UART_sendStr("\r\n1 to return:  \r\n");
-				}
-				else if (UART_receiveData()==INPUT_ENTERANCE)
+				ControlCounter = 1;
+			}
+			//UART read
+			if(UART_receiveData()==INPUT_Light){
+				//lighting
+				UART_sendStr("1.Hall 2.Entrance\r\n");
+				if (UART_receiveData()==LIGHTINGROOM)
 				{
-					DOORCONTROL_Start();
+					LIGHTING_Start(LIGHTINGROOM);
 				}
-				else if (UART_receiveData()== INPUT_ADDUSER)
+				else if (UART_receiveData()==LIGHTINHALL)
 				{
-					//UART_sendStr("\r\n Add user data \r\n");
-					AddUser();
+					LIGHTING_Start(LIGHTINHALL);
+				}
+				ControlCounter = 1;
+			}
+			else if(UART_receiveData()==INPUT_Temp){
+				//Temperature check
+				TEMP_Check();
+				UART_sendStr("\r\n1 to return:  \r\n");
+				if(UART_receiveData()==INPUT_RETURN){
+					ControlCounter = 1;
 				}
 			}
+			else if (UART_receiveData()==INPUT_ENTERANCE)
+			{
+				DOORCONTROL_Start();
+				ControlCounter = 1;
+			}
+			else if (UART_receiveData()== INPUT_ADDUSER)
+			{
+				//UART_sendStr("\r\n Add user data \r\n");
+				AddUser();
+				ControlCounter = 1;
+			}
+		}
 			/*else if(( uxBits & BIT_0 ) != 1){
 				LCD_sendStr("1.Light 2.Temp 3.Enter");
 				LCD_GoTo(0,1);

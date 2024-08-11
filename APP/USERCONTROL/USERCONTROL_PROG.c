@@ -6,11 +6,13 @@
  */
 #include"USERCONTROL_INT.h"
 
+extern u8 EEPROMValues[24];
+
 void AddUser()
 {
 	 // temp array to put pass in the main array
 		static u8 TEMPArr [5] ;
-		u8 UARTResevedData = UART_NOT_RECEIVE; TEMPArr [5];
+		u8 UARTResevedData = UART_NOT_RECEIVE;
 
 
 		UART_sendStr("Enter pass:\r\n");
@@ -20,7 +22,7 @@ void AddUser()
 			UARTResevedData = UART_receiveData()-48;
 			if (UARTResevedData!=UART_NOT_RECEIVE)
 			{
-				TEMPArr[I] = UARTResevedData;
+				TEMPArr[i] = UARTResevedData;
 				UARTResevedData = UART_NOT_RECEIVE;
 			}
 		}
@@ -44,7 +46,7 @@ void AddUser()
 			INTERNALEEPROM_SendByte(EEPROMValues[i],i) ;
 		}
 
-	}
+		EEPROMInitialize();
 
 
 
@@ -184,14 +186,10 @@ BOOL DeleteUser(u8 userID){
 			for (u8 i=i2;i<(i2+5);i++){
 				INTERNALEEPROM_SendByte(0xff,i);
 			}
-			return TRUE;
-		}
-		else
-		{
-			deleteuserflag = FALSE;
+			return deleteuserflag;
 		}
 		i2+=4;
 
 	}
-	return FALSE;
+	return deleteuserflag;
 }
