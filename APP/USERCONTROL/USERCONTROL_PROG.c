@@ -9,7 +9,7 @@
 extern u8 EEPROMValues[24];
 
 void AddUser(){
-// temp array to put pass in the main array
+	// temp array to put pass in the main array
 	 static u8 TEMPArr [5] ;
 	 u8 UARTResevedData = UART_NOT_RECEIVE;
 
@@ -54,98 +54,47 @@ void AddUser(){
 }
 
 BOOL UserLogin(){
-<<<<<<< HEAD
-	  static BOOL AccessResult = FALSE;
-	  static u8 User_Data[5];
-	  static u8 KPD_ReceivedData = KPD_UNPRESSED;
-	  static u8 index = 0;
-	  static u8 AccessTimes = 0;
-	  u8 i2 = 4;
-
-	  KPD_ReceivedData = KPD_UNPRESSED;
-	  KPD_ReceivedData = KPD_read();
-	  if ( KPD_ReceivedData!=KPD_UNPRESSED)
-	  {
-	    while(KPD_read()!=KPD_UNPRESSED);
-	    User_Data[index] = KPD_ReceivedData;
-	    KPD_ReceivedData = KPD_UNPRESSED;
-	  }
-	  //if the user entered five digits
-	  if (index==5)
-	  {
-	    while(i2<24)
-	    {
-	      if (User_Data[0]==EEPROMValues[i2])
-	      {
-	        index = 0;
-	        for (u8 index2 = i2; index2<(i2+5); index2++)
-	        {
-	          if (User_Data[index]==EEPROMValues[index2])
-	          {
-	            AccessResult = TRUE;
-	          }
-	          else
-	          {
-	            AccessResult = FALSE;
-	            break;
-	          }
-	          index++;
-	        }
-
-	      }
-	      i2+=5;
-	    }
-
-	    if (AccessResult == TRUE)
-	    {
-	      LCD_sendStr("welcome/r/n") ;
-	      index = 0;
-	      return AccessResult;
-	    }
-	    else{
-	      switch (AccessTimes)
-	      {
-	        AccessTimes++;
-	        case 1:
-	          LCD_sendStr("WrongData");
-	          break;
-	        case 2 :
-	          LCD_sendStr("WrongData");
-	          break;
-	        case 3 :
-	          LCD_sendStr("Block") ;
-	          break;
-	        default:
-	        break;
-	        index = 0;
-	      }
-	    }
-	  }
-	  return AccessResult;
-	}
-=======
 	static BOOL AccessResult = FALSE;
 	static u8 User_Data[5];
 	static u8 KPD_ReceivedData = KPD_UNPRESSED;
 	static u8 index = 0;
 	static u8 AccessTimes = 0;
-	u8 i2 = 4;
+	static u8 i2 = 4;
 
-	KPD_ReceivedData = KPD_UNPRESSED;
+	static BOOL ResetFlag = FALSE;
+
+
+	if (ResetFlag==TRUE)
+	{
+		index = 4;
+		while (index<24)
+		{
+			_delay_ms(50);
+			INTERNALEEPROM_SendByte(255,index);
+			UART_sendData(index+48);
+			UART_sendStr("\r\n");
+			index++;
+		}
+		ResetFlag = TRUE;
+		index = 0;
+	}
+
 	KPD_ReceivedData = KPD_read();
-	if ( KPD_ReceivedData!=KPD_UNPRESSED)
+	if (KPD_ReceivedData!=KPD_UNPRESSED)
 	{
 		while(KPD_read()!=KPD_UNPRESSED);
-		User_Data[index] = KPD_ReceivedData;
-		KPD_ReceivedData = KPD_UNPRESSED;
+		LCD_sendData(KPD_ReceivedData);
+		User_Data[index] = KPD_ReceivedData-48;
+		index++;
 	}
 	//if the user entered five digits
-	if (index==5)
+	if (index>=4)
 	{
 		while(i2<24)
 		{
 			if (User_Data[0]==EEPROMValues[i2])
 			{
+				LCD_sendData(EEPROMValues[i2]);
 				index = 0;
 				for (u8 index2 = i2; index2<(i2+5); index2++)
 				{
@@ -160,7 +109,6 @@ BOOL UserLogin(){
 					}
 					index++;
 				}
-
 			}
 			i2+=5;
 		}
@@ -176,14 +124,14 @@ BOOL UserLogin(){
 			{
 				AccessTimes++;
 				case 1:
-					LCD_sendStr("WrongData");
-					break;
+				LCD_sendStr("WrongData");
+				break;
 				case 2 :
-					LCD_sendStr("WrongData");
-					break;
+				LCD_sendStr("WrongData");
+				break;
 				case 3 :
-					LCD_sendStr("Block") ;
-					break;
+				LCD_sendStr("Block") ;
+				break;
 				default:
 				break;
 				index = 0;
@@ -192,7 +140,6 @@ BOOL UserLogin(){
 	}
 	return AccessResult;
 }
->>>>>>> 990d18efaf04918aeb1b8b7f18fc10768e14cb0d
 
 BOOL DeleteUser(u8 userID){
 	// define flag to delete user

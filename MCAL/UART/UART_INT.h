@@ -82,6 +82,8 @@ void UART_sendStr(u8* str);
 
 u8 UART_receiveData();
 
+u8 UART_receiveDataWait();
+
 void UART_INT_init(u8 state);
 
 void UART_setcallbackINT(void (*ptr)());

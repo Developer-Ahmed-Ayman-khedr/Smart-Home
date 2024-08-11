@@ -67,6 +67,23 @@ u8 UART_receiveData()
 	return UDR;
 }
 
+u8 UART_receiveDataWait()
+{
+	/*u32 timeOut = 100000;
+	while(GET_BIT(UCSRA,RXC)==0)
+	{
+		timeOut--;
+		if(timeOut == 0)
+		{
+			return UART_NOT_RECEIVE;
+		}
+	}*/
+
+
+	while(GET_BIT(UCSRA,RXC) == 0);
+
+	return UDR;
+}
 
 void UART_INT_init(u8 state)
 {
