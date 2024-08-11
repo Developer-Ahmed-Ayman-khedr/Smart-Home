@@ -38,8 +38,10 @@
 /**************
   GLOBAL FUNCTIONS Prototypes
 ***************/
-void password_init ();
-BOOL CheckPasswordAdmin();
+BOOL EEPROMInitialize();
 
+void password_init ();
+
+BOOL CheckPasswordAdmin();
 
 #endif /* APP_PASSWORDCHECK_PASSWORDCHECK_INT_H_ */
