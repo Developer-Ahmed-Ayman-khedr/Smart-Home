@@ -100,6 +100,8 @@ TaskHandle_t DoorControlTaskHandle;
 
 #define INPUT_ADDUSER  '4'
 
+#define INPUT_DELETEUSER  '5'
+
 #define INPUT_RETURN '1'
 
 #define INPUT_LIGHTINGROOM '1'

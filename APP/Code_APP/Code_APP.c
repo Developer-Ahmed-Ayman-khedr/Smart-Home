@@ -14,9 +14,9 @@ void Code_APPInitDriversTask(void *pvParameters){
 		UART_init();
 		EEPROMInitialize();
 
-		//LIGHTING_init();
-		//HOLD_init();
-		//DOORCONTROL_init();
+		LIGHTING_init();
+		HOLD_init();
+		DOORCONTROL_init();
 		vTaskSuspend(NULL);
 		vTaskDelay(500/portTICK_PERIOD_MS);
 	}
@@ -46,18 +46,20 @@ void LoginTask(void * pvParameters ){
 
 void OptionsTask(void *pvParameters){
 	//u8 var2 = 'a';
-	//u8 read = 0;
-	u8 ControlCounter = 0;
-	while(1){
+		//u8 read = 0;
+		static u8 ControlCounter = 0;
+		static u8 UARTInput = UART_NOT_RECEIVE;
+		while(1){
 		uxBits = xEventGroupWaitBits(LoginEventGroup, BIT_0, pdTRUE, pdFALSE, 0 );
 		if(( uxBits & BIT_0 ) != 0){
 			if (ControlCounter==0)
 			{
 				//Correct password Welcome
-				UART_sendStr("1.Light 2.Temp 3.Enter 4.Add User\r\n");
+				UART_sendStr("1.Light 2.Temp 3.Enter 4.Add User 5.Delete User\r\n");
 				ControlCounter = 1;
 			}
 			//UART read
+			//UARTInput = UART_receiveData();
 			if(UART_receiveData()==INPUT_Light){
 				//lighting
 				UART_sendStr("1.Hall 2.Entrance\r\n");
@@ -69,26 +71,35 @@ void OptionsTask(void *pvParameters){
 				{
 					LIGHTING_Start(LIGHTINHALL);
 				}
-				ControlCounter = 1;
+				ControlCounter = 0;
 			}
 			else if(UART_receiveData()==INPUT_Temp){
 				//Temperature check
 				TEMP_Check();
 				UART_sendStr("\r\n1 to return:  \r\n");
 				if(UART_receiveData()==INPUT_RETURN){
-					ControlCounter = 1;
+					ControlCounter = 0;
 				}
 			}
+
 			else if (UART_receiveData()==INPUT_ENTERANCE)
 			{
 				DOORCONTROL_Start();
-				ControlCounter = 1;
+				ControlCounter = 0;
 			}
-			else if (UART_receiveData()== INPUT_ADDUSER)
+
+			else if (UART_receiveDataWait()==INPUT_ADDUSER)
 			{
 				//UART_sendStr("\r\n Add user data \r\n");
+				UART_sendStr("\r\nEnter user id\r\n");
 				AddUser();
-				ControlCounter = 1;
+				ControlCounter = 0;
+			}
+			else if (UART_receiveData()==INPUT_DELETEUSER)
+			{
+				UART_sendStr("\r\nEnter user id\r\n");
+				//DeleteUser();
+				ControlCounter = 0;
 			}
 		}
 			/*else if(( uxBits & BIT_0 ) != 1){
@@ -127,7 +138,7 @@ void OptionsTask(void *pvParameters){
 			}*/
 			//xSemaphoreGive( A );
 		//}
-		vTaskDelay(10/portTICK_PERIOD_MS);
+		vTaskDelay(5/portTICK_PERIOD_MS);
 	}
 }
 
