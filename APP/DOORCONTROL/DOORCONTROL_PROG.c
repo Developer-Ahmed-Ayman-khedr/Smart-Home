@@ -29,7 +29,7 @@ BOOL DOORCONTROL_Start(){
 	if(HOLD_Retrun()>30)
 	{
 		//Close the door
-		TIMER1_setOcr(375);
+		TIMER1_setOcr(374);
 		return TRUE;
 	}
 }
