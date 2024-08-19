@@ -112,9 +112,17 @@ void OptionsTask(void *pvParameters){
 					}
 				}
 				UART_sendStr("\r\nEnter user id\r\n");
-				recieve = UART_receiveDataWait()-48;
+				// show the saved users for admin to delete from them
+				for (u8 i=4 ; i<24 ; i++)
+				{
+					UART_sendData(EEPROMValues[i]);
+					if (i==8||i==13||i==18||i==23)
+					{
+						UART_sendData('*') ;
+					}
+				}
+				recieve = UART_receiveDataWait() ;
 				DeleteUser(recieve);
-				EEPROMInitialize();
 				ControlCounter = 0;
 			}
 		}
