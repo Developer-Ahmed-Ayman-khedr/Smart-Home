@@ -6,6 +6,9 @@
  */
 
 #include"Code_APP.h"
+
+extern u8 EEPROMValues[24];
+
 void Code_APPInitDriversTask(void *pvParameters){
 	while(1){
 		GI_enable();
@@ -46,10 +49,10 @@ void LoginTask(void * pvParameters ){
 
 void OptionsTask(void *pvParameters){
 	//u8 var2 = 'a';
-		//u8 read = 0;
-		static u8 ControlCounter = 0;
-		static u8 UARTInput = UART_NOT_RECEIVE;
-		while(1){
+	//u8 read = 0;
+	static u8 ControlCounter = 0;
+	u8 recieve = UART_NOT_RECEIVE;
+	while(1){
 		uxBits = xEventGroupWaitBits(LoginEventGroup, BIT_0, pdTRUE, pdFALSE, 0 );
 		if(( uxBits & BIT_0 ) != 0){
 			if (ControlCounter==0)
@@ -59,46 +62,59 @@ void OptionsTask(void *pvParameters){
 				ControlCounter = 1;
 			}
 			//UART read
-			//UARTInput = UART_receiveData();
-			if(UART_receiveData()==INPUT_Light){
+			recieve = UART_receiveDataWait() ;
+			if(recieve==INPUT_Light){
 				//lighting
 				UART_sendStr("1.Hall 2.Entrance\r\n");
-				if (UART_receiveData()==LIGHTINGROOM)
+				recieve = UART_receiveDataWait() ;
+				if (recieve ==LIGHTINGROOM)
 				{
 					LIGHTING_Start(LIGHTINGROOM);
 				}
-				else if (UART_receiveData()==LIGHTINHALL)
+				else if (recieve == LIGHTINHALL)
 				{
 					LIGHTING_Start(LIGHTINHALL);
 				}
 				ControlCounter = 0;
 			}
-			else if(UART_receiveData()==INPUT_Temp){
+			else if(recieve ==INPUT_Temp){
 				//Temperature check
 				TEMP_Check();
 				UART_sendStr("\r\n1 to return:  \r\n");
-				if(UART_receiveData()==INPUT_RETURN){
+				if(recieve ==INPUT_RETURN){
 					ControlCounter = 0;
 				}
 			}
 
-			else if (UART_receiveData()==INPUT_ENTERANCE)
+			else if (recieve ==INPUT_ENTERANCE)
 			{
 				DOORCONTROL_Start();
 				ControlCounter = 0;
 			}
 
-			else if (UART_receiveDataWait()==INPUT_ADDUSER)
+			else if (recieve ==INPUT_ADDUSER)
 			{
 				//UART_sendStr("\r\n Add user data \r\n");
 				UART_sendStr("\r\nEnter user id\r\n");
 				AddUser();
 				ControlCounter = 0;
 			}
-			else if (UART_receiveData()==INPUT_DELETEUSER)
+			else if (recieve == INPUT_DELETEUSER)
 			{
+				// show the saved users for admin to delete from them
+				UART_sendStr("\r\n");
+				for (u8 i=4 ; i<24 ; i++)
+				{
+					UART_sendData(EEPROMValues[i]+48);
+					if (i==8||i==13||i==18||i==23)
+					{
+						UART_sendData('*') ;
+					}
+				}
 				UART_sendStr("\r\nEnter user id\r\n");
-				//DeleteUser();
+				recieve = UART_receiveDataWait()-48;
+				DeleteUser(recieve);
+				EEPROMInitialize();
 				ControlCounter = 0;
 			}
 		}
@@ -139,20 +155,5 @@ void OptionsTask(void *pvParameters){
 			//xSemaphoreGive( A );
 		//}
 		vTaskDelay(5/portTICK_PERIOD_MS);
-	}
-}
-
-void DoorControlTask (void * pvParameters ){
-	//u8 DoorKey ;
-	while(1)
-	{
-		/*if (xQueueReceive(xQueue,&DoorKey,0)== pdPASS)
-		{
-			if(DoorKey==1)
-			{
-				DOORCONTROL_Start();
-			}
-		}*/
-		vTaskDelay(250/portTICK_PERIOD_MS);
 	}
 }

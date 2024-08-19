@@ -71,21 +71,13 @@
 
 EventGroupHandle_t LoginEventGroup;
 
-QueueHandle_t xQueue;
-
 EventBits_t uxBits;
 
-SemaphoreHandle_t A;
-
 TaskHandle_t Code_APPInitDriversTaskHandle;
-
-TaskHandle_t UARTInputTaskHandle;
 
 TaskHandle_t LoginTaskHandle;
 
 TaskHandle_t OptionsTaskHandle;
-
-TaskHandle_t DoorControlTaskHandle;
 
 /******************************************
   GLOBAL CONSTANT MACROS
@@ -122,12 +114,8 @@ TaskHandle_t DoorControlTaskHandle;
 
 void Code_APPInitDriversTask(void *pvParameters);
 
-void UARTInputTask(void *pvParameters);
-
 void LoginTask(void * pvParameters );
 
 void OptionsTask(void *pvParameters);
-
-void DoorControlTask (void * pvParameters );
 
 #endif /* APP_CODE_APP_CODE_APP_H_ */
