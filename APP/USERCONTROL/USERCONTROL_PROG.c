@@ -169,22 +169,35 @@ BOOL UserLogin(){
 }
 
 BOOL DeleteUser(u8 userID){
-	// define flag to delete user
-	u8 deleteuserflag = FALSE , i2 = 4 , EEPROMRecievedData ;
-	while (i2<21)
+	switch (userID)
 	{
-		_delay_ms(100);
-		EEPROMRecievedData = INTERNALEEPROM_Read(i2);
-		if (EEPROMRecievedData == userID)
-		{
-			deleteuserflag = TRUE;
-			for (u8 i=i2;i<(i2+5);i++){
-				INTERNALEEPROM_SendByte(0xff,i);
-			}
-			return deleteuserflag;
+	case 1:
+		for (u8 i = 4; i<9; i++){
+			INTERNALEEPROM_SendByte(255,i);
 		}
-		i2+=4;
+		UART_sendStr("Deleted\r\n");
+		break;
+	case 2:
+		for (u8 i = 9; i<13; i++){
+			INTERNALEEPROM_SendByte(255,i);
+		}
+		UART_sendStr("Deleted\r\n");
+		break;
+		case 3:
+		for (u8 i =13 ; i<18; i++){
+			INTERNALEEPROM_SendByte(255,i);
+		}
+		UART_sendStr("Deleted\r\n");
+		break;
+		case 4:
+		for (u8 i = 18; i<=24; i++){
+			INTERNALEEPROM_SendByte(255,i);
+		}
+		UART_sendStr("Deleted\r\n");
+		break;
 
+	default:
+		break;
 	}
-	return deleteuserflag;
+
 }
