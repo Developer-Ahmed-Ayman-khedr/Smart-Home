@@ -51,7 +51,7 @@ void OptionsTask(void *pvParameters){
 	//u8 var2 = 'a';
 	//u8 read = 0;
 	static u8 ControlCounter = 0;
-	static u8 UARTInput = UART_NOT_RECEIVE;
+	u8 recieve = UART_NOT_RECEIVE;
 	while(1){
 		uxBits = xEventGroupWaitBits(LoginEventGroup, BIT_0, pdTRUE, pdFALSE, 0 );
 		if(( uxBits & BIT_0 ) != 0){
@@ -62,7 +62,7 @@ void OptionsTask(void *pvParameters){
 				ControlCounter = 1;
 			}
 			//UART read
-			u8 recieve = UART_receiveDataWait() ;
+			recieve = UART_receiveDataWait() ;
 			if(recieve==INPUT_Light){
 				//lighting
 				UART_sendStr("1.Hall 2.Entrance\r\n");
@@ -101,6 +101,16 @@ void OptionsTask(void *pvParameters){
 			}
 			else if (recieve == INPUT_DELETEUSER)
 			{
+				// show the saved users for admin to delete from them
+				UART_sendStr("\r\n");
+				for (u8 i=4 ; i<24 ; i++)
+				{
+					UART_sendData(EEPROMValues[i]+48);
+					if (i==8||i==13||i==18||i==23)
+					{
+						UART_sendData('*') ;
+					}
+				}
 				UART_sendStr("\r\nEnter user id\r\n");
 				// show the saved users for admin to delete from them
 				for (u8 i=4 ; i<24 ; i++)
@@ -153,20 +163,5 @@ void OptionsTask(void *pvParameters){
 			//xSemaphoreGive( A );
 		//}
 		vTaskDelay(5/portTICK_PERIOD_MS);
-	}
-}
-
-void DoorControlTask (void * pvParameters ){
-	//u8 DoorKey ;
-	while(1)
-	{
-		/*if (xQueueReceive(xQueue,&DoorKey,0)== pdPASS)
-		{
-			if(DoorKey==1)
-			{
-				DOORCONTROL_Start();
-			}
-		}*/
-		vTaskDelay(250/portTICK_PERIOD_MS);
 	}
 }

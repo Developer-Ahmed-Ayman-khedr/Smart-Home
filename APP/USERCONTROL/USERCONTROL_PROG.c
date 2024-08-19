@@ -9,8 +9,8 @@
 extern u8 EEPROMValues[24];
 
 void AddUser(){
-	// temp array to put pass in the main array
-	 static u8 TEMPArr [5] ;
+	 // temp array to put pass in the main array
+	 u8 TEMPArr [5] ;
 	 u8 UARTResevedData = UART_NOT_RECEIVE;
 
 	 UART_sendStr("Enter pass:\r\n");
@@ -18,10 +18,10 @@ void AddUser(){
 	 while (index1<5)
 	 {
 		 UARTResevedData = UART_NOT_RECEIVE;
-		 UARTResevedData = UART_receiveData()-48;
+		 UARTResevedData = UART_receiveData();
 		 if (UARTResevedData!=UART_NOT_RECEIVE)
 		 {
-			 TEMPArr[index1] = UARTResevedData;
+			 TEMPArr[index1] = UARTResevedData-48;
 			 index1++;
 			 UARTResevedData = UART_NOT_RECEIVE;
 		 }
@@ -58,10 +58,10 @@ BOOL UserLogin(){
 	static u8 User_Data[5];
 	static u8 KPD_ReceivedData = KPD_UNPRESSED;
 	static u8 index = 0;
-	static u8 AccessTimes = 0;
-	static u8 i2 = 4;
+	static u8 counter = 0;
 
-	static BOOL ResetFlag = FALSE;
+	//used to reset the EEPROM that is responsible for the users
+	/*static BOOL ResetFlag = FALSE;
 
 
 	if (ResetFlag==TRUE)
@@ -77,7 +77,7 @@ BOOL UserLogin(){
 		}
 		ResetFlag = TRUE;
 		index = 0;
-	}
+	}*/
 
 	KPD_ReceivedData = KPD_read();
 	if (KPD_ReceivedData!=KPD_UNPRESSED)
@@ -88,55 +88,82 @@ BOOL UserLogin(){
 		index++;
 	}
 	//if the user entered five digits
-	if (index>=4)
+	if (index>4)
 	{
+		//LCD_clearDis();
+		//LCD_sendStr("Checking");
+		//LCD_GoTo(0,1);
+		u8 i2 = 4;
 		while(i2<24)
 		{
 			if (User_Data[0]==EEPROMValues[i2])
 			{
-				LCD_sendData(EEPROMValues[i2]);
+				//LCD_sendStr("w");
+				//LCD_sendNum(EEPROMValues[i2]);
 				index = 0;
-				for (u8 index2 = i2; index2<(i2+5); index2++)
+				for (u16 index2 = i2; index2<(i2+5); index2++)
 				{
 					if (User_Data[index]==EEPROMValues[index2])
 					{
+						LCD_sendData('w');
 						AccessResult = TRUE;
 					}
 					else
 					{
+						//LCD_sendStr("n");
 						AccessResult = FALSE;
 						break;
 					}
 					index++;
 				}
+				break;
+			}
+			else{
+				LCD_sendData('n');
+				AccessResult = FALSE;
 			}
 			i2+=5;
 		}
 
-		if (AccessResult == TRUE)
+		//LCD_clearDis();
+		if (AccessResult==TRUE)
 		{
-			LCD_sendStr("welcome/r/n") ;
+			LCD_sendStr("Welcome");
 			index = 0;
 			return AccessResult;
 		}
-		else{
-			switch (AccessTimes)
+		else if (AccessResult==FALSE)
+		{
+			counter++;
+			if (counter==1)
 			{
-				AccessTimes++;
-				case 1:
 				LCD_sendStr("WrongData");
-				break;
-				case 2 :
-				LCD_sendStr("WrongData");
-				break;
-				case 3 :
-				LCD_sendStr("Block") ;
-				break;
-				default:
-				break;
-				index = 0;
 			}
+			else if (counter==2)
+			{
+				LCD_sendStr("WrongData");
+			}
+			else if (counter==3)
+			{
+				LCD_sendStr("Block");
+			}
+			/*switch (LoginTimes)
+			{
+				case 0:
+					LCD_sendStr("WrongData");
+					break;
+				case 1:
+					LCD_sendStr("WrongData");
+					break;
+				case 2:
+					LCD_sendStr("Block");
+					break;
+				default:
+					break;
+			}*/
 		}
+		index = 0;
+
 	}
 	return AccessResult;
 }
