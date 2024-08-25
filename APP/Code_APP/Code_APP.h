@@ -71,7 +71,7 @@
 
 EventGroupHandle_t LoginEventGroup;
 
-EventBits_t uxBits;
+EventGroupHandle_t UserEventGroup;
 
 TaskHandle_t Code_APPInitDriversTaskHandle;
 
@@ -82,6 +82,12 @@ TaskHandle_t OptionsTaskHandle;
 /******************************************
   GLOBAL CONSTANT MACROS
 *******************************************/
+
+//Temperature Check
+
+#define OUTPUTLCD 0
+
+#define OUTPUTUART 1
 
 //Input
 #define INPUT_Light	'1'
@@ -100,6 +106,11 @@ TaskHandle_t OptionsTaskHandle;
 
 #define INPUT_LIGHTINHALL '2'
 
+//Admin
+#define INPUT_LOGOUTADMIN '6'
+
+//User
+#define INPUT_LOGOUTUSER '4'
 // Specific for Event Group in Login System
 #define BIT_0	( 1 << 0 )
 

@@ -34,7 +34,7 @@
 /******************************************
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
-void LIGHTING_init();
+
 void LIGHTING_Start(u8 Start);
 
 

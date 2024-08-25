@@ -56,7 +56,7 @@ void AddUser(){
 BOOL UserLogin(){
 	static BOOL AccessResult = FALSE;
 	static u8 User_Data[5];
-	static u8 KPD_ReceivedData = KPD_UNPRESSED;
+	u8 KPD_ReceivedData = KPD_UNPRESSED;
 	static u8 index = 0;
 	static u8 counter = 0;
 
@@ -147,20 +147,6 @@ BOOL UserLogin(){
 			{
 				LCD_sendStr("Block");
 			}
-			/*switch (LoginTimes)
-			{
-				case 0:
-					LCD_sendStr("WrongData");
-					break;
-				case 1:
-					LCD_sendStr("WrongData");
-					break;
-				case 2:
-					LCD_sendStr("Block");
-					break;
-				default:
-					break;
-			}*/
 		}
 		index = 0;
 
@@ -168,36 +154,40 @@ BOOL UserLogin(){
 	return AccessResult;
 }
 
-BOOL DeleteUser(u8 userID){
+void DeleteUser(u8 userID){
 	switch (userID)
 	{
-	case 1:
-		for (u8 i = 4; i<9; i++){
-			INTERNALEEPROM_SendByte(255,i);
-		}
-		UART_sendStr("Deleted\r\n");
-		break;
-	case 2:
-		for (u8 i = 9; i<13; i++){
-			INTERNALEEPROM_SendByte(255,i);
-		}
-		UART_sendStr("Deleted\r\n");
-		break;
+		case 1:
+			for (u8 i = 4; i<9; i++){
+				_delay_ms(50);
+				INTERNALEEPROM_SendByte(255,i);
+			}
+			break;
+		case 2:
+			for
+			(u8 i = 9; i<14; i++){
+				_delay_ms(50);
+				INTERNALEEPROM_SendByte(255,i);
+			}
+			//UART_sendStr("Deleted\r\n");
+			break;
 		case 3:
-		for (u8 i =13 ; i<18; i++){
-			INTERNALEEPROM_SendByte(255,i);
-		}
-		UART_sendStr("Deleted\r\n");
-		break;
+			for (u8 i =14 ; i<19; i++){
+				_delay_ms(50);
+				INTERNALEEPROM_SendByte(255,i);
+			}
+			//UART_sendStr("Deleted\r\n");
+			break;
 		case 4:
-		for (u8 i = 18; i<=24; i++){
-			INTERNALEEPROM_SendByte(255,i);
-		}
-		UART_sendStr("Deleted\r\n");
-		break;
-
-	default:
-		break;
+			for (u8 i = 19; i<=24; i++){
+				_delay_ms(50);
+				INTERNALEEPROM_SendByte(255,i);
+			}
+			//UART_sendStr("Deleted\r\n");
+			break;
+		default:
+			break;
 	}
-
+	UART_sendStr("Deleted\r\n");
+	EEPROMInitialize();
 }

@@ -51,8 +51,8 @@
 
 void AddUser();
 
-BOOL UserLogin();
+void DeleteUser(u8 userID);
 
-BOOL DeleteUser(u8 userID);
+BOOL UserLogin();
 
 #endif /* APP_USERCONTROL_USERCONTROL_INT_H_ */

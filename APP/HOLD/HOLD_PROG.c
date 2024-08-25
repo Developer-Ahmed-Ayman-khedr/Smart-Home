@@ -8,8 +8,8 @@
 #include "HOLD_INT.h"
 
 f32 Ttick = 0.004, TONTime=0; //ms
-u32 dis;
-u32 OvCounter=0, TimeOn=0;
+u8 dis;
+u8 OvCounter=0, TimeOn=0;
 u8 edge = 0;
 
 void Timer0OvFunc(){
