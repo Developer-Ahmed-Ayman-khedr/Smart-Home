@@ -7,8 +7,7 @@
 
 #include "TEMP_INT.h"
 
-void TEMP_Init(){
-
+void TEMP_Check(u8 Platform){
 
 	DIO_setPinDir(DIO_PINA1,DIO_INPUT);
 
@@ -21,24 +20,28 @@ void TEMP_Init(){
 	DIO_setPinDir(DIO_PIND3,DIO_OUTPUT);
 	DIO_setPinDir(DIO_PIND7,DIO_OUTPUT);
 
-}
+	//Read the ADC
 
-u16 VDigitalTemp;
-f32 VAnalogTemp;
-
-void TEMP_Check(){
+	u16 VDigitalTemp;
+	f32 VAnalogTemp;
 
 	VDigitalTemp = ADC_read(ADC_CH1);
 	VAnalogTemp = (ADC_convertAnalog(VDigitalTemp))*100;
-	LCD_clearDis();
-	LCD_sendStr("Temp = ");
-	LCD_sendFloatNum(VAnalogTemp);
-	LCD_sendData('C');
-	TEMP_ControlAC();
-}
+	if (Platform==0)
+	{
+		LCD_clearDis();
+		LCD_sendStr("Temp = ");
+		LCD_sendFloatNum(VAnalogTemp);
+		LCD_sendData('C');
+	}
+	else if (Platform==1)
+	{
+		UART_sendStr("Temp = ");
+		UART_sendData(VAnalogTemp);
+		UART_sendStr("C \r\n");
+	}
 
-
-void TEMP_ControlAC(){
+	//Start or Stop the Motor
 	if(VAnalogTemp>28){
 
 		//Enable

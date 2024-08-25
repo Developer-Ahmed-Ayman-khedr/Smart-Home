@@ -37,11 +37,11 @@ void password_init ()
 BOOL CheckPasswordAdmin(){
 	static u8 UART_RecevedData = UART_NOT_RECEIVE, Entered_Pass[4], InputIndex = 0, counter=0;
 	static BOOL AccessFlag = TRUE;
-	static BOOL ResetFlag = FALSE;
-	static BOOL EneranceFlage = FALSE;
+	//static BOOL ResetFlag = FALSE;
+	//static BOOL EneranceFlage = FALSE;
 
 
-	if (ResetFlag==TRUE)
+	/*if (ResetFlag==TRUE)
 	{
 		InputIndex = 0;
 		while (InputIndex<4)
@@ -54,13 +54,13 @@ BOOL CheckPasswordAdmin(){
 		}
 		ResetFlag = TRUE;
 		InputIndex = 0;
-	}
+	}*/
 
-	if (EneranceFlage==FALSE)
+	/*if (EneranceFlage==FALSE)
 	{
 		UART_sendStr("Enter Password\r\n");
 		EneranceFlage = TRUE;
-	}
+	}*/
 
 	UART_RecevedData = UART_receiveData();
 

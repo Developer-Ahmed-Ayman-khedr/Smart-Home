@@ -6,28 +6,17 @@
  */
 #include "LIGHTING_INT.h"
 
-void LIGHTING_init (){
+void LIGHTING_Start(u8 Start){
+
 	DIO_setPinDir(DIO_PINC2,DIO_OUTPUT);
 	DIO_setPinDir(DIO_PINC7,DIO_OUTPUT);
 
-}
-
-
-
-
-void LIGHTING_Start(u8 Start){
-	switch(Start){
-			case LIGHTINGROOM:
-				 DIO_togglePinValue(DIO_PINC7);
-				break;
-			case LIGHTINHALL:
-				 DIO_togglePinValue(DIO_PINC2);
-				break;
-			default:
-				break ;
-
+	if (Start==LIGHTINGROOM)
+	{
+		DIO_togglePinValue(DIO_PINC7);
 	}
-
-
-
+	else if (Start==LIGHTINHALL)
+	{
+		DIO_togglePinValue(DIO_PINC2);
+	}
 }

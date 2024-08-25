@@ -39,10 +39,6 @@
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
 
-void TEMP_Init();
-
-void TEMP_Check();
-
-void TEMP_ControlAC();
+void TEMP_Check(u8 Platform);
 
 #endif /* APP_TEMP_TEMP_INT_H_ */
