@@ -1,12 +1,12 @@
 /*
- * TEMP_INT.h
+ * DOORCONTROL_INT.h
  *
- *  Created on: May 17, 2024
+ *  Created on: May 25, 2024
  *      Author: ahmed
  */
 
-#ifndef APP_TEMP_TEMP_INT_H_
-#define APP_TEMP_TEMP_INT_H_
+#ifndef APP_DOORCONTROL_DOORCONTROL_INT_H_
+#define APP_DOORCONTROL_DOORCONTROL_INT_H_
 
 /******************************************
   INCLUDES
@@ -14,11 +14,15 @@
 
 #include "DIO_INT.h"
 
-#include "ADC_INT.h"
+#include "GI_INT.h"
 
-#include "LCD_INT.h"
+#include "TIMER0_INT.h"
 
 #include "TIMER1_INT.h"
+
+#include "EXT_INT.h"
+
+#include "HOLD_INT.h"
 
 /******************************************
   Global Data TYPES AND STRUCTURES
@@ -39,6 +43,8 @@
   GLOBAL FUNCTIONS Prototypes
 *******************************************/
 
-void TEMP_Check(u8 Platform);
+void DOORCONTROL_init();
 
-#endif /* APP_TEMP_TEMP_INT_H_ */
+void DOORCONTROL_Start();
+
+#endif /* APP_DOORCONTROL_DOORCONTROL_INT_H_ */

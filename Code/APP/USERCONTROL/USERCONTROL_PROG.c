@@ -60,6 +60,8 @@ BOOL UserLogin(){
 	static u8 index = 0;
 	static u8 counter = 0;
 
+	AccessResult = FALSE;
+
 	//used to reset the EEPROM that is responsible for the users
 	/*static BOOL ResetFlag = FALSE;
 
@@ -119,33 +121,37 @@ BOOL UserLogin(){
 				break;
 			}
 			else{
-				LCD_sendData('n');
+				//LCD_sendData('n');
 				AccessResult = FALSE;
 			}
 			i2+=5;
 		}
 
-		//LCD_clearDis();
+		LCD_clearDis();
 		if (AccessResult==TRUE)
 		{
 			LCD_sendStr("Welcome");
 			index = 0;
+			_delay_ms(300);
 			return AccessResult;
 		}
-		else if (AccessResult==FALSE)
-		{
+		else{
+			LCD_sendStr("WrongData");
 			counter++;
-			if (counter==1)
-			{
-				LCD_sendStr("WrongData");
-			}
-			else if (counter==2)
-			{
-				LCD_sendStr("WrongData");
-			}
-			else if (counter==3)
-			{
-				LCD_sendStr("Block");
+			switch (counter){
+				case 1:
+				DIO_setPinValue (DIO_PINA0,DIO_HIGH);
+				break;
+				case 2:
+				DIO_setPinValue (DIO_PINA2,DIO_HIGH);
+				break;
+				case 3:
+				DIO_setPinValue (DIO_PINA3,DIO_HIGH);
+				LCD_sendStr("BLOCK");
+				_delay_ms(60000);
+				break;
+				default:
+				break;
 			}
 		}
 		index = 0;

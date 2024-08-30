@@ -7,9 +7,10 @@
 
 #include "HOLD_INT.h"
 
+//UltraSonic using Timer0 and INT0
 f32 Ttick = 0.004, TONTime=0; //ms
-u8 dis;
-u8 OvCounter=0, TimeOn=0;
+u32 dis;
+u32 OvCounter=0, TimeOn=0;
 u8 edge = 0;
 
 void Timer0OvFunc(){
@@ -45,7 +46,6 @@ void UltrasonicFunc(){
 }
 
 void HOLD_init(){
-
 	//TR
 	DIO_setPinDir(DIO_PINC6,DIO_OUTPUT);
 
@@ -56,8 +56,6 @@ void HOLD_init(){
 	TIMER0_initNormal();
 
 	TIMER0_setCallbackOv(Timer0OvFunc);
-
-
 
 	//External Interrupt
 	EXT_int0Int(EXT_RISING);
@@ -70,6 +68,7 @@ void HOLD_Start(){
 	_delay_us(11);
 	DIO_setPinValue(DIO_PINC6,DIO_LOW);
 }
+
 u32 HOLD_Retrun(){
 	return dis;
 }
