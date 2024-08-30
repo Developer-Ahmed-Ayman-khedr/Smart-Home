@@ -9,6 +9,7 @@
 
 void TEMP_Check(u8 Platform){
 
+	//Temperature read pin
 	DIO_setPinDir(DIO_PINA1,DIO_INPUT);
 
 	//DC Motor control
@@ -26,19 +27,21 @@ void TEMP_Check(u8 Platform){
 	f32 VAnalogTemp;
 
 	VDigitalTemp = ADC_read(ADC_CH1);
-	VAnalogTemp = (ADC_convertAnalog(VDigitalTemp))*100;
-	if (Platform==0)
+	VAnalogTemp = ADC_convertAnalog(VDigitalTemp)*100;
+
+	if (Platform==OUTPUTLCD)
 	{
-		LCD_clearDis();
+		//LCD_clearDis();
 		LCD_sendStr("Temp = ");
 		LCD_sendFloatNum(VAnalogTemp);
 		LCD_sendData('C');
 	}
-	else if (Platform==1)
+	else if (Platform==OUTPUTUART)
 	{
-		UART_sendStr("Temp = ");
-		UART_sendData(VAnalogTemp);
-		UART_sendStr("C \r\n");
+		/*UART_sendStr("Temp = ");
+		u8 varr = (u32)VAnalogTemp>>8;
+		UART_sendData(varr);
+		UART_sendStr("C \r\n");*/
 	}
 
 	//Start or Stop the Motor
@@ -60,4 +63,5 @@ void TEMP_Check(u8 Platform){
 		DIO_setPinValue(DIO_PIND3,DIO_LOW);
 		DIO_setPinValue(DIO_PINC6,DIO_LOW);
 	}
+	_delay_ms(1000);
 }

@@ -15,13 +15,11 @@
 
 //Physical Drivers
 
+//Physical Drivers
+
 #include "DIO_INT.h"
 
 #include "ADC_INT.h"
-
-#include "LCD_INT.h"
-
-#include "KPD_INT.h"
 
 #include "GI_INT.h"
 
@@ -33,7 +31,11 @@
 
 #include "UART_INT.h"
 
-#include"INTERNALEEPROM_INT.h"
+#include "INTERNALEEPROM_INT.h"
+
+#include "LCD_INT.h"
+
+#include "KPD_INT.h"
 
 //FreeRTOS
 
@@ -42,12 +44,6 @@
 #include "FreeRTOSConfig.h"
 
 #include "task.h"
-
-#include "semphr.h"
-
-#include "event_groups.h"
-
-#include "queue.h"
 
 //Project Elements
 
@@ -69,27 +65,24 @@
   Global Data TYPES AND STRUCTURES
 *******************************************/
 
-EventGroupHandle_t LoginEventGroup;
+//EventGroupHandle_t LoginEventGroup;
 
-EventGroupHandle_t UserEventGroup;
+//EventGroupHandle_t UserEventGroup;
 
 TaskHandle_t Code_APPInitDriversTaskHandle;
 
 TaskHandle_t LoginTaskHandle;
 
-TaskHandle_t OptionsTaskHandle;
+//TaskHandle_t OptionsTaskHandle;
+
+TaskHandle_t AdminOptionsTaskHandle;
+
+TaskHandle_t UserOptionsTaskHandle;
 
 /******************************************
   GLOBAL CONSTANT MACROS
 *******************************************/
 
-//Temperature Check
-
-#define OUTPUTLCD 0
-
-#define OUTPUTUART 1
-
-//Input
 #define INPUT_Light	'1'
 
 #define INPUT_Temp 	'2'
@@ -111,8 +104,12 @@ TaskHandle_t OptionsTaskHandle;
 
 //User
 #define INPUT_LOGOUTUSER '4'
+
+
 // Specific for Event Group in Login System
-#define BIT_0	( 1 << 0 )
+//#define ADMIN_BIT_0	( 1 << 0 )
+
+//#define USER_BIT_1	( 1 << 1 )
 
 /******************************************
   GLOBAL FUNCTIONS MACROS
@@ -127,6 +124,12 @@ void Code_APPInitDriversTask(void *pvParameters);
 
 void LoginTask(void * pvParameters );
 
-void OptionsTask(void *pvParameters);
+//void OptionsTask(void *pvParameters);
+
+void AdminOptionsTask(void * pvParameters );
+
+void UserOptionsTask(void * pvParameters );
+
+//void LightingTask(void *pvParameters);
 
 #endif /* APP_CODE_APP_CODE_APP_H_ */

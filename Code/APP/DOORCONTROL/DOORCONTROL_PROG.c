@@ -22,10 +22,12 @@ void DOORCONTROL_init(){
 
 }
 
-BOOL DOORCONTROL_Start(){
-
+void DOORCONTROL_Start(){
+	u8 UartSend;
 	//Start the Holding process
 	HOLD_Start();
+
+	UART_sendData(UartSend);
 
 	if(HOLD_Retrun()<30)
 	{
@@ -34,11 +36,14 @@ BOOL DOORCONTROL_Start(){
 	}
 
 	//Wait for the Ultrasonic Sensor to return a distance greater than 30cm
-	if(HOLD_Retrun()>30)
+
+	while(HOLD_Retrun()<=30){
+		HOLD_Start();
+		UartSend = (u8)HOLD_Retrun();
+	}
+	if (HOLD_Retrun()>30)
 	{
 		//Close the door
 		TIMER1_setOcr(374);
-		return TRUE;
 	}
-	return FALSE;
 }

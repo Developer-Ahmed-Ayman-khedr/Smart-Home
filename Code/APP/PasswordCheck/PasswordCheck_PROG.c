@@ -10,8 +10,8 @@
 u8 EEPROMValues[24];
 
 BOOL EEPROMInitialize(){
-	static u16 EEPROMINDEX = 0;
-	static BOOL ReturnFlag = FALSE;
+	u16 EEPROMINDEX = 0;
+	BOOL ReturnFlag = FALSE;
 	//Read the EEPROM an put it into the EEPROMValues Array
 	while (EEPROMINDEX<=MAXEEPROMUSER)
 	{
@@ -25,7 +25,6 @@ BOOL EEPROMInitialize(){
 
 void password_init ()
 {
-
 	DIO_setPinDir(DIO_PINA0,DIO_OUTPUT);
 
 	DIO_setPinDir (DIO_PINA2,DIO_OUTPUT);
