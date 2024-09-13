@@ -36,15 +36,8 @@ void TEMP_Check(u8 Platform){
 		LCD_sendFloatNum(VAnalogTemp);
 		LCD_sendData('C');
 	}
-	else if (Platform==OUTPUTUART)
-	{
-		/*UART_sendStr("Temp = ");
-		u8 varr = (u32)VAnalogTemp>>8;
-		UART_sendData(varr);
-		UART_sendStr("C \r\n");*/
-	}
 
-	//Start or Stop the Motor
+	//Start the Cooling Motor
 	if(VAnalogTemp>28){
 
 		//Enable
@@ -54,6 +47,7 @@ void TEMP_Check(u8 Platform){
 		DIO_setPinValue(DIO_PIND3,DIO_HIGH);
 		DIO_setPinValue(DIO_PIND7,DIO_LOW);
 	}
+	//Stop the Cooling Motor
 	else if(VAnalogTemp<28){
 
 		//Enable

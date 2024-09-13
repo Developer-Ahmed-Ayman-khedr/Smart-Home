@@ -23,11 +23,8 @@ void DOORCONTROL_init(){
 }
 
 void DOORCONTROL_Start(){
-	u8 UartSend;
 	//Start the Holding process
 	HOLD_Start();
-
-	UART_sendData(UartSend);
 
 	if(HOLD_Retrun()<30)
 	{
@@ -39,7 +36,6 @@ void DOORCONTROL_Start(){
 
 	while(HOLD_Retrun()<=30){
 		HOLD_Start();
-		UartSend = (u8)HOLD_Retrun();
 	}
 	if (HOLD_Retrun()>30)
 	{

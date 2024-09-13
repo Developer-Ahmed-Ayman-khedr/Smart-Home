@@ -13,6 +13,8 @@ BOOL EEPROMInitialize(){
 	u16 EEPROMINDEX = 0;
 	BOOL ReturnFlag = FALSE;
 	//Read the EEPROM an put it into the EEPROMValues Array
+	//Admin       ,User1          ,User2              ,User3               ,User4
+	//[0][1][2][3],[4][5][6][7][8],[9][10][11][12][13],[14][15][16][17][18],[19][20][21][22][23]
 	while (EEPROMINDEX<=MAXEEPROMUSER)
 	{
 		_delay_ms(50);
@@ -36,33 +38,7 @@ void password_init ()
 BOOL CheckPasswordAdmin(){
 	static u8 UART_RecevedData = UART_NOT_RECEIVE, Entered_Pass[4], InputIndex = 0, counter=0;
 	static BOOL AccessFlag = TRUE;
-	//static BOOL ResetFlag = FALSE;
-	//static BOOL EneranceFlage = FALSE;
-
-
-	/*if (ResetFlag==TRUE)
-	{
-		InputIndex = 0;
-		while (InputIndex<4)
-		{
-			_delay_ms(50);
-			INTERNALEEPROM_SendByte(4,InputIndex);
-			UART_sendData(InputIndex+48);
-			UART_sendStr("\r\n");
-			InputIndex++;
-		}
-		ResetFlag = TRUE;
-		InputIndex = 0;
-	}*/
-
-	/*if (EneranceFlage==FALSE)
-	{
-		UART_sendStr("Enter Password\r\n");
-		EneranceFlage = TRUE;
-	}*/
-
 	UART_RecevedData = UART_receiveData();
-
 	if (UART_RecevedData!=UART_NOT_RECEIVE)
 	{
 		Entered_Pass[InputIndex] = UART_RecevedData-48;
@@ -71,8 +47,6 @@ BOOL CheckPasswordAdmin(){
 		InputIndex++;
 		UART_RecevedData = UART_NOT_RECEIVE;
 	}
-
-	//Try using EEPROMValues Array
 
 	//Check if the user entered 4 Numbers
 	if (InputIndex==4)
