@@ -62,25 +62,6 @@ BOOL UserLogin(){
 
 	AccessResult = FALSE;
 
-	//used to reset the EEPROM that is responsible for the users
-	/*static BOOL ResetFlag = FALSE;
-
-
-	if (ResetFlag==TRUE)
-	{
-		index = 4;
-		while (index<24)
-		{
-			_delay_ms(50);
-			INTERNALEEPROM_SendByte(255,index);
-			UART_sendData(index+48);
-			UART_sendStr("\r\n");
-			index++;
-		}
-		ResetFlag = TRUE;
-		index = 0;
-	}*/
-
 	KPD_ReceivedData = KPD_read();
 	if (KPD_ReceivedData!=KPD_UNPRESSED)
 	{
@@ -92,16 +73,13 @@ BOOL UserLogin(){
 	//if the user entered five digits
 	if (index>4)
 	{
-		//LCD_clearDis();
-		//LCD_sendStr("Checking");
-		//LCD_GoTo(0,1);
 		u8 i2 = 4;
 		while(i2<24)
 		{
+
+			//Check if the first digit is equal to a place in the EEPROMValues array in the addresses (4,9,14,19)
 			if (User_Data[0]==EEPROMValues[i2])
 			{
-				//LCD_sendStr("w");
-				//LCD_sendNum(EEPROMValues[i2]);
 				index = 0;
 				for (u16 index2 = i2; index2<(i2+5); index2++)
 				{
@@ -112,7 +90,6 @@ BOOL UserLogin(){
 					}
 					else
 					{
-						//LCD_sendStr("n");
 						AccessResult = FALSE;
 						break;
 					}
@@ -121,7 +98,6 @@ BOOL UserLogin(){
 				break;
 			}
 			else{
-				//LCD_sendData('n');
 				AccessResult = FALSE;
 			}
 			i2+=5;
@@ -175,21 +151,18 @@ void DeleteUser(u8 userID){
 				_delay_ms(50);
 				INTERNALEEPROM_SendByte(255,i);
 			}
-			//UART_sendStr("Deleted\r\n");
 			break;
 		case 3:
 			for (u8 i =14 ; i<19; i++){
 				_delay_ms(50);
 				INTERNALEEPROM_SendByte(255,i);
 			}
-			//UART_sendStr("Deleted\r\n");
 			break;
 		case 4:
 			for (u8 i = 19; i<=24; i++){
 				_delay_ms(50);
 				INTERNALEEPROM_SendByte(255,i);
 			}
-			//UART_sendStr("Deleted\r\n");
 			break;
 		default:
 			break;
