@@ -65,13 +65,13 @@ void AdminOptionsTask(void * pvParameters ){
 
 			if(Adminrecieve==INPUT_Light){
 				//lighting
-				UART_sendStr("1.Hall 2.Entrance\r\n");
+				UART_sendStr("1.Entrance 2.Hall\r\n");
 
 				Adminrecieve = UART_receiveDataWait();
 
-				if (Adminrecieve ==LIGHTINGROOM)
+				if (Adminrecieve ==LIGHTINGENTRANCE)
 				{
-					LIGHTING_Start(LIGHTINGROOM);
+					LIGHTING_Start(LIGHTINGENTRANCE);
 				}
 				else if (Adminrecieve == LIGHTINHALL)
 				{
@@ -150,9 +150,9 @@ void UserOptionsTask(void * pvParameters ){
 						//lighting
 						LCD_clearDis();
 						//1.Hall 2.Entrance
-						LCD_sendData('H');
-						LCD_sendData(' ');
 						LCD_sendData('E');
+						LCD_sendData(' ');
+						LCD_sendData('H');
 						LCD_Goto(0,1);
 						UserControlCounter = 2;
 					}
@@ -197,9 +197,9 @@ void UserOptionsTask(void * pvParameters ){
 					LCD_sendData(UserRecieve);
 
 					//lighting
-					if (UserRecieve ==LIGHTINGROOM)
+					if (UserRecieve ==LIGHTINGENTRANCE)
 					{
-						LIGHTING_Start(LIGHTINGROOM);
+						LIGHTING_Start(LIGHTINGENTRANCE);
 						UserControlCounter = 0;
 					}
 					else if (UserRecieve == LIGHTINHALL)

@@ -11,7 +11,7 @@ void LIGHTING_Start(u8 Start){
 	DIO_setPinDir(DIO_PINC2,DIO_OUTPUT);
 	DIO_setPinDir(DIO_PINC7,DIO_OUTPUT);
 
-	if (Start==LIGHTINGROOM)
+	if (Start==LIGHTINGENTRANCE)
 	{
 		DIO_togglePinValue(DIO_PINC7);
 	}
