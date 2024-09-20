@@ -37,6 +37,7 @@ void DOORCONTROL_Start(){
 	while(HOLD_Retrun()<=30){
 		HOLD_Start();
 	}
+
 	if (HOLD_Retrun()>30)
 	{
 		//Close the door
