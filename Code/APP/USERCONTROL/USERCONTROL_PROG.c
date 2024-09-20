@@ -85,7 +85,7 @@ BOOL UserLogin(){
 				{
 					if (User_Data[index]==EEPROMValues[index2])
 					{
-						LCD_sendData('w');
+						//LCD_sendData('w');
 						AccessResult = TRUE;
 					}
 					else
