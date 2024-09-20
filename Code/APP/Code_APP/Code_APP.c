@@ -149,7 +149,7 @@ void UserOptionsTask(void * pvParameters ){
 					if(UserRecieve==INPUT_Light){
 						//lighting
 						LCD_clearDis();
-						//1.Hall 2.Entrance
+						//1.Entrance 2.Hall
 						LCD_sendData('E');
 						LCD_sendData(' ');
 						LCD_sendData('H');
